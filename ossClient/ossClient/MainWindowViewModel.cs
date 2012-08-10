@@ -12,9 +12,10 @@ namespace ossClient
 {
     class MainWindowViewModel : PropertyChangedBase
     {
+        OssClient ossClient = new OssClient("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM=");
         public MainWindowViewModel()
         {
-            OssClient client = new OssClient("", "");
+            
 
             ////OssClient client = new OssClient(id.Text, key.Text);
 
@@ -23,7 +24,7 @@ namespace ossClient
 
             //string key = "test2/";
 
-            IEnumerable<Bucket> bucketList = client.ListBuckets();
+            IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
 
             foreach (Bucket temp in bucketList)
             {
@@ -46,28 +47,69 @@ namespace ossClient
             }
         }
 
+        public void refreshBuckets()
+        {
+            _buckets.Clear();
+            IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
+
+            foreach (Bucket temp in bucketList)
+            {
+                _buckets.Add(new BucketModel(temp.Name));
+            }
+
+        }
+
+        public void createBucket(string bucketName, CannedAccessControlList accessControl)
+        {
+            ossClient.CreateBucket(bucketName);
+            ossClient.SetBucketAcl(bucketName, accessControl);
+            refreshBuckets();
+        }
+
+        public void deleteBucket(string bucketName)
+        {
+            ossClient.DeleteBucket(bucketName);
+            refreshBuckets();
+        }
+
+
+
+
 
         public void ossTest()
         {
-            OssClient client = new OssClient("", "");
+            _buckets.Clear();
+            IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
 
-            //OssClient client = new OssClient(id.Text, key.Text);
-
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.UserMetadata.Add("myfield", "test");
-
-            string key = "test2/";
-
-            IEnumerable<Bucket> bucketList = client.ListBuckets();
-
-            string text = "I am from .net client";
-            string bucketName = bucketList.First().Name;
-
-
-            using (FileStream fStream = new FileStream("1.txt", FileMode.Open, FileAccess.Read))
+            foreach (Bucket temp in bucketList)
             {
-                client.PutObject(bucketName, key, fStream, metadata);
+                
+                _buckets.Add(new BucketModel(temp.Name));
             }
+
+
+
+
+
+            //OssClient client = new OssClient("", "");
+
+            ////OssClient client = new OssClient(id.Text, key.Text);
+
+            //ObjectMetadata metadata = new ObjectMetadata();
+            //metadata.UserMetadata.Add("myfield", "test");
+
+            //string key = "test2/";
+
+            //IEnumerable<Bucket> bucketList = client.ListBuckets();
+
+            //string text = "I am from .net client";
+            //string bucketName = bucketList.First().Name;
+
+
+            //using (FileStream fStream = new FileStream("1.txt", FileMode.Open, FileAccess.Read))
+            //{
+            //    client.PutObject(bucketName, key, fStream, metadata);
+            //}
 
             //client.DeleteObject(bucketName, key);
             // client.CreateBucket("mydoc");
