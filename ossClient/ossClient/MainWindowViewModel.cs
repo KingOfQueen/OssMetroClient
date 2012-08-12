@@ -12,7 +12,7 @@ namespace ossClient
 {
     class MainWindowViewModel : PropertyChangedBase
     {
-        OssClient ossClient = new OssClient("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM=");
+        OssClient ossClient = Global.getInstance().login("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM=");
         public MainWindowViewModel()
         {
             
@@ -32,9 +32,41 @@ namespace ossClient
             }
         }
 
-        private BindableCollection<BucketModel> _buckets = new BindableCollection<BucketModel>();
 
-        public BindableCollection<BucketModel> buckets
+        private int m_selectedBuketIndex = 1;
+
+        public int selectedBuketIndex
+        {
+            get
+            {
+                return this.m_selectedBuketIndex;
+            }
+            set
+            {
+                this.m_selectedBuketIndex = value;
+                NotifyOfPropertyChange(() => this.selectedBuketIndex);
+            }
+        }
+
+
+        private string m_inputBucketName = "";
+
+        public string inputBucketName
+        {
+            get
+            {
+                return this.m_inputBucketName;
+            }
+            set
+            {
+                this.m_inputBucketName = value;
+                NotifyOfPropertyChange(() => this.inputBucketName);
+            }
+        }
+
+        private BucketListModel _buckets = new BucketListModel();
+
+        public BucketListModel buckets
         {
             get
             {
@@ -47,34 +79,23 @@ namespace ossClient
             }
         }
 
+
+
         public void refreshBuckets()
         {
-            _buckets.Clear();
-            IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
-
-            foreach (Bucket temp in bucketList)
-            {
-                _buckets.Add(new BucketModel(temp.Name));
-            }
-
+            _buckets.refreshBuckets();
         }
 
-        public void createBucket(string bucketName, CannedAccessControlList accessControl)
+        public void createBucket()
         {
-            ossClient.CreateBucket(bucketName);
-            ossClient.SetBucketAcl(bucketName, accessControl);
-            refreshBuckets();
+            _buckets.createBucket(inputBucketName, CannedAccessControlList.Private);
         }
 
-        public void deleteBucket(string bucketName)
+        public void deleteBucket()
         {
-            ossClient.DeleteBucket(bucketName);
-            refreshBuckets();
+            _buckets.deleteBucket(_buckets[selectedBuketIndex].name);
         }
-
-
-
-
+        
 
         public void ossTest()
         {

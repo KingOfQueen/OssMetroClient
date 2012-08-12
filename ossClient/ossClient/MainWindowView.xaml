@@ -18,11 +18,11 @@
 
     <Grid>
         <!--<Button Content="test" Height="24" HorizontalAlignment="Left" Margin="39,166,0,0" Name="button1" VerticalAlignment="Top" Width="85" Click="button1_Click" />-->
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="39,60,0,0"  VerticalAlignment="Top" Width="247" Name="id"/>
+        <TextBox Name="inputBucketName" Height="23" HorizontalAlignment="Left" Margin="29,332,0,0"  VerticalAlignment="Top" Width="184" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="39,112,0,0" VerticalAlignment="Top" Width="247" Name="key"/>
-        <Button Content="test" Height="47" HorizontalAlignment="Left" Margin="39,171,0,0" Name="ossTest" VerticalAlignment="Top" Width="145" />
+        <Button Content="test" Height="47" HorizontalAlignment="Left" Margin="39,162,0,0" Name="ossTest" VerticalAlignment="Top" Width="145" />
 
-        <ListBox Margin="367,49,44,180" x:Name="buckets">
+        <ListBox Margin="367,49,44,180" x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text='{Binding name}'  
@@ -31,5 +31,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button Name="createBucket"  Content="createBuket" Height="26" HorizontalAlignment="Left" Margin="237,332,0,0"  VerticalAlignment="Top" Width="94" />
+        <Button Name="refreshBuckets" Content="refreshBuckets" Height="25" HorizontalAlignment="Left" Margin="237,374,0,0"  VerticalAlignment="Top" Width="94" />
+        <Button Name="deleteBucket" Content="deleteBucket" Height="26" HorizontalAlignment="Left" Margin="237,417,0,0"  VerticalAlignment="Top" Width="94" />
     </Grid>
 </Controls:MetroWindow>
