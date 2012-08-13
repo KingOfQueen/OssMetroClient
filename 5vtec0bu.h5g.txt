@@ -1,0 +1,51 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   ossClient/ossClient/bin/Debug/ossClient.exe
+#	modified:   ossClient/ossClient/bin/Debug/ossClient.pdb
+#	modified:   ossClient/ossClient/obj/x86/Debug/App.baml
+#	modified:   ossClient/ossClient/obj/x86/Debug/App.g.cs
+#	modified:   ossClient/ossClient/obj/x86/Debug/App.g.i.cs
+#	modified:   ossClient/ossClient/obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
+#	modified:   ossClient/ossClient/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+#	modified:   ossClient/ossClient/obj/x86/Debug/GeneratedInternalTypeHelper.g.cs
+#	modified:   ossClient/ossClient/obj/x86/Debug/GeneratedInternalTypeHelper.g.i.cs
+#	modified:   ossClient/ossClient/obj/x86/Debug/MainWindowView.baml
+#	modified:   ossClient/ossClient/obj/x86/Debug/MainWindowView.g.cs
+#	modified:   ossClient/ossClient/obj/x86/Debug/MainWindowView.g.i.cs
+#	modified:   ossClient/ossClient/obj/x86/Debug/ossClient.csproj.FileListAbsolute.txt
+#	modified:   ossClient/ossClient/obj/x86/Debug/ossClient.exe
+#	modified:   ossClient/ossClient/obj/x86/Debug/ossClient.g.resources
+#	modified:   ossClient/ossClient/obj/x86/Debug/ossClient.pdb
+#	modified:   ossClient/ossClient/obj/x86/Debug/ossClient_MarkupCompile.cache
+#	modified:   ossClient/ossClient/obj/x86/Debug/ossClient_MarkupCompile.i.cache
+#	deleted:    ossClient/ossClient/obj/x86/Debug/ossClient_MarkupCompile.i.lref
+#	modified:   ossClient/ossClient/obj/x86/Debug/ossClient_MarkupCompile.lref
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	debug.log
+#	ossClient/ossClient/bin/Debug/NLog.config
+#	ossClient/ossClient/bin/Debug/NLog.dll
+#	ossClient/ossClient/bin/Debug/NLog.xml
+#	ossClient/ossClient/bin/Debug/log.txt
+#	ossClient/ossClient/obj/x86/Debug/ossClient.csproj.GenerateResource.Cache
+#	ossClient/ossClient/obj/x86/Debug/ossClient.csprojResolveAssemblyReference.cache
+#	ossClient/ossClient/obj/x86/Release/
+#	ossClient/packages/NLog.2.0.0.2000/NLog.2.0.0.2000.nupkg
+#	ossClient/packages/NLog.2.0.0.2000/lib/net20/
+#	ossClient/packages/NLog.2.0.0.2000/lib/net35/
+#	ossClient/packages/NLog.2.0.0.2000/lib/sl2/
+#	ossClient/packages/NLog.2.0.0.2000/lib/sl3-wp/
+#	ossClient/packages/NLog.2.0.0.2000/lib/sl3/
+#	ossClient/packages/NLog.2.0.0.2000/lib/sl4-windowsphone71/
+#	ossClient/packages/NLog.2.0.0.2000/lib/sl4/
+#	ossClient/packages/repositories.config
+
