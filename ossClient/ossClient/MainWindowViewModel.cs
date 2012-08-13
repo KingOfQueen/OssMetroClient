@@ -6,34 +6,73 @@ using Caliburn.Micro;
 using Aliyun.OpenServices.OpenStorageService;
 using System.IO;
 using ossClient.Model;
+using System.Threading.Tasks;
+using NLog;
 
 
 namespace ossClient
 {
     class MainWindowViewModel : PropertyChangedBase
     {
-        OssClient ossClient = Global.getInstance().login("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM=");
+
+       // "bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="
+        OssClient ossClient;
         public MainWindowViewModel()
         {
-            
-
-            ////OssClient client = new OssClient(id.Text, key.Text);
-
-            //ObjectMetadata metadata = new ObjectMetadata();
-            //metadata.UserMetadata.Add("myfield", "test");
-
-            //string key = "test2/";
-
-            IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
-
-            foreach (Bucket temp in bucketList)
+            if (Global.getInstance().login("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM=") == true)
             {
-                _buckets.Add(new BucketModel(temp.Name));
+
+
+                ossClient = Global.getInstance().ossClient;
+                _buckets = new BucketListModel(ossClient);
+
+                // create the task
+                Task<IEnumerable<Bucket>> taskWithFactoryAndState =
+                    Task.Factory.StartNew<IEnumerable<Bucket>>(() =>
+                    {
+                        IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
+
+                        return bucketList;
+
+                    });
+
+
+                //and setup a continuation for it only on when faulted
+                taskWithFactoryAndState.ContinueWith((ant) =>
+                {
+                    Exception aggEx = ant.Exception.GetBaseException();
+                    Global.getInstance().logger.Error(aggEx.Message);
+                }, TaskContinuationOptions.OnlyOnFaulted);
+
+
+                ////and setup a continuation for it only on ran to completion
+                taskWithFactoryAndState.ContinueWith((ant) =>
+                {
+                    IEnumerable<Bucket> bucketList = ant.Result;
+                    foreach (Bucket temp in bucketList)
+                    {
+                        _buckets.Add(new BucketModel(temp.Name));
+                    }
+
+
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
+
+                ////OssClient client = new OssClient(id.Text, key.Text);
+
+                //ObjectMetadata metadata = new ObjectMetadata();
+                //metadata.UserMetadata.Add("myfield", "test");
+
+                //string key = "test2/";
+
+              // IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
+
+               
             }
+            
         }
 
 
-        private int m_selectedBuketIndex = 1;
+        private int m_selectedBuketIndex = 0;
 
         public int selectedBuketIndex
         {
@@ -64,7 +103,7 @@ namespace ossClient
             }
         }
 
-        private BucketListModel _buckets = new BucketListModel();
+        private BucketListModel _buckets;
 
         public BucketListModel buckets
         {
