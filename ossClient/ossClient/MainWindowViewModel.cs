@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Caliburn.Micro;
-using Aliyun.OpenServices.OpenStorageService;
+using Oss;
 using System.IO;
 using ossClient.Model;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace ossClient
 
        // "bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="
         OssClient ossClient;
-        public MainWindowViewModel()
+        public  MainWindowViewModel()
         {
             if (Global.getInstance().login("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM=") == true)
             {
@@ -26,36 +26,7 @@ namespace ossClient
                 ossClient = Global.getInstance().ossClient;
                 _buckets = new BucketListModel(ossClient);
 
-                // create the task
-                Task<IEnumerable<Bucket>> taskWithFactoryAndState =
-                    Task.Factory.StartNew<IEnumerable<Bucket>>(() =>
-                    {
-                        IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
 
-                        return bucketList;
-
-                    });
-
-
-                //and setup a continuation for it only on when faulted
-                taskWithFactoryAndState.ContinueWith((ant) =>
-                {
-                    Exception aggEx = ant.Exception.GetBaseException();
-                    Global.getInstance().logger.Error(aggEx.Message);
-                }, TaskContinuationOptions.OnlyOnFaulted);
-
-
-                ////and setup a continuation for it only on ran to completion
-                taskWithFactoryAndState.ContinueWith((ant) =>
-                {
-                    IEnumerable<Bucket> bucketList = ant.Result;
-                    foreach (Bucket temp in bucketList)
-                    {
-                        _buckets.Add(new BucketModel(temp.Name));
-                    }
-
-
-                }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
                 ////OssClient client = new OssClient(id.Text, key.Text);
 
@@ -71,6 +42,7 @@ namespace ossClient
             
         }
 
+       
 
         private int m_selectedBuketIndex = 0;
 
@@ -120,26 +92,26 @@ namespace ossClient
 
 
 
-        public void refreshBuckets()
+        public async void refreshBuckets()
         {
-            _buckets.refreshBuckets();
+            await _buckets.refreshBuckets();
         }
 
-        public void createBucket()
+        public async void createBucket()
         {
-            _buckets.createBucket(inputBucketName, CannedAccessControlList.Private);
+            await _buckets.createBucket(inputBucketName, CannedAccessControlList.Private);
         }
 
-        public void deleteBucket()
+        public async  void deleteBucket()
         {
-            _buckets.deleteBucket(_buckets[selectedBuketIndex].name);
+            await _buckets.deleteBucket(_buckets[selectedBuketIndex].name);
         }
-        
 
-        public void ossTest()
+
+        public async void ossTest()
         {
             _buckets.Clear();
-            IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
+            IEnumerable<Bucket> bucketList = await ossClient.ListBuckets();
 
             foreach (Bucket temp in bucketList)
             {

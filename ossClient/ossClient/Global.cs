@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Aliyun.OpenServices.OpenStorageService;
+using Oss;
 using System.Threading.Tasks;
 using System.Windows;
 using NLog;

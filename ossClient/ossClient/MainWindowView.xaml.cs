@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Aliyun.OpenServices.OpenStorageService;
+using Oss;
 using System.IO;
 using MahApps.Metro.Controls;
 
