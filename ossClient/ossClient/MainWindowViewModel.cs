@@ -8,146 +8,156 @@ using System.IO;
 using ossClient.Model;
 using System.Threading.Tasks;
 using NLog;
+using ossClient.Framework;
+using System.ComponentModel.Composition;
 
 
 namespace ossClient
 {
-    class MainWindowViewModel : PropertyChangedBase
+    [Export(typeof(IShell))]
+    class MainWindowViewModel : PropertyChangedBase, IShell
     {
-
-       // "bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="
-        OssClient ossClient;
-        public  MainWindowViewModel()
-        {
-            if (Global.getInstance().login("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM=") == true)
-            {
-
-
-                ossClient = Global.getInstance().ossClient;
-                _buckets = new BucketListModel(ossClient);
+         public IView leftView;
+          public  MainWindowViewModel()
+          {
+              leftView = new LeftViewModel();
+          }
 
 
 
-                ////OssClient client = new OssClient(id.Text, key.Text);
+    //   // "bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="
+    //    OssClient ossClient;
+    //    public  MainWindowViewModel()
+    //    {
+    //        if (Global.getInstance().login("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM=") == true)
+    //        {
 
-                //ObjectMetadata metadata = new ObjectMetadata();
-                //metadata.UserMetadata.Add("myfield", "test");
 
-                //string key = "test2/";
+    //            ossClient = Global.getInstance().ossClient;
+    //            _buckets = new BucketListModel(ossClient);
 
-              // IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
+
+
+    //            ////OssClient client = new OssClient(id.Text, key.Text);
+
+    //            //ObjectMetadata metadata = new ObjectMetadata();
+    //            //metadata.UserMetadata.Add("myfield", "test");
+
+    //            //string key = "test2/";
+
+    //          // IEnumerable<Bucket> bucketList = ossClient.ListBuckets();
 
                
-            }
+    //        }
             
-        }
+    //    }
 
        
 
-        private int m_selectedBuketIndex = 0;
+    //    private int m_selectedBuketIndex = 0;
 
-        public int selectedBuketIndex
-        {
-            get
-            {
-                return this.m_selectedBuketIndex;
-            }
-            set
-            {
-                this.m_selectedBuketIndex = value;
-                NotifyOfPropertyChange(() => this.selectedBuketIndex);
-            }
-        }
-
-
-        private string m_inputBucketName = "";
-
-        public string inputBucketName
-        {
-            get
-            {
-                return this.m_inputBucketName;
-            }
-            set
-            {
-                this.m_inputBucketName = value;
-                NotifyOfPropertyChange(() => this.inputBucketName);
-            }
-        }
-
-        private BucketListModel _buckets;
-
-        public BucketListModel buckets
-        {
-            get
-            {
-                return this._buckets;
-            }
-            set
-            {
-                this._buckets = value;
-                NotifyOfPropertyChange(() => this.buckets);
-            }
-        }
+    //    public int selectedBuketIndex
+    //    {
+    //        get
+    //        {
+    //            return this.m_selectedBuketIndex;
+    //        }
+    //        set
+    //        {
+    //            this.m_selectedBuketIndex = value;
+    //            NotifyOfPropertyChange(() => this.selectedBuketIndex);
+    //        }
+    //    }
 
 
+    //    private string m_inputBucketName = "";
 
-        public async void refreshBuckets()
-        {
-            await _buckets.refreshBuckets();
-        }
+    //    public string inputBucketName
+    //    {
+    //        get
+    //        {
+    //            return this.m_inputBucketName;
+    //        }
+    //        set
+    //        {
+    //            this.m_inputBucketName = value;
+    //            NotifyOfPropertyChange(() => this.inputBucketName);
+    //        }
+    //    }
 
-        public async void createBucket()
-        {
-            await _buckets.createBucket(inputBucketName, CannedAccessControlList.Private);
-        }
+    //    private BucketListModel _buckets;
 
-        public async  void deleteBucket()
-        {
-            await _buckets.deleteBucket(_buckets[selectedBuketIndex].name);
-        }
+    //    public BucketListModel buckets
+    //    {
+    //        get
+    //        {
+    //            return this._buckets;
+    //        }
+    //        set
+    //        {
+    //            this._buckets = value;
+    //            NotifyOfPropertyChange(() => this.buckets);
+    //        }
+    //    }
 
 
-        public async void ossTest()
-        {
-            _buckets.Clear();
-            IEnumerable<Bucket> bucketList = await ossClient.ListBuckets();
 
-            foreach (Bucket temp in bucketList)
-            {
+    //    public async void refreshBuckets()
+    //    {
+    //        await _buckets.refreshBuckets();
+    //    }
+
+    //    public async void createBucket()
+    //    {
+    //        await _buckets.createBucket(inputBucketName, CannedAccessControlList.Private);
+    //    }
+
+    //    public async  void deleteBucket()
+    //    {
+    //        await _buckets.deleteBucket(_buckets[selectedBuketIndex].name);
+    //    }
+
+
+    //    public async void ossTest()
+    //    {
+    //        _buckets.Clear();
+    //        IEnumerable<Bucket> bucketList = await ossClient.ListBuckets();
+
+    //        foreach (Bucket temp in bucketList)
+    //        {
                 
-                _buckets.Add(new BucketModel(temp.Name));
-            }
+    //            _buckets.Add(new BucketModel(temp.Name));
+    //        }
 
 
 
 
 
-            //OssClient client = new OssClient("", "");
+    //        //OssClient client = new OssClient("", "");
 
-            ////OssClient client = new OssClient(id.Text, key.Text);
+    //        ////OssClient client = new OssClient(id.Text, key.Text);
 
-            //ObjectMetadata metadata = new ObjectMetadata();
-            //metadata.UserMetadata.Add("myfield", "test");
+    //        //ObjectMetadata metadata = new ObjectMetadata();
+    //        //metadata.UserMetadata.Add("myfield", "test");
 
-            //string key = "test2/";
+    //        //string key = "test2/";
 
-            //IEnumerable<Bucket> bucketList = client.ListBuckets();
+    //        //IEnumerable<Bucket> bucketList = client.ListBuckets();
 
-            //string text = "I am from .net client";
-            //string bucketName = bucketList.First().Name;
-
-
-            //using (FileStream fStream = new FileStream("1.txt", FileMode.Open, FileAccess.Read))
-            //{
-            //    client.PutObject(bucketName, key, fStream, metadata);
-            //}
-
-            //client.DeleteObject(bucketName, key);
-            // client.CreateBucket("mydoc");
+    //        //string text = "I am from .net client";
+    //        //string bucketName = bucketList.First().Name;
 
 
-        }
+    //        //using (FileStream fStream = new FileStream("1.txt", FileMode.Open, FileAccess.Read))
+    //        //{
+    //        //    client.PutObject(bucketName, key, fStream, metadata);
+    //        //}
+
+    //        //client.DeleteObject(bucketName, key);
+    //        // client.CreateBucket("mydoc");
+
+
+    //    }
 
     }
 }
