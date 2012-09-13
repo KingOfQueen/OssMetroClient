@@ -1,4 +1,3 @@
-K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ResolveAssemblyReference.cache
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\MainWindowView.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\MainWindowView.g.cs
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\App.g.cs
@@ -7,7 +6,6 @@ K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient_MarkupCompile.ca
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient_MarkupCompile.lref
 K:\github\ossClient\ossClient\ossClient\bin\Debug\ossClient.exe
 K:\github\ossClient\ossClient\ossClient\bin\Debug\ossClient.pdb
-K:\github\ossClient\ossClient\ossClient\bin\Debug\Aliyun.OpenServices.dll
 K:\github\ossClient\ossClient\ossClient\bin\Debug\Caliburn.Micro.dll
 K:\github\ossClient\ossClient\ossClient\bin\Debug\MahApps.Metro.dll
 K:\github\ossClient\ossClient\ossClient\bin\Debug\MahApps.Metro.Resources.dll
@@ -15,8 +13,6 @@ K:\github\ossClient\ossClient\ossClient\bin\Debug\System.Windows.Interactivity.d
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\App.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.g.resources
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.Properties.Resources.resources
-K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\GenerateResource.read.1.tlog
-K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\GenerateResource.write.1.tlog
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.exe
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.pdb
 F:\GitHub\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.exe
@@ -107,3 +103,22 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.g.cs
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.g.cs
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Resources\Icons.baml
+K:\github\ossClient\ossClient\ossClient\bin\Debug\ossClient.exe.config
+K:\github\ossClient\ossClient\ossClient\bin\Debug\NLog.config
+K:\github\ossClient\ossClient\ossClient\bin\Debug\NLog.dll
+K:\github\ossClient\ossClient\ossClient\bin\Debug\Oss.dll
+K:\github\ossClient\ossClient\ossClient\bin\Debug\System.Net.Http.Formatting.dll
+K:\github\ossClient\ossClient\ossClient\bin\Debug\NLog.xml
+K:\github\ossClient\ossClient\ossClient\bin\Debug\System.Net.Http.Formatting.xml
+K:\github\ossClient\ossClient\ossClient\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.csprojResolveAssemblyReference.cache
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Resources\Icons.baml
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.baml
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.baml
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.baml
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.g.cs
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.g.cs
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.g.cs
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.csproj.GenerateResource.Cache
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.baml
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.g.cs

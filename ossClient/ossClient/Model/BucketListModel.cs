@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace ossClient.Model
 {
-    class BucketListModel : BindableCollection<BucketModel>
+    public class BucketListModel : BindableCollection<Bucket>
     {
 
-        public BucketListModel(OssClient _ossClient)
+        public BucketListModel(OssClient client)
         {
-            ossClient = _ossClient;
+            _ossClient = client;
         }
-        OssClient ossClient;
+        OssClient _ossClient;
 
         public async Task refreshBuckets()
         {
-            IEnumerable<Bucket> bucketList = await ossClient.ListBuckets();
-
+            IEnumerable<Bucket> bucketList = await _ossClient.ListBuckets();
+            this.Clear();
             foreach (Bucket temp in bucketList)
             {
-                this.Add(new BucketModel(temp.Name));
+                this.Add(temp);
             }
            
         }
@@ -31,26 +31,15 @@ namespace ossClient.Model
         public async Task createBucket(string bucketName, CannedAccessControlList accessControl)
         {
 
-                 Bucket bucket = await ossClient.CreateBucket(bucketName);
-                 await ossClient.SetBucketAcl(bucketName, accessControl);
-
-                 this.Add(new BucketModel(bucket.Name));
-
-
+            Bucket bucket = await _ossClient.CreateBucket(bucketName);
+            await _ossClient.SetBucketAcl(bucketName, accessControl);
+            this.Add(bucket);
         }
 
         public async Task deleteBucket(string bucketName)
         {
-            await ossClient.DeleteBucket(bucketName);
-
-            foreach (BucketModel temp in this)
-            {
-                if (temp.name == bucketName)
-                {
-                    this.Remove(temp);
-                    break;
-                }
-            }     
+            await _ossClient.DeleteBucket(bucketName);
+            this.Remove(this.First(x => x.Name == bucketName));
         }
     }
 }

@@ -87,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\NavigateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,7 +112,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Model\ObjectListModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\NavigateViewModel.cs" />
+    <Compile Include="Views\NavigateView.xaml.cs">
+      <DependentUpon>NavigateView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RightView.xaml.cs">
       <DependentUpon>RightView.xaml</DependentUpon>
     </Compile>

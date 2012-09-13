@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ossClient.ViewModels
 {
-    [Export(typeof(ILeftWorkSpace))]
+   // [Export(typeof(ILeftWorkSpace))]
     class LoginViewModel : ILeftWorkSpace
     {
     }
