@@ -17,6 +17,13 @@ namespace ossClient
 
         protected override void Configure()
         {
+            ViewLocator.NameTransformer.AddRule
+(
+@"(?<nsbefore>([A-Za-z_]\w*\.)*)?(?<nsvm>ViewModels\.)(?<nsafter>([A-Za-z_]\w*\.)*)(?<basename>[A-Za-z_]\w*)(?<suffix>ViewModel$)",
+@"${nsbefore}Views.${nsafter}${basename}View",
+@"(([A-Za-z_]\w*\.)*)?ViewModels\.([A-Za-z_]\w*\.)*[A-Za-z_]\w*ViewModel$"
+);
+
             container = new CompositionContainer(new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()));
 
             CompositionBatch batch = new CompositionBatch();

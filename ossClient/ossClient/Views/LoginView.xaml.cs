@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ossClient
+namespace ossClient.Views
 {
     /// <summary>
-    /// ContentView.xaml 的交互逻辑
+    /// LoginView.xaml 的交互逻辑
     /// </summary>
-    public partial class ContentView : UserControl
+    public partial class LoginView : UserControl
     {
-        public ContentView()
+        public LoginView()
         {
             InitializeComponent();
         }

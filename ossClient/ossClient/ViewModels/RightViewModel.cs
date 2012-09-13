@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ossClient
+namespace ossClient.ViewModels
 {
      [Export(typeof(IRightView))]
-    class ContentViewModel : IRightView
+    class RightViewModel : IRightView
     {
     }
 }

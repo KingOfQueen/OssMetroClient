@@ -96,9 +96,14 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\App.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.g.resources
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.Properties.Resources.resources
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.csproj.GenerateResource.Cache
-C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\LeftView.baml
-C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\LeftView.g.cs
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\NavigateView.baml
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\NavigateView.g.cs
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ContentView.baml
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ContentView.g.cs
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.baml
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.g.cs
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.baml
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.baml
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.g.cs
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.g.cs
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Resources\Icons.baml

@@ -42,8 +42,9 @@
     <Reference Include="Caliburn.Micro">
       <HintPath>.\Caliburn.Micro.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro">
-      <HintPath>.\MahApps.Metro.dll</HintPath>
+    <Reference Include="MahApps.Metro, Version=0.9.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MahApps.Metro.0.9.0.0\lib\net40\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro.Resources">
       <HintPath>.\MahApps.Metro.Resources.dll</HintPath>
@@ -63,7 +64,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.0.9.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,11 +83,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ContentView.xaml">
+    <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NavigateView.xaml">
+    <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LeftView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -99,19 +108,24 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="ContentView.xaml.cs">
-      <DependentUpon>ContentView.xaml</DependentUpon>
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="Views\RightView.xaml.cs">
+      <DependentUpon>RightView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ContentViewModel.cs" />
+    <Compile Include="ViewModels\RightViewModel.cs" />
+    <Compile Include="Framework\ILeftWorkSpace.cs" />
     <Compile Include="Framework\IRightView.cs" />
+    <Compile Include="Framework\IRightWorkSpace.cs" />
     <Compile Include="Framework\IShell.cs" />
     <Compile Include="Framework\ILeftView.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="NavigateView.xaml.cs">
-      <DependentUpon>NavigateView.xaml</DependentUpon>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NavigateViewModel.cs" />
+    <Compile Include="Views\LeftView.xaml.cs">
+      <DependentUpon>LeftView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\LeftViewModel.cs" />
     <Compile Include="MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -145,11 +159,16 @@
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Resources\Entypo.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

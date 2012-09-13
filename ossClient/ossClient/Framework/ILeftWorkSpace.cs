@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ossClient.Framework
 {
-    interface ILeftWorkSpace
+    public interface ILeftWorkSpace
     {
     }
 }
