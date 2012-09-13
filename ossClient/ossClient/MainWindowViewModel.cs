@@ -17,12 +17,45 @@ namespace ossClient
     [Export(typeof(IShell))]
     class MainWindowViewModel : PropertyChangedBase, IShell
     {
-         public IView leftView;
-          public  MainWindowViewModel()
-          {
-              leftView = new LeftViewModel();
-          }
+        [ImportingConstructor]
+        public MainWindowViewModel(ILeftView firstViewModel, IRightView secondviewModel) // etc, for each child ViewModel
+        {
+            leftView = firstViewModel;
+            rightView = secondviewModel;
+        }
 
+        private ILeftView leftView;
+        private IRightView rightView;
+
+
+
+        public ILeftView LeftView
+        {
+            get
+            {
+                return this.leftView;
+            }
+            set
+            {
+                this.leftView = value;
+                NotifyOfPropertyChange(() => this.LeftView);
+            }
+        }
+
+
+
+        public IRightView RightView
+        {
+            get
+            {
+                return this.rightView;
+            }
+            set
+            {
+                this.rightView = value;
+                NotifyOfPropertyChange(() => this.RightView);
+            }
+        }
 
 
     //   // "bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="

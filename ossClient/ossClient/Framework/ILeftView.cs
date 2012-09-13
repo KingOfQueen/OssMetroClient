@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ossClient.Framework
 {
-    public interface IView
+    public interface ILeftView
     {
     }
 }

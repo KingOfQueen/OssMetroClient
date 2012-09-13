@@ -98,3 +98,7 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.Properties.Resou
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.csproj.GenerateResource.Cache
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\LeftView.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\LeftView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\NavigateView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\NavigateView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ContentView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ContentView.g.cs

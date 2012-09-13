@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ossClient
 {
     /// <summary>
-    /// LeftView.xaml 的交互逻辑
+    /// NavigateView.xaml 的交互逻辑
     /// </summary>
-    public partial class LeftView : UserControl
+    public partial class NavigateView : UserControl
     {
-        public LeftView()
+        public NavigateView()
         {
             InitializeComponent();
         }
