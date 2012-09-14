@@ -43,8 +43,7 @@ namespace ossClient.ViewModels
             set
             {
                 this.m_selectedBuketIndex = value;
-                NotifyOfPropertyChange(() => this.selectedBuketIndex);
-                Publish();
+                NotifyOfPropertyChange(() => this.selectedBuketIndex);               
             }
         }
 

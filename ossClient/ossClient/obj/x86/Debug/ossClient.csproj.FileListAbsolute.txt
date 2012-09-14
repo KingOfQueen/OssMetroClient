@@ -129,3 +129,7 @@ D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.g.cs
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.g.cs
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.baml
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.g.cs
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.baml
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.baml
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.g.cs
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.g.cs
