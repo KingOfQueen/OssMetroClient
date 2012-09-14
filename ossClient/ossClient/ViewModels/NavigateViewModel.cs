@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using Oss;
+using ossClient.Events;
 using ossClient.Framework;
 using ossClient.Model;
 using System;
@@ -14,11 +15,22 @@ namespace ossClient.ViewModels
     [Export(typeof(ILeftWorkSpace))]
     class NavigateViewModel : PropertyChangedBase,ILeftWorkSpace
     {
-        public NavigateViewModel()
+        readonly IEventAggregator events;
+
+        [ImportingConstructor]
+        public NavigateViewModel(IEventAggregator _events)
         {
+            events = _events;
             buckets = new BucketListModel(new OssClient("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="));
             buckets.refreshBuckets();
         }
+
+        public void Publish()
+        {
+            events.Publish(new SelectedPathEvent(buckets[selectedBuketIndex].Name));
+
+        }
+
 
         private int m_selectedBuketIndex = 0;
 
@@ -32,6 +44,7 @@ namespace ossClient.ViewModels
             {
                 this.m_selectedBuketIndex = value;
                 NotifyOfPropertyChange(() => this.selectedBuketIndex);
+                Publish();
             }
         }
 

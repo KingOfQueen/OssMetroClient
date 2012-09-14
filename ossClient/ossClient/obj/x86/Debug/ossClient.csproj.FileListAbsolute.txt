@@ -92,10 +92,6 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\App.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.g.resources
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.Properties.Resources.resources
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.csproj.GenerateResource.Cache
-D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\NavigateView.baml
-D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\NavigateView.g.cs
-D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ContentView.baml
-D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ContentView.g.cs
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.g.cs
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.baml
@@ -122,3 +118,14 @@ K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.g.cs
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\ossClient.csproj.GenerateResource.Cache
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Resources\Icons.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.g.cs
