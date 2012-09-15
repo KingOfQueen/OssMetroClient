@@ -6,7 +6,7 @@ using Caliburn.Micro;
 using Oss;
 using System.Threading.Tasks;
 
-namespace ossClient.Model
+namespace OssClientMetro.Model
 {
     public class BucketListModel : BindableCollection<Bucket>
     {

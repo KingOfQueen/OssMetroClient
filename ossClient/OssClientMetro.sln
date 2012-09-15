@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ossClient", "ossClient\ossClient.csproj", "{B8B8E4BC-C7A1-477F-A5A8-2083EB12F13C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OssClientMetro", "ossClient\OssClientMetro.csproj", "{B8B8E4BC-C7A1-477F-A5A8-2083EB12F13C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

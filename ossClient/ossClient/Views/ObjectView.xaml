@@ -1,19 +1,20 @@
-﻿<UserControl x:Class="ossClient.Views.ObjectView"
+﻿<UserControl x:Class="OssClientMetro.Views.ObjectView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Height="485.057" Width="404.598">
+             Height="485.057" Width="489.598">
     <Grid>
-        <ListBox  x:Name="objectList"  Margin="0,0,0,26">
+        <ListBox  x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Margin="0,0,0,108" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"  
+                    <TextBlock Text="{Binding key}"  
                                    Margin='2 0 12 0'   
-                                   FontSize='30' />
+                                   FontSize='14' />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button x:Name="Publish" Content="in" HorizontalAlignment="Left" Height="24" Margin="160,418,0,0" VerticalAlignment="Top" Width="90"/>
 
     </Grid>
 </UserControl>

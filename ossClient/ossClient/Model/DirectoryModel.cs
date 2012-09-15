@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ossClient.Model
+namespace OssClientMetro.Model
 {
     class DirectoryModel : ObjectModel
     {

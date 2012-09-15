@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Caliburn.Micro;
-using ossClient.Framework;
+using OssClientMetro.Framework;
 using System.ComponentModel.Composition.Hosting;
 using System.Windows;
 using System.ComponentModel.Composition.Primitives;
 using System.ComponentModel.Composition;
 
-namespace ossClient
+namespace OssClientMetro
 {
-    class AppBootstrapper  : Bootstrapper<IShell>
+    class AppBootstrapper : Bootstrapper<IShell>
     {
         private CompositionContainer container;
 

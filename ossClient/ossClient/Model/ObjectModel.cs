@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ossClient.Model
+namespace OssClientMetro.Model
 {
-    abstract class ObjectModel
+    class ObjectModel
     {
-        string BucketName;
-        string displayName;
-        string key;
-        DateTime modifyTime;
+        public string BucketName { get; set; }
+        public string displayName { get; set; }
+        public string key { get; set; }
+        public DateTime modifyTime { get; set; }
     }
 }

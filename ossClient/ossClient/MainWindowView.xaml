@@ -1,8 +1,8 @@
-﻿<Controls:MetroWindow  x:Class="ossClient.MainWindowView"
+﻿<Controls:MetroWindow  x:Class="OssClientMetro.MainWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:views="clr-namespace:ossClient"
+        xmlns:views="clr-namespace:OssClientMetro"
         Title="MainWindow" Height="594" Width="938">
 
     <Window.Resources>

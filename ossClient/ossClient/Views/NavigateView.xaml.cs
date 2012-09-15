@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ossClient.Views
+namespace OssClientMetro.Views
 {
     /// <summary>
     /// NavigateView.xaml 的交互逻辑

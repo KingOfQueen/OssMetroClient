@@ -1,8 +1,8 @@
 ﻿using Caliburn.Micro;
 using Oss;
-using ossClient.Events;
-using ossClient.Framework;
-using ossClient.Model;
+using OssClientMetro.Events;
+using OssClientMetro.Framework;
+using OssClientMetro.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ossClient.ViewModels
+namespace OssClientMetro.ViewModels
 {
     [Export(typeof(ILeftWorkSpace))]
     class NavigateViewModel : PropertyChangedBase,ILeftWorkSpace

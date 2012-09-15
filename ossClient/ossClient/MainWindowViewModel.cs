@@ -5,14 +5,14 @@ using System.Text;
 using Caliburn.Micro;
 using Oss;
 using System.IO;
-using ossClient.Model;
+using OssClientMetro.Model;
 using System.Threading.Tasks;
 using NLog;
-using ossClient.Framework;
+using OssClientMetro.Framework;
 using System.ComponentModel.Composition;
 
 
-namespace ossClient
+namespace OssClientMetro
 {
     [Export(typeof(IShell))]
     class MainWindowViewModel : PropertyChangedBase, IShell

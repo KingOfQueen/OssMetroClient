@@ -1,19 +1,19 @@
-﻿ossClient
+﻿OssClientMetro
 
 
 winexe
 C#
 .cs
-C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\
-ossClient
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\
+OssClientMetro
 none
 false
 DEBUG;TRACE
-C:\github\ossClient\ossClient\ossClient\App.xaml
+K:\github\ossClient\ossClient\ossClient\App.xaml
 7-1610497431
 
-30-1305399531
-23-343212505
+31-1391999123
+23-453403131
 Views\ObjectView.xaml;Resources\Icons.xaml;Views\NavigateView.xaml;Views\RightView.xaml;Views\LoginView.xaml;Views\LeftView.xaml;MainWindowView.xaml;
 
 False

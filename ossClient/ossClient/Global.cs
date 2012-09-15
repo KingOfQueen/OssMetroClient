@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using NLog;
 
-namespace ossClient
+namespace OssClientMetro
 {
     class Global
     {

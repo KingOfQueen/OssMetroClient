@@ -15,7 +15,7 @@ using Oss;
 using System.IO;
 using MahApps.Metro.Controls;
 
-namespace ossClient
+namespace OssClientMetro
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

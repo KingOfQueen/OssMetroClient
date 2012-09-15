@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ossClient.Events
+namespace OssClientMetro.Events
 {
     class SelectedPathEvent
     {
