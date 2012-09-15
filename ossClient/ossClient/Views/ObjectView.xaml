@@ -3,18 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
              Height="485.057" Width="489.598">
     <Grid>
         <ListBox  x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Margin="0,0,0,108" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding key}"  
-                                   Margin='2 0 12 0'   
-                                   FontSize='14' />
+                   
+                        <TextBlock Text="{Binding key}"  
+                                       Margin='2 0 12 0'   
+                                       FontSize='14' />
+             
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [Publish()]" />
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
-        <Button x:Name="Publish" Content="in" HorizontalAlignment="Left" Height="24" Margin="160,418,0,0" VerticalAlignment="Top" Width="90"/>
-
     </Grid>
 </UserControl>
