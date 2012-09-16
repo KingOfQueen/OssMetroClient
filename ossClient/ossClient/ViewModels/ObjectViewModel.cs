@@ -9,18 +9,21 @@ using Caliburn.Micro;
 using Oss;
 using OssClientMetro.Events;
 using OssClientMetro.Model;
+using System.IO;
 
 namespace OssClientMetro.ViewModels
 {
-    class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, IHandle<SelectedPathEvent>
+    class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, IHandle<SelectedPathEvent>, IHandle<CreateFolderEvent>
     {
             readonly IEventAggregator events;
         readonly IClientService clientService;
+        readonly IWindowManager windowManager;
 
-        public ObjectViewModel(IEventAggregator _events, IClientService _clientService)
+        public ObjectViewModel(IEventAggregator _events, IClientService _clientService, IWindowManager _windowManager)
        {
             this.events = _events;
             clientService = _clientService;
+            windowManager = _windowManager;
             objListModel = new ObjectListModel(new OssClient("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="));
             events.Subscribe(this);
             objectList = new BindableCollection<ObjectModel>();
@@ -69,32 +72,44 @@ namespace OssClientMetro.ViewModels
        }
 
 
-
-
-       public void Publish()
+       public void createFolder()
        {
-           ObjectModel temp = objectList[selectedIndex];
+           windowManager.ShowWindow(new CreateFolderViewModel(events));
+       }
 
-           IEnumerable<OssObjectSummary> list = objListModel.getObjectList(temp.BucketName, temp.key);
+        public void refreshObjectList(string BucketName, string key)
+        {
+            IEnumerable<OssObjectSummary> list = objListModel.getObjectList(BucketName, key);
 
           objectList.Clear();
           foreach (OssObjectSummary obj in list)
           {
 
-              ObjectModel model =   handleObject(obj, temp.key);
+              ObjectModel model =   handleObject(obj, key);
               if(model != null)
                   objectList.Add(model);
           }
+
+        }
+
+       public void passInto()
+       {
+           ObjectModel temp = objectList[selectedIndex];
+           currentFolderObj = temp;
+
+           refreshObjectList(temp.BucketName, temp.key);
 
 
            //events.Publish(new SelectedPathEvent(buckets[selectedBuketIndex].Name));
 
        }
+       ObjectModel currentFolderObj;
+       string currentBuketName;
 
          public   void Handle(SelectedPathEvent message)
          {
              IEnumerable<OssObjectSummary>list = objListModel.getObjectList(message.BuketName);
-
+             currentBuketName = message.BuketName;
              objectList.Clear();
              foreach (OssObjectSummary obj in list)
              {
@@ -103,6 +118,43 @@ namespace OssClientMetro.ViewModels
                      objectList.Add(model);               
              }
 
+         }
+
+
+
+         public async void Handle(CreateFolderEvent message)
+         {
+             try
+             {
+                 MemoryStream s = new MemoryStream();
+                 ObjectMetadata oMetaData = new ObjectMetadata();
+                 OssObjectSummary ossObjSummary  = new OssObjectSummary();
+                 ossObjSummary.BucketName = currentBuketName;
+                 if (currentFolderObj == null)
+                 {
+ 
+                     ossObjSummary.Key = message.folderName + "/";                     
+                 }
+                 else
+                 {               
+                      ossObjSummary.Key = currentFolderObj.key + message.folderName + "/";                    
+                 }
+                 await clientService.ossClient.PutObject(ossObjSummary.BucketName, ossObjSummary.Key, s, oMetaData);
+                 objListModel.Add(ossObjSummary);
+                 if (currentFolderObj == null)
+                 {
+                     refreshObjectList(currentBuketName, "");
+                 }
+                 else
+                 {
+                     refreshObjectList(currentBuketName, currentFolderObj.key);
+                 }
+
+             }
+             catch (Exception ex)
+             {
+
+             }
          }
 
          public ObjectListModel objListModel;

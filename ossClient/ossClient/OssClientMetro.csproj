@@ -39,7 +39,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Caliburn.Micro">
+    <Reference Include="Caliburn.Micro, Version=1.3.1.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>.\Caliburn.Micro.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=0.9.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
@@ -83,6 +84,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\CreateFolderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ObjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,11 +122,16 @@
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="ClientService.cs" />
+    <Compile Include="Events\CreateFolderEvent.cs" />
     <Compile Include="Events\LoginResultEvent.cs" />
     <Compile Include="Events\SelectedPathEvent.cs" />
     <Compile Include="Framework\IClientService.cs" />
     <Compile Include="Model\ModelFactory.cs" />
     <Compile Include="Model\ObjectListModel.cs" />
+    <Compile Include="ViewModels\CreateFolderViewModel.cs" />
+    <Compile Include="Views\CreateFolderView.xaml.cs">
+      <DependentUpon>CreateFolderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ObjectView.xaml.cs">
       <DependentUpon>ObjectView.xaml</DependentUpon>
     </Compile>

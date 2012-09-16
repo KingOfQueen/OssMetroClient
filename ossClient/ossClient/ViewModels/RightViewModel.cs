@@ -17,10 +17,12 @@ namespace OssClientMetro.ViewModels
     {
         readonly IEventAggregator events;
         readonly IClientService clientService;
+        readonly IWindowManager windowManager;
 
         [ImportingConstructor]
-         public RightViewModel(IEventAggregator _events, IClientService _clientService)
+         public RightViewModel(IEventAggregator _events, IClientService _clientService, IWindowManager _windowManager)
          {
+             windowManager = _windowManager;
               events = _events;
             events.Subscribe(this);
             clientService = _clientService;
@@ -30,7 +32,7 @@ namespace OssClientMetro.ViewModels
         {
             if (loginResult.result == Result.SUCCESS)
             {
-                objectViewModel = new ObjectViewModel(events, clientService);
+                objectViewModel = new ObjectViewModel(events, clientService, windowManager);
                 ActivateItem(objectViewModel);
             }
 

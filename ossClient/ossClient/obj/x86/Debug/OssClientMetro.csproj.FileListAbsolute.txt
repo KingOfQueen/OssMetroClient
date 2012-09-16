@@ -13,12 +13,14 @@ K:\github\ossClient\ossClient\ossClient\bin\Debug\NLog.xml
 K:\github\ossClient\ossClient\ossClient\bin\Debug\Oss.pdb
 K:\github\ossClient\ossClient\ossClient\bin\Debug\System.Net.Http.Formatting.xml
 K:\github\ossClient\ossClient\ossClient\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\CreateFolderView.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Resources\Icons.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LoginView.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\LeftView.baml
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\CreateFolderView.g.cs
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.g.cs
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\NavigateView.g.cs
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\RightView.g.cs
