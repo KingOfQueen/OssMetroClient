@@ -18,7 +18,7 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [passInto()]" />
+                    <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [OpenFolder()]" />
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>

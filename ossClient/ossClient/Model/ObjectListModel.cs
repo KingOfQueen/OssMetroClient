@@ -43,46 +43,8 @@ namespace OssClientMetro.Model
             client = _client;
         }
 
-        //bool indir(string key, string prefix = "")
-        //{
-        //    string subString = key.Remove(0, prefix.Length);
-        //    string [] ss = subString.Split('/');
 
-        //    if ((ss.Count() == 1 && subString != "") || (ss.Count() == 2 && subString.EndsWith("/")))
-        //        return true;
-
-        //    return false;
-        //}
-
-        //void addFolder( IEnumerable<OssObjectSummary>  list, string prefix)
-        //{
-        //    foreach (OssObjectSummary obj in list)
-        //    {
-        //        string subString = obj.Key.Remove(0, prefix.Length);
-        //        string[] ss = subString.Split('/');
-        //        if (ss.Count() > 1 && ss[1] != "")
-        //        {
-        //            if (this.Find(x => x.Key == (prefix + ss[0] + "/")) == null)
-        //            {
-        //                this.Add(new OssObjectSummary() {});
-        //            }
-        //        }
-        //    }
-
-        //}
-
-
-
-        public IEnumerable<OssObjectSummary> getObjectList(string buketName)
-        {
-            var result = from ossObject in this
-                         where (ossObject.BucketName == buketName)
-                         select ossObject;
-            return result;
-        }
-
-
-        public IEnumerable<OssObjectSummary> getObjectList(string buketName, string prefix)
+        public IEnumerable<OssObjectSummary> getObjectList(string buketName, string prefix = "")
         {
            var result =  from ossObject in this 
                          where (ossObject.BucketName == buketName

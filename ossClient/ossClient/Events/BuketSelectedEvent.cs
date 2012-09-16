@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OssClientMetro.Events
 {
-    class SelectedPathEvent
+    class BuketSelectedEvent
     {
-        public SelectedPathEvent(string buketName)
+        public BuketSelectedEvent(string buketName)
         {
             BuketName = buketName;
         }

@@ -26,7 +26,7 @@ namespace OssClientMetro.ViewModels
 
         public void Publish()
         {
-            events.Publish(new SelectedPathEvent(buckets[selectedBuketIndex].Name));
+            events.Publish(new BuketSelectedEvent(buckets[selectedBuketIndex].Name));
 
         }
 

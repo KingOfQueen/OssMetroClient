@@ -13,7 +13,7 @@ using System.IO;
 
 namespace OssClientMetro.ViewModels
 {
-    class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, IHandle<SelectedPathEvent>, IHandle<CreateFolderEvent>
+    class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, IHandle<BuketSelectedEvent>, IHandle<CreateFolderEvent>
     {
             readonly IEventAggregator events;
         readonly IClientService clientService;
@@ -47,7 +47,7 @@ namespace OssClientMetro.ViewModels
            }
        }
 
-       ObjectModel handleObject(OssObjectSummary obj, string prefix)
+       ObjectModel filterObject(OssObjectSummary obj, string prefix)
        {
            string subString = obj.Key.Remove(0, prefix.Length);
            string[] ss = subString.Split('/');
@@ -71,13 +71,14 @@ namespace OssClientMetro.ViewModels
            return null;
        }
 
-
+       CreateFolderViewModel createFolderVM;
        public void createFolder()
        {
-           windowManager.ShowWindow(new CreateFolderViewModel(events));
+           createFolderVM = new CreateFolderViewModel(events);
+           windowManager.ShowWindow(createFolderVM);
        }
 
-        public void refreshObjectList(string BucketName, string key)
+        public void refreshObjectList(string BucketName, string key = "")
         {
             IEnumerable<OssObjectSummary> list = objListModel.getObjectList(BucketName, key);
 
@@ -85,42 +86,29 @@ namespace OssClientMetro.ViewModels
           foreach (OssObjectSummary obj in list)
           {
 
-              ObjectModel model =   handleObject(obj, key);
+              ObjectModel model = filterObject(obj, key);
               if(model != null)
                   objectList.Add(model);
           }
 
         }
 
-       public void passInto()
+       public void OpenFolder()
        {
            ObjectModel temp = objectList[selectedIndex];
            currentFolderObj = temp;
 
            refreshObjectList(temp.BucketName, temp.key);
-
-
-           //events.Publish(new SelectedPathEvent(buckets[selectedBuketIndex].Name));
-
        }
+
        ObjectModel currentFolderObj;
        string currentBuketName;
 
-         public   void Handle(SelectedPathEvent message)
+         public   void Handle(BuketSelectedEvent message)
          {
-             IEnumerable<OssObjectSummary>list = objListModel.getObjectList(message.BuketName);
              currentBuketName = message.BuketName;
-             objectList.Clear();
-             foreach (OssObjectSummary obj in list)
-             {
-                 ObjectModel model = handleObject(obj, "");
-                 if (model != null)
-                     objectList.Add(model);               
-             }
-
+             refreshObjectList(message.BuketName);
          }
-
-
 
          public async void Handle(CreateFolderEvent message)
          {
