@@ -12,27 +12,22 @@ using OssClientMetro.Model;
 
 namespace OssClientMetro.ViewModels
 {
-   [Export(typeof(IRightWorkSpace))]
     class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, IHandle<SelectedPathEvent>
     {
-       readonly IEventAggregator events;
+            readonly IEventAggregator events;
+        readonly IClientService clientService;
 
-         [ImportingConstructor]
-       public ObjectViewModel(IEventAggregator _events)
+        public ObjectViewModel(IEventAggregator _events, IClientService _clientService)
        {
             this.events = _events;
+            clientService = _clientService;
             objListModel = new ObjectListModel(new OssClient("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="));
             events.Subscribe(this);
             objectList = new BindableCollection<ObjectModel>();
-            initData();
+            objListModel = _clientService.objects;
+
         }
 
-       public async Task initData()
-       {
-            BucketListModel buckets = new BucketListModel(new OssClient("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="));
-            await buckets.refreshBuckets();
-            await objListModel.createData(buckets);
-       }
 
        private int m_selectedIndex = 0;
 
@@ -96,7 +91,7 @@ namespace OssClientMetro.ViewModels
 
        }
 
-         public  async void Handle(SelectedPathEvent message)
+         public   void Handle(SelectedPathEvent message)
          {
              IEnumerable<OssObjectSummary>list = objListModel.getObjectList(message.BuketName);
 

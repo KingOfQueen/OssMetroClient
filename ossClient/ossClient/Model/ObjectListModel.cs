@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OssClientMetro.Model
 {
-    class ObjectListModel : List<OssObjectSummary>
+    public class ObjectListModel : List<OssObjectSummary>
     {
         public ObjectListModel(OssClient _client) 
         {

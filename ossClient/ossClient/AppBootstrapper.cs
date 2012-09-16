@@ -30,6 +30,7 @@ namespace OssClientMetro
 
             batch.AddExportedValue<IWindowManager>(new WindowManager());
             batch.AddExportedValue<IEventAggregator>(new EventAggregator());
+            batch.AddExportedValue<IClientService>(new ClientService());
             batch.AddExportedValue(container);
 
             container.Compose(batch);

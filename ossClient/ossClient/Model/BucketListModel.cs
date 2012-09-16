@@ -19,11 +19,18 @@ namespace OssClientMetro.Model
 
         public async Task refreshBuckets()
         {
-            IEnumerable<Bucket> bucketList = await _ossClient.ListBuckets();
-            this.Clear();
-            foreach (Bucket temp in bucketList)
+            try
             {
-                this.Add(temp);
+                IEnumerable<Bucket> bucketList = await _ossClient.ListBuckets();
+                this.Clear();
+                foreach (Bucket temp in bucketList)
+                {
+                    this.Add(temp);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
            
         }

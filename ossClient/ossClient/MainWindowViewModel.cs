@@ -15,47 +15,47 @@ using System.ComponentModel.Composition;
 namespace OssClientMetro
 {
     [Export(typeof(IShell))]
-    class MainWindowViewModel : PropertyChangedBase, IShell
+    class MainWindowViewModel :  IShell
     {
         [ImportingConstructor]
         public MainWindowViewModel(ILeftView firstViewModel, IRightView secondviewModel) // etc, for each child ViewModel
         {
-            leftView = firstViewModel;
-            rightView = secondviewModel;
+            LeftView = firstViewModel;
+            RightView = secondviewModel;
         }
 
-        private ILeftView leftView;
-        private IRightView rightView;
+        public ILeftView LeftView { get; private set; }
+        public IRightView RightView { get; private set; }
 
 
 
-        public ILeftView LeftView
-        {
-            get
-            {
-                return this.leftView;
-            }
-            set
-            {
-                this.leftView = value;
-                NotifyOfPropertyChange(() => this.LeftView);
-            }
-        }
+        //public ILeftView LeftView
+        //{
+        //    get
+        //    {
+        //        return this.leftView;
+        //    }
+        //    set
+        //    {
+        //        this.leftView = value;
+        //        NotifyOfPropertyChange(() => this.LeftView);
+        //    }
+        //}
 
 
 
-        public IRightView RightView
-        {
-            get
-            {
-                return this.rightView;
-            }
-            set
-            {
-                this.rightView = value;
-                NotifyOfPropertyChange(() => this.RightView);
-            }
-        }
+        //public IRightView RightView
+        //{
+        //    get
+        //    {
+        //        return this.rightView;
+        //    }
+        //    set
+        //    {
+        //        this.rightView = value;
+        //        NotifyOfPropertyChange(() => this.RightView);
+        //    }
+        //}
 
 
     //   // "bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="

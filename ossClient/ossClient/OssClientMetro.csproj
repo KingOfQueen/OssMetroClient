@@ -116,7 +116,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="ClientService.cs" />
+    <Compile Include="Events\LoginResultEvent.cs" />
     <Compile Include="Events\SelectedPathEvent.cs" />
+    <Compile Include="Framework\IClientService.cs" />
     <Compile Include="Model\ModelFactory.cs" />
     <Compile Include="Model\ObjectListModel.cs" />
     <Compile Include="Views\ObjectView.xaml.cs">

@@ -3,11 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              d:DesignHeight="300" Width="205.594">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="25" Margin="23,94,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="135"/>
-        <Button Content="Button" HorizontalAlignment="Left" Height="28" Margin="23,137,0,0" VerticalAlignment="Top" Width="76"/>
+
+        <TextBox x:Name="UserName" Controls:TextboxHelper.Watermark="Enter Username"
+                                     Controls:TextboxHelper.ClearTextButton="True"
+
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Left"
+                                         Width="154"
+										 VerticalContentAlignment="Center" Margin="26,92,0,0" />
+        <PasswordBox x:Name="UserPassword" Controls:TextboxHelper.Watermark="Enter Password"
+
+                                             VerticalAlignment="Top"
+                                             HorizontalAlignment="Left"
+                                             Width="154"
+											 VerticalContentAlignment="Center" Margin="26,132,0,0" />
+        <Button x:Name="login" Content="login" HorizontalAlignment="Left" Margin="60,189,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,1.364"/>
 
     </Grid>
 </UserControl>

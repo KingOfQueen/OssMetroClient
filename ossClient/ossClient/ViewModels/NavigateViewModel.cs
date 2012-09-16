@@ -12,17 +12,16 @@ using System.Threading.Tasks;
 
 namespace OssClientMetro.ViewModels
 {
-    [Export(typeof(ILeftWorkSpace))]
     class NavigateViewModel : PropertyChangedBase,ILeftWorkSpace
     {
         readonly IEventAggregator events;
+        readonly IClientService clientService;
 
-        [ImportingConstructor]
-        public NavigateViewModel(IEventAggregator _events)
+        public NavigateViewModel(IEventAggregator _events, IClientService _clientService)
         {
             events = _events;
-            buckets = new BucketListModel(new OssClient("bm9crcnr0rtnuw8bnrfvq7w8", "RbtJoExTnA8vYLynUfDh7Ior+oM="));
-            buckets.refreshBuckets();
+            clientService = _clientService;
+            buckets = clientService.buckets;
         }
 
         public void Publish()
