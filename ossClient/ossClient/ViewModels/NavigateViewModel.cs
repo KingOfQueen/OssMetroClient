@@ -26,7 +26,14 @@ namespace OssClientMetro.ViewModels
 
         public void Publish()
         {
-            events.Publish(new BuketSelectedEvent(buckets[selectedBuketIndex].Name));
+            if (selectedBuketIndex >= 0)
+            {
+                events.Publish(new BuketSelectedEvent(buckets[selectedBuketIndex].Name));
+            }
+            else
+            {
+                events.Publish(new BuketSelectedEvent(null));
+            }
 
         }
 
@@ -72,7 +79,17 @@ namespace OssClientMetro.ViewModels
 
         public async void deleteBucket()
         {
-            await buckets.deleteBucket(buckets[selectedBuketIndex].Name);
+            if (selectedBuketIndex < 0)
+            {
+            }
+            else
+            {
+                string bucketName = buckets[selectedBuketIndex].Name;
+                await clientService.folders.deleteBuket(bucketName);
+                await buckets.deleteBucket(bucketName);
+
+
+            }
         }
 
         public BucketListModel buckets { get; set; }

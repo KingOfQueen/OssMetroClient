@@ -15,8 +15,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27" Margin="10,431,0,0" VerticalAlignment="Top" Width="106"/>
-        <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27" Margin="162,431,0,0" VerticalAlignment="Top" Width="106"/>
-        <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" Margin="36,483,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
+        <Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27" Margin="23,482,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27" Margin="159,482,0,0" VerticalAlignment="Top" Width="106"/>
+        <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" Margin="37,430,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
     </Grid>
 </UserControl>

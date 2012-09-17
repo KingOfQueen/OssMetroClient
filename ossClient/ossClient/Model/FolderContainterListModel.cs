@@ -74,25 +74,33 @@ namespace OssClientMetro.Model
             return await getFolderModelFromWeb(buketName, folderKey);
         }
 
-
-
-
-        public async Task deleteObjectModel(ObjectModel objModel)
+        public async Task deleteFolder(string buketName, string key)
         {
-            if (objModel is FileModel)
+            FolderContainterModel folderModle = await getFolderModel(buketName, key);
+            foreach (OssObjectSummary ossObjSummary in folderModle.objList)
             {
-                await client.DeleteObject(objModel.bucketName, objModel.key);
+                await client.DeleteObject(ossObjSummary.BucketName, ossObjSummary.Key);
             }
-            else
+            this.Remove(folderModle);
+
+        }
+
+        public async Task deleteFile(string buketName, string key)
+        {
+            await client.DeleteObject(buketName, key);
+        }
+
+        public async Task deleteBuket(string buketName)
+        {
+            ListObjectsRequest listRequest = new ListObjectsRequest(buketName);
+            ObjectListing reslut = await client.ListObjects(listRequest);
+
+            foreach (OssObjectSummary ossObjSummary in reslut.ObjectSummaries)
             {
-                FolderContainterModel folderModle = await getFolderModel(objModel.bucketName, objModel.key);
-                foreach (OssObjectSummary ossObjSummary in folderModle.objList)
-                {
-                    await client.DeleteObject(ossObjSummary.BucketName, ossObjSummary.Key);
-                }
-                this.Remove(folderModle);
+                await client.DeleteObject(ossObjSummary.BucketName, ossObjSummary.Key);
             }
 
+            this.RemoveAll(x => x.buketName == buketName);
         }
 
         

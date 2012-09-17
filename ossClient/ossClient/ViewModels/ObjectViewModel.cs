@@ -56,21 +56,27 @@ namespace OssClientMetro.ViewModels
 
         public void refreshObjectList(FolderContainterModel folderModel)
         {
-
-            IEnumerable<OssObjectSummary> list = folderModel.objList;
-
-            objectList.Clear();
-          
-            foreach (OssObjectSummary obj in list)
+            if (folderModel == null)
             {
-                if (obj.Key != folderModel.folderKey)
-                    objectList.Add(new FileModel() { bucketName = obj.BucketName, key = obj.Key});
+                objectList.Clear();
             }
-
-            foreach (string prefix in folderModel.CommonPrefixes)
+            else
             {
-                
-                   objectList.Add(new FolderModel() { bucketName = folderModel.buketName, key = prefix });
+                IEnumerable<OssObjectSummary> list = folderModel.objList;
+
+                objectList.Clear();
+
+                foreach (OssObjectSummary obj in list)
+                {
+                    if (obj.Key != folderModel.folderKey)
+                        objectList.Add(new FileModel() { bucketName = obj.BucketName, key = obj.Key });
+                }
+
+                foreach (string prefix in folderModel.CommonPrefixes)
+                {
+
+                    objectList.Add(new FolderModel() { bucketName = folderModel.buketName, key = prefix });
+                }
             }
 
         }
@@ -96,8 +102,16 @@ namespace OssClientMetro.ViewModels
 
          public async   void Handle(BuketSelectedEvent message)
          {
-             currentFolder =  await folderListModel.getFolderModel(message.BuketName);
-             refreshObjectList(currentFolder);
+             if (message.BuketName != null)
+             {
+                 currentFolder = await folderListModel.getFolderModel(message.BuketName);
+                 refreshObjectList(currentFolder);
+             }
+             else
+             {
+                 currentFolder = null;
+                 refreshObjectList(null);
+             }
          }
 
          public async void Handle(CreateFolderEvent message)
@@ -123,9 +137,25 @@ namespace OssClientMetro.ViewModels
 
          public async void delete()
          {
-             ObjectModel temp = objectList[selectedIndex];
-             await folderListModel.deleteObjectModel(temp);
-             refresh();
+             if (selectedIndex < 0)
+             {
+
+
+             }
+             else
+             {
+                ObjectModel objModel = objectList[selectedIndex];
+                if (objModel is FileModel)
+                {
+                    await folderListModel.deleteFile(objModel.bucketName, objModel.key);
+                }
+                else
+                {
+                    await folderListModel.deleteFolder(objModel.bucketName, objModel.key);
+                }
+              
+                 refresh();
+             }
          }
 
          
