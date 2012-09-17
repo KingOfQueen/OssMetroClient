@@ -126,7 +126,7 @@
     <Compile Include="Events\LoginResultEvent.cs" />
     <Compile Include="Events\BuketSelectedEvent.cs" />
     <Compile Include="Framework\IClientService.cs" />
-    <Compile Include="Model\ModelFactory.cs" />
+    <Compile Include="Model\FolderListModel.cs" />
     <Compile Include="Model\ObjectListModel.cs" />
     <Compile Include="ViewModels\CreateFolderViewModel.cs" />
     <Compile Include="Views\CreateFolderView.xaml.cs">
@@ -167,7 +167,7 @@
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Model\BucketListModel.cs" />
     <Compile Include="Model\BucketModel.cs" />
-    <Compile Include="Model\DirectoryModel.cs" />
+    <Compile Include="Model\FolderModel.cs" />
     <Compile Include="Model\FileModel.cs" />
     <Compile Include="Model\ObjectModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

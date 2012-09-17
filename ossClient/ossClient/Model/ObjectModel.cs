@@ -7,7 +7,13 @@ namespace OssClientMetro.Model
 {
     class ObjectModel
     {
-        public string BucketName { get; set; }
+        public  ObjectModel(string _bucketName, string _key)
+        {
+            bucketName = _bucketName;
+            key = _key;
+        }
+
+        public string bucketName { get; set; }
         public string displayName { get; set; }
         public string key { get; set; }
         public DateTime modifyTime { get; set; }

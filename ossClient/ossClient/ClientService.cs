@@ -41,9 +41,11 @@ namespace OssClientMetro
                 buckets = new BucketListModel(ossClient);
                 await buckets.refreshBuckets();
 
-                objects = new ObjectListModel(ossClient);
+                folders = new FolderListModel(ossClient);
 
-                await objects.createData(buckets);
+               // objects = new ObjectListModel(ossClient);
+
+               // await objects.createData(buckets);
 
                 
             }
@@ -59,7 +61,9 @@ namespace OssClientMetro
 
         public BucketListModel buckets { get;  private set;}
 
-        public ObjectListModel objects { get; private set; }
+        public FolderListModel folders { get; private set; }
+
+       // public ObjectListModel objects { get; private set; }
 
     }
 }

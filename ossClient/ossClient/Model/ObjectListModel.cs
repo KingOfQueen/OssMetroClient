@@ -19,20 +19,28 @@ namespace OssClientMetro.Model
 
             foreach (Bucket buket in buketlist)
             {
-                ListObjectsRequest listRequest = new ListObjectsRequest(buket.Name);
-                ObjectListing reslut = await client.ListObjects(listRequest);
-                this.AddRange(reslut.ObjectSummaries);
-                while (reslut.IsTrunked)
-                {
-                    ListObjectsRequest listRequest2 = new ListObjectsRequest(buket.Name);
-                    listRequest2.Marker = reslut.NextMarker;
-                    reslut = await client.ListObjects(listRequest2);
-                    this.AddRange(reslut.ObjectSummaries);
-                }
-                
+                this.AddRange(await getObjListFromWeb(buket.Name));                          
             }
 
 
+        }
+
+
+        private async Task<IEnumerable<OssObjectSummary>> getObjListFromWeb(string buketName, string prefix = "")
+        {
+            List<OssObjectSummary> resultList = new List<OssObjectSummary>();
+            ListObjectsRequest listRequest = new ListObjectsRequest(buketName);
+            ObjectListing reslut = await client.ListObjects(listRequest);
+            resultList.AddRange(reslut.ObjectSummaries);
+            while (reslut.IsTrunked)
+            {
+                ListObjectsRequest listRequest2 = new ListObjectsRequest(buketName);
+                listRequest2.Marker = reslut.NextMarker;
+                reslut = await client.ListObjects(listRequest2);
+                resultList.AddRange(reslut.ObjectSummaries);
+            }
+
+            return resultList;
         }
 
 
@@ -56,6 +64,15 @@ namespace OssClientMetro.Model
         }
 
 
+        public async Task refreshFolder(string buketName, string prefix = "")
+        {
+            ListObjectsRequest arg = new ListObjectsRequest(buketName);
+            arg.Delimiter = @"/";
+            arg.Prefix = prefix;
+            ObjectListing result = await client.ListObjects(arg);
+
+
+        }
 
         
     }
