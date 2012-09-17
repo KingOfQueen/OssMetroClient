@@ -129,6 +129,7 @@
     <Compile Include="Model\FolderContainterListModel.cs" />
     <Compile Include="Model\FolderModel.cs" />
     <Compile Include="Model\ObjectListModel.cs" />
+    <Compile Include="Services\History.cs" />
     <Compile Include="ViewModels\CreateFolderViewModel.cs" />
     <Compile Include="Views\CreateFolderView.xaml.cs">
       <DependentUpon>CreateFolderView.xaml</DependentUpon>
