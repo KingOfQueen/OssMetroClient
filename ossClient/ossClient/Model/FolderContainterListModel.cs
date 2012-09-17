@@ -1,6 +1,7 @@
 ﻿using Oss;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,6 +72,26 @@ namespace OssClientMetro.Model
             this.Remove(folderModle);
 
             return await getFolderModelFromWeb(buketName, folderKey);
+        }
+
+
+
+
+        public async Task deleteObjectModel(ObjectModel objModel)
+        {
+            if (objModel is FileModel)
+            {
+                await client.DeleteObject(objModel.bucketName, objModel.key);
+            }
+            else
+            {
+                FolderContainterModel folderModle = await getFolderModel(objModel.bucketName, objModel.key);
+                foreach (OssObjectSummary ossObjSummary in folderModle.objList)
+                {
+                    await client.DeleteObject(ossObjSummary.BucketName, ossObjSummary.Key);
+                }
+                this.Remove(folderModle);
+            }
 
         }
 

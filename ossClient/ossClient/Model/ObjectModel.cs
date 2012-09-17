@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OssClientMetro.Model
 {
-    abstract class ObjectModel
+    public abstract class ObjectModel
     {
         public string bucketName { get; set; }
         public string displayName { get; set; }

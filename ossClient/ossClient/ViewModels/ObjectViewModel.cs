@@ -79,8 +79,11 @@ namespace OssClientMetro.ViewModels
        {
            ObjectModel temp = objectList[selectedIndex];
 
-           currentFolder = await folderListModel.getFolderModel(temp.bucketName, temp.key);
-           refreshObjectList(currentFolder);
+           if (temp is FolderModel)
+           {
+               currentFolder = await folderListModel.getFolderModel(temp.bucketName, temp.key);
+               refreshObjectList(currentFolder);
+           }
        }
 
         public async void refresh()
@@ -116,6 +119,13 @@ namespace OssClientMetro.ViewModels
              {
 
              }
+         }
+
+         public async void delete()
+         {
+             ObjectModel temp = objectList[selectedIndex];
+             await folderListModel.deleteObjectModel(temp);
+             refresh();
          }
 
          
