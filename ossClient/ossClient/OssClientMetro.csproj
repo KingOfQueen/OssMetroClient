@@ -126,7 +126,8 @@
     <Compile Include="Events\LoginResultEvent.cs" />
     <Compile Include="Events\BuketSelectedEvent.cs" />
     <Compile Include="Framework\IClientService.cs" />
-    <Compile Include="Model\FolderListModel.cs" />
+    <Compile Include="Model\FolderContainterListModel.cs" />
+    <Compile Include="Model\FolderModel.cs" />
     <Compile Include="Model\ObjectListModel.cs" />
     <Compile Include="ViewModels\CreateFolderViewModel.cs" />
     <Compile Include="Views\CreateFolderView.xaml.cs">
@@ -150,7 +151,6 @@
     <Compile Include="Framework\IRightWorkSpace.cs" />
     <Compile Include="Framework\IShell.cs" />
     <Compile Include="Framework\ILeftView.cs" />
-    <Compile Include="Global.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -167,7 +167,7 @@
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Model\BucketListModel.cs" />
     <Compile Include="Model\BucketModel.cs" />
-    <Compile Include="Model\FolderModel.cs" />
+    <Compile Include="Model\FolderContainterModel.cs" />
     <Compile Include="Model\FileModel.cs" />
     <Compile Include="Model\ObjectModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

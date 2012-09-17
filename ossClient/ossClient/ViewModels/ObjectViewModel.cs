@@ -46,38 +46,15 @@ namespace OssClientMetro.ViewModels
            }
        }
 
-       //ObjectModel filterObject(OssObjectSummary obj, string prefix)
-       //{
-       //    string subString = obj.Key.Remove(0, prefix.Length);
-       //    string[] ss = subString.Split('/');
-       //    if (ss.Count() == 1 && subString != "")
-       //        return new ObjectModel() { BucketName = obj.BucketName, key = obj.Key };
-       //    else if (ss.Count() == 2 && subString.EndsWith("/"))
-       //        return new ObjectModel() { BucketName = obj.BucketName, key = obj.Key };
-       //    else
-       //    {
-       //        if (ss.Count() > 1 && ss[1] != "")
-       //        {
-       //            if (objectList.FirstOrDefault(x => x.key == (prefix + ss[0] + "/")) == null)
-       //            {
-       //                return new ObjectModel() { BucketName = obj.BucketName, key = (prefix + ss[0] + "/") };
-       //            }
-       //        }
-
-       //    }
-
-
-       //    return null;
-       //}
-
        CreateFolderViewModel createFolderVM;
+
        public void createFolder()
        {
            createFolderVM = new CreateFolderViewModel(events);
            windowManager.ShowWindow(createFolderVM);
        }
 
-        public void refreshObjectList(FolderModel folderModel)
+        public void refreshObjectList(FolderContainterModel folderModel)
         {
 
             IEnumerable<OssObjectSummary> list = folderModel.objList;
@@ -86,9 +63,14 @@ namespace OssClientMetro.ViewModels
           
             foreach (OssObjectSummary obj in list)
             {
+                if (obj.Key != folderModel.folderKey)
+                    objectList.Add(new FileModel() { bucketName = obj.BucketName, key = obj.Key});
+            }
 
-                objectList.Add(new ObjectModel(obj.BucketName, obj.Key));
-;
+            foreach (string prefix in folderModel.CommonPrefixes)
+            {
+                
+                   objectList.Add(new FolderModel() { bucketName = folderModel.buketName, key = prefix });
             }
 
         }
@@ -101,8 +83,13 @@ namespace OssClientMetro.ViewModels
            refreshObjectList(currentFolder);
        }
 
-       ObjectModel currentFolderObj;
-       string currentBuketName;
+        public async void refresh()
+        {
+            currentFolder = await folderListModel.refreshFolderModel(currentFolder.buketName, currentFolder.folderKey);
+            refreshObjectList(currentFolder);
+        }
+
+    
 
          public async   void Handle(BuketSelectedEvent message)
          {
@@ -117,26 +104,12 @@ namespace OssClientMetro.ViewModels
                  MemoryStream s = new MemoryStream();
                  ObjectMetadata oMetaData = new ObjectMetadata();
                  OssObjectSummary ossObjSummary = new OssObjectSummary();
-                 ossObjSummary.BucketName = currentBuketName;
-                 if (currentFolderObj == null)
-                 {
+                 ossObjSummary.BucketName = currentFolder.buketName;
 
-                     ossObjSummary.Key = message.folderName + "/";
-                 }
-                 else
-                 {
-                     ossObjSummary.Key = currentFolderObj.key + message.folderName + "/";
-                 }
+                 ossObjSummary.Key = currentFolder.folderKey + message.folderName + "/";
+
                  await clientService.ossClient.PutObject(ossObjSummary.BucketName, ossObjSummary.Key, s, oMetaData);
-                 //objListModel.Add(ossObjSummary);
-                 //if (currentFolderObj == null)
-                 //{
-                 //    refreshObjectList(currentBuketName, "");
-                 //}
-                 //else
-                 //{
-                 //    refreshObjectList(currentBuketName, currentFolderObj.key);
-                 //}
+                  refresh();
 
              }
              catch (Exception ex)
@@ -146,8 +119,8 @@ namespace OssClientMetro.ViewModels
          }
 
          
-         public FolderListModel folderListModel;
-         public FolderModel currentFolder;
+         public FolderContainterListModel folderListModel;
+         public FolderContainterModel currentFolder;
          public BindableCollection<ObjectModel> objectList { get; set; }
 
     }

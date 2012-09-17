@@ -1,16 +1,12 @@
-﻿using Oss;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace OssClientMetro.Model
 {
-    public class FolderModel 
+    class FolderModel : ObjectModel
     {
-        public string buketName { get; set; }
-        public string folderKey { get; set; }
-        public List<OssObjectSummary> objList { get; set; }
-
     }
 }

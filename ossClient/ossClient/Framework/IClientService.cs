@@ -14,7 +14,7 @@ namespace OssClientMetro.Framework
 
         BucketListModel buckets { get; }
 
-         FolderListModel folders { get;}
+         FolderContainterListModel folders { get;}
 
          Task login(string userName, string userPassword);
 
