@@ -18,5 +18,6 @@
         <Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27" Margin="23,482,0,0" VerticalAlignment="Top" Width="106"/>
         <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27" Margin="159,482,0,0" VerticalAlignment="Top" Width="106"/>
         <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" Margin="37,430,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
+        <Button x:Name="refreshBuckets" Content="refresh" HorizontalAlignment="Left" Height="28" Margin="78,533,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </UserControl>

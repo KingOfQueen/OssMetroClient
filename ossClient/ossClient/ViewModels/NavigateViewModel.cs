@@ -69,6 +69,10 @@ namespace OssClientMetro.ViewModels
             }
         }
 
+         public async void refreshBuckets()
+        {
+            await buckets.refreshBuckets();
+        }
 
 
 
@@ -87,8 +91,6 @@ namespace OssClientMetro.ViewModels
                 string bucketName = buckets[selectedBuketIndex].Name;
                 await clientService.folders.deleteBuket(bucketName);
                 await buckets.deleteBucket(bucketName);
-
-
             }
         }
 
