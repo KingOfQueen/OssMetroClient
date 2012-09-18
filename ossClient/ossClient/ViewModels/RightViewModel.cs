@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using OssClientMetro.Events;
 using OssClientMetro.Framework;
+using OssClientMetro.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -18,21 +19,24 @@ namespace OssClientMetro.ViewModels
         readonly IEventAggregator events;
         readonly IClientService clientService;
         readonly IWindowManager windowManager;
+        readonly IFileFolderDialogService fileFolderDialogService;
 
         [ImportingConstructor]
-         public RightViewModel(IEventAggregator _events, IClientService _clientService, IWindowManager _windowManager)
+         public RightViewModel(IEventAggregator _events, IClientService _clientService,
+            IWindowManager _windowManager, IFileFolderDialogService _fileFolderDialogService)
          {
-             windowManager = _windowManager;
+              windowManager = _windowManager;
               events = _events;
-            events.Subscribe(this);
-            clientService = _clientService;
+              events.Subscribe(this);
+              fileFolderDialogService = _fileFolderDialogService;    
+              clientService = _clientService;
          }
 
         public void Handle(LoginResultEvent loginResult)
         {
             if (loginResult.result == Result.SUCCESS)
             {
-                objectViewModel = new ObjectViewModel(events, clientService, windowManager);
+                objectViewModel = new ObjectViewModel(events, clientService, windowManager, fileFolderDialogService);
                 ActivateItem(objectViewModel);
             }
 

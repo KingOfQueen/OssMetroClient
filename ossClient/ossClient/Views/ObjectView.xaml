@@ -28,5 +28,6 @@
         <TextBlock  Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="32,453,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="430"/>
         <Button x:Name="goback" Content="goback" HorizontalAlignment="Left" Height="25" Margin="32,405,0,0" VerticalAlignment="Top" Width="111" IsEnabled="{Binding history.CanGoBack}"/>
         <Button x:Name="gofoward" Content="gofoward" HorizontalAlignment="Left" Height="25" Margin="174,405,0,0" VerticalAlignment="Top" Width="111" IsEnabled="{Binding history.CanGoForward}"/>
+        <Button x:Name="download" Content="download" HorizontalAlignment="Left" Height="25" Margin="351,405,0,0" VerticalAlignment="Top" Width="111"/>
     </Grid>
 </UserControl>

@@ -8,6 +8,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Windows;
 using System.ComponentModel.Composition.Primitives;
 using System.ComponentModel.Composition;
+using OssClientMetro.Services;
 
 namespace OssClientMetro
 {
@@ -18,11 +19,11 @@ namespace OssClientMetro
         protected override void Configure()
         {
             ViewLocator.NameTransformer.AddRule
-(
-@"(?<nsbefore>([A-Za-z_]\w*\.)*)?(?<nsvm>ViewModels\.)(?<nsafter>([A-Za-z_]\w*\.)*)(?<basename>[A-Za-z_]\w*)(?<suffix>ViewModel$)",
-@"${nsbefore}Views.${nsafter}${basename}View",
-@"(([A-Za-z_]\w*\.)*)?ViewModels\.([A-Za-z_]\w*\.)*[A-Za-z_]\w*ViewModel$"
-);
+            (
+            @"(?<nsbefore>([A-Za-z_]\w*\.)*)?(?<nsvm>ViewModels\.)(?<nsafter>([A-Za-z_]\w*\.)*)(?<basename>[A-Za-z_]\w*)(?<suffix>ViewModel$)",
+            @"${nsbefore}Views.${nsafter}${basename}View",
+            @"(([A-Za-z_]\w*\.)*)?ViewModels\.([A-Za-z_]\w*\.)*[A-Za-z_]\w*ViewModel$"
+            );
 
             container = new CompositionContainer(new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()));
 
@@ -31,6 +32,7 @@ namespace OssClientMetro
             batch.AddExportedValue<IWindowManager>(new WindowManager());
             batch.AddExportedValue<IEventAggregator>(new EventAggregator());
             batch.AddExportedValue<IClientService>(new ClientService());
+            batch.AddExportedValue<IFileFolderDialogService>(new FileFolderDialogService());
             batch.AddExportedValue(container);
 
             container.Compose(batch);

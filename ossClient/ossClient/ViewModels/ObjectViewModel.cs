@@ -19,12 +19,15 @@ namespace OssClientMetro.ViewModels
             readonly IEventAggregator events;
         readonly IClientService clientService;
         readonly IWindowManager windowManager;
+        readonly IFileFolderDialogService fileFolderDialogService;
 
-        public ObjectViewModel(IEventAggregator _events, IClientService _clientService, IWindowManager _windowManager)
+        public ObjectViewModel(IEventAggregator _events, IClientService _clientService,
+            IWindowManager _windowManager, IFileFolderDialogService _fileFolderDialogServic)
        {
             this.events = _events;
             clientService = _clientService;
             windowManager = _windowManager;
+            fileFolderDialogService = _fileFolderDialogServic;
             events.Subscribe(this);
             objectList = new BindableCollection<ObjectModel>();
             folderListModel = _clientService.folders;
@@ -194,10 +197,52 @@ namespace OssClientMetro.ViewModels
              history.goForward();
              refreshPath();
 
-
          }
 
 
+       async void downloadfile(string bucketName, string key, string fileName)
+       {
+           OssObject obj = await folderListModel.downloadFile(bucketName, key);        
+           Stream stream = obj.Content;
+           FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
+           await stream.CopyToAsync(fs);
+           fs.Position = 0;
+           fs.Flush();
+           fs.Close();
+           stream.Close();
+       }
+
+
+       public async void download()
+       {
+            if (selectedIndex < 0)
+             {
+
+
+             }
+             else
+             {
+                string foulderPath = fileFolderDialogService.openFolderDialog();
+                ObjectModel objModel = objectList[selectedIndex];
+                if (objModel != null)
+                {
+
+                    if (objModel is FileModel)
+                    {
+                        string fileName = foulderPath + "/" + objModel.key.Substring(currentFolder.folderKey.Length);
+                        downloadfile(objModel.bucketName, objModel.key, fileName);
+                    }
+                    else
+                    {
+
+
+
+        
+                    }
+                }
+
+             }
+       }
         
          
          public FolderContainterListModel folderListModel;
