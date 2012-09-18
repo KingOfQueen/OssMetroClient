@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="ClientService.cs" />
+    <Compile Include="Events\BuketSelectedUiUpdateEvent.cs" />
     <Compile Include="Events\CreateFolderEvent.cs" />
     <Compile Include="Events\LoginResultEvent.cs" />
     <Compile Include="Events\BuketSelectedEvent.cs" />

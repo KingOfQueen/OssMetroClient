@@ -39,7 +39,7 @@ namespace OssClientMetro.Services
                 paths.RemoveRange(nowPos + 1, paths.Count() -1 - nowPos);
                 CanGoBack = true;
             }
-
+            NowPath = paths[nowPos];
             CanGoForward = false;
         }
 
@@ -52,6 +52,7 @@ namespace OssClientMetro.Services
                     CanGoBack = false;
 
                 CanGoForward = true;
+                NowPath = paths[nowPos];
             }
 
         }
@@ -66,6 +67,8 @@ namespace OssClientMetro.Services
 
              
                 CanGoBack = true;
+
+                NowPath = paths[nowPos];
             }
 
         }
@@ -76,18 +79,19 @@ namespace OssClientMetro.Services
 
         int nowPos;
 
+        string nowPath;
+
         public string NowPath
         {
             get
             {
-                if (nowPos > -1)
-                    return paths[nowPos];
-
-                return null;
+                return this.nowPath;
             }
-
-
-
+            set
+            {
+                this.nowPath = value;
+                NotifyOfPropertyChange(() => this.NowPath);
+            }
         }
 
 

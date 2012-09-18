@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OssClientMetro.ViewModels
 {
-    class NavigateViewModel : PropertyChangedBase,ILeftWorkSpace
+    class NavigateViewModel : PropertyChangedBase, ILeftWorkSpace, IHandle<BuketSelectedUiUpdateEvent>
     {
         readonly IEventAggregator events;
         readonly IClientService clientService;
@@ -22,17 +22,27 @@ namespace OssClientMetro.ViewModels
             events = _events;
             clientService = _clientService;
             buckets = clientService.buckets;
+            events.Subscribe(this);
+
         }
 
+        bool uiSelected = true;
         public void Publish()
         {
-            if (selectedBuketIndex >= 0)
+            if (uiSelected)
             {
-                events.Publish(new BuketSelectedEvent(buckets[selectedBuketIndex].Name));
+                if (selectedBuketIndex >= 0)
+                {
+                    events.Publish(new BuketSelectedEvent(buckets[selectedBuketIndex].Name));
+                }
+                else
+                {
+                    events.Publish(new BuketSelectedEvent(null));
+                }
             }
             else
             {
-                events.Publish(new BuketSelectedEvent(null));
+                uiSelected = true;
             }
 
         }
@@ -93,6 +103,16 @@ namespace OssClientMetro.ViewModels
                 await buckets.deleteBucket(bucketName);
             }
         }
+
+        public void Handle(BuketSelectedUiUpdateEvent message)
+        {
+            if (message.BuketName != null)
+            {
+                uiSelected = false;
+                selectedBuketIndex = buckets.IndexOf(buckets.First(x => x.Name == message.BuketName));
+            }
+        }
+
 
         public BucketListModel buckets { get; set; }
 
