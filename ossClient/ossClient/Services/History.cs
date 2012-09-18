@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OssClientMetro.Services
 {
-    class History : PropertyChangedBase
+    public class History : PropertyChangedBase
     {
 
         public History()
@@ -18,12 +18,13 @@ namespace OssClientMetro.Services
             paths = new List<string>();
         }
 
-        void add(string path)
+        public void add(string path)
         {
             if (nowPos == paths.Count() - 1)
             {
                 paths.Add(path);
                 nowPos++;
+
 
                 if (nowPos > 0)
                 {
@@ -34,6 +35,7 @@ namespace OssClientMetro.Services
             {
                 nowPos++;
                 paths[nowPos] = path;
+
                 paths.RemoveRange(nowPos + 1, paths.Count() -1 - nowPos);
                 CanGoBack = true;
             }
@@ -62,24 +64,31 @@ namespace OssClientMetro.Services
                 if (nowPos == paths.Count() - 1)
                     CanGoForward = false;
 
+             
                 CanGoBack = true;
             }
 
         }
 
 
-        public string getNowPath()
-        {
-            if (nowPos != -1)
-                return paths[nowPos];
-
-            return null;
-        }
-
 
         public List<string> paths;
 
         int nowPos;
+
+        public string NowPath
+        {
+            get
+            {
+                if (nowPos > -1)
+                    return paths[nowPos];
+
+                return null;
+            }
+
+
+
+        }
 
 
         bool canGoBack;

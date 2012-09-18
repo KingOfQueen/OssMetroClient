@@ -10,6 +10,7 @@ using Oss;
 using OssClientMetro.Events;
 using OssClientMetro.Model;
 using System.IO;
+using OssClientMetro.Services;
 
 namespace OssClientMetro.ViewModels
 {
@@ -27,6 +28,7 @@ namespace OssClientMetro.ViewModels
             events.Subscribe(this);
             objectList = new BindableCollection<ObjectModel>();
             folderListModel = _clientService.folders;
+            history = new History();
 
         }
 
@@ -89,6 +91,8 @@ namespace OssClientMetro.ViewModels
            {
                currentFolder = await folderListModel.getFolderModel(temp.bucketName, temp.key);
                refreshObjectList(currentFolder);
+               history.add(temp.bucketName + "/" + temp.key);
+               NowPath = history.NowPath;
            }
        }
 
@@ -106,6 +110,11 @@ namespace OssClientMetro.ViewModels
              {
                  currentFolder = await folderListModel.getFolderModel(message.BuketName);
                  refreshObjectList(currentFolder);
+
+                 history.add(message.BuketName + "/");
+                 NowPath = history.NowPath;
+
+
              }
              else
              {
@@ -158,10 +167,47 @@ namespace OssClientMetro.ViewModels
              }
          }
 
+
+       public  void goback()
+         {
+             if (history.CanGoBack)
+             {
+                 history.goBack();
+                 NowPath = history.NowPath;
+             }
+
+         }
+
+       public void gofoward()
+         {
+             if (history.CanGoForward)
+             {
+                 history.goForward();
+                 NowPath = history.NowPath;
+             }
+
+         }
+
+
+         public string nowPath;
+
+         public string NowPath
+         {
+             get
+             {
+                 return nowPath;
+             }
+             set
+             {
+                 this.nowPath = value;
+                 NotifyOfPropertyChange(() => this.NowPath);
+             }
+         }
+         
          
          public FolderContainterListModel folderListModel;
          public FolderContainterModel currentFolder;
          public BindableCollection<ObjectModel> objectList { get; set; }
-
+         public History history;
     }
 }
