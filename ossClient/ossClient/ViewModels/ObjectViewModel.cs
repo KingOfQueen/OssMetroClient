@@ -212,6 +212,27 @@ namespace OssClientMetro.ViewModels
            stream.Close();
        }
 
+       async void downloadFolder(string bucketName, string key, string  savePath)
+       {
+           if(!Directory.Exists(savePath))
+               Directory.CreateDirectory(savePath);
+
+           FolderContainterModel folderModel = await folderListModel.getFolderModel(bucketName, key);
+
+           IEnumerable<OssObjectSummary> list = folderModel.objList;
+
+
+           foreach (OssObjectSummary obj in list)
+           {
+               if (obj.Key != folderModel.folderKey)
+                   downloadfile(obj.BucketName, obj.Key, savePath + "/" + obj.Key.Substring(folderModel.folderKey.Length));
+           }
+
+           foreach (string prefix in folderModel.CommonPrefixes)
+           {
+               downloadFolder(bucketName, prefix, savePath + "/" + prefix.Substring(folderModel.folderKey.Length));
+           }
+       }
 
        public async void download()
        {
@@ -234,10 +255,7 @@ namespace OssClientMetro.ViewModels
                     }
                     else
                     {
-
-
-
-        
+                        downloadFolder(objModel.bucketName, objModel.key, foulderPath + "/" + objModel.key.Substring(currentFolder.folderKey.Length));
                     }
                 }
 
