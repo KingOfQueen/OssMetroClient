@@ -22,14 +22,14 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <Button x:Name="createFolder" Content="Create Folder" HorizontalAlignment="Left" Height="25" Margin="32,504,0,0" VerticalAlignment="Top" Width="123"/>
+        <Button x:Name="createFolderOperate" Content="Create Folder" HorizontalAlignment="Left" Height="25" Margin="32,504,0,0" VerticalAlignment="Top" Width="123"/>
         <Button x:Name="refresh"  Content="Refresh" HorizontalAlignment="Left" Height="25" Margin="200,504,0,0" VerticalAlignment="Top" Width="104"/>
         <Button x:Name="delete" Content="delete" HorizontalAlignment="Left" Height="25" Margin="337,504,0,0" VerticalAlignment="Top" Width="125"/>
         <TextBlock  Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="32,453,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="430"/>
         <Button x:Name="goback" Content="goback" HorizontalAlignment="Left" Height="25" Margin="32,405,0,0" VerticalAlignment="Top" Width="111" IsEnabled="{Binding history.CanGoBack}"/>
         <Button x:Name="gofoward" Content="gofoward" HorizontalAlignment="Left" Height="25" Margin="174,405,0,0" VerticalAlignment="Top" Width="111" IsEnabled="{Binding history.CanGoForward}"/>
         <Button x:Name="download" Content="download" HorizontalAlignment="Left" Height="25" Margin="351,405,0,0" VerticalAlignment="Top" Width="111"/>
-        <Button x:Name="uploadFile" Content="uploadFile" HorizontalAlignment="Left" Height="25" Margin="524,405,0,0" VerticalAlignment="Top" Width="116"/>
-        <Button  x:Name="uploadFolder" Content="uploadFolder" HorizontalAlignment="Left" Height="22" Margin="524,505,0,0" VerticalAlignment="Top" Width="116" RenderTransformOrigin="0.411,1.676"/>
+        <Button x:Name="uploadFileOperate" Content="uploadFile" HorizontalAlignment="Left" Height="25" Margin="524,405,0,0" VerticalAlignment="Top" Width="116"/>
+        <Button  x:Name="uploadFolderOperate" Content="uploadFolder" HorizontalAlignment="Left" Height="22" Margin="524,505,0,0" VerticalAlignment="Top" Width="116" RenderTransformOrigin="0.411,1.676"/>
     </Grid>
 </UserControl>

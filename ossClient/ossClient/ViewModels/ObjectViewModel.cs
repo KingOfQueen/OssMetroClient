@@ -53,10 +53,23 @@ namespace OssClientMetro.ViewModels
 
        CreateFolderViewModel createFolderVM;
 
-       public void createFolder()
+       public void createFolderOperate()
        {
            createFolderVM = new CreateFolderViewModel(events);
            windowManager.ShowWindow(createFolderVM);
+       }
+
+       private async Task createFolder(string bucketName, string parentKey, string folderName)  //key is the parent 
+       {
+           MemoryStream s = new MemoryStream();
+           ObjectMetadata oMetaData = new ObjectMetadata();
+           OssObjectSummary ossObjSummary = new OssObjectSummary();
+           ossObjSummary.BucketName = bucketName;
+
+           ossObjSummary.Key = parentKey + folderName + "/";
+
+           await clientService.ossClient.PutObject(ossObjSummary.BucketName, ossObjSummary.Key, s, oMetaData);
+           s.Dispose();
        }
 
         public void refreshObjectList(FolderContainterModel folderModel)
@@ -129,14 +142,7 @@ namespace OssClientMetro.ViewModels
          {
              try
              {
-                 MemoryStream s = new MemoryStream();
-                 ObjectMetadata oMetaData = new ObjectMetadata();
-                 OssObjectSummary ossObjSummary = new OssObjectSummary();
-                 ossObjSummary.BucketName = currentFolder.buketName;
-
-                 ossObjSummary.Key = currentFolder.folderKey + message.folderName + "/";
-
-                 await clientService.ossClient.PutObject(ossObjSummary.BucketName, ossObjSummary.Key, s, oMetaData);
+                  await createFolder(currentFolder.buketName, currentFolder.folderKey, message.folderName);
                   refresh();
 
              }
@@ -172,12 +178,8 @@ namespace OssClientMetro.ViewModels
 
        public  void goback()
          {
-
             history.goBack();
-            refreshPath();
-
-           
-            
+            refreshPath();           
          }
 
        async Task refreshPath()
@@ -265,29 +267,68 @@ namespace OssClientMetro.ViewModels
              }
        }
 
-       private async void uploadSingleFile()
+       private async void uploadSingleFile(string bucket, string parentKey, string fileName)
        {
+           FileInfo fileInfo = new FileInfo(fileName);
+           FileStream fs = new FileStream(fileName, FileMode.Open);
+           ObjectMetadata oMetaData = new ObjectMetadata();
+           await folderListModel.client.PutObject(bucket, parentKey + fileInfo.Name, fs, oMetaData);
+           fs.Dispose();
+       }
+
+       private async void uploadfolder(string bucket, string parentKey, string dir)
+       {
+           DirectoryInfo dirInfo = new DirectoryInfo(dir);
+
+           await createFolder(bucket, parentKey, dirInfo.Name);
+
+           string currentKey = parentKey + dirInfo.Name + "/";
+
+           FileInfo[] fileInfos = dirInfo.GetFiles();
+           foreach (FileInfo fileinfo in fileInfos)
+               uploadSingleFile(bucket, currentKey, fileinfo.FullName);
+
+           DirectoryInfo[] sonDirInfos = dirInfo.GetDirectories();
+           foreach (DirectoryInfo sonDirInfo in sonDirInfos)
+           {
+               uploadfolder(bucket, currentKey, sonDirInfo.FullName);
+           }
 
        }
 
 
-       public async void uploadFile()
+
+
+       public async void uploadFileOperate()
        {
-           string[] fileNames = fileFolderDialogService.openFileDialog();
-           if (fileNames != null)
+           if (currentFolder != null)
            {
-               foreach (string fileName in fileNames)
+               string[] fileNames = fileFolderDialogService.openFileDialog();
+               if (fileNames != null)
                {
+                   foreach (string fileName in fileNames)
+                   {
+                       uploadSingleFile(currentFolder.buketName, currentFolder.folderKey, fileName);
+                   }
+                   refresh();
 
                }
-
            }
           
 
        }
 
-       public void uploadFolder()
+       public void uploadFolderOperate()
        {
+           if (currentFolder != null)
+           {
+               string foulderPath = fileFolderDialogService.openFolderDialog();
+               if (foulderPath != null)
+               {
+                   uploadfolder(currentFolder.buketName, currentFolder.folderKey, foulderPath);
+               }
+               refresh();
+           }
 
        }
          
