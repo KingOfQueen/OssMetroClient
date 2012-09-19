@@ -9,6 +9,7 @@ namespace OssClientMetro.Services
     interface IFileFolderDialogService
     {
        string openFolderDialog();
+       string[] openFileDialog();
        
     }
 }

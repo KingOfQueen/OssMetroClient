@@ -20,5 +20,18 @@ namespace OssClientMetro.Services
 
             return null;
         }
+
+        public string[] openFileDialog()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                return openFileDialog.FileNames;
+            }
+            return null;
+
+
+        }
     }
 }

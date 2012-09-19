@@ -244,24 +244,52 @@ namespace OssClientMetro.ViewModels
              else
              {
                 string foulderPath = fileFolderDialogService.openFolderDialog();
-                ObjectModel objModel = objectList[selectedIndex];
-                if (objModel != null)
+                if (foulderPath != null)
                 {
+                    ObjectModel objModel = objectList[selectedIndex];
+                    if (objModel != null)
+                    {
 
-                    if (objModel is FileModel)
-                    {
-                        string fileName = foulderPath + "/" + objModel.key.Substring(currentFolder.folderKey.Length);
-                        downloadfile(objModel.bucketName, objModel.key, fileName);
-                    }
-                    else
-                    {
-                        downloadFolder(objModel.bucketName, objModel.key, foulderPath + "/" + objModel.key.Substring(currentFolder.folderKey.Length));
+                        if (objModel is FileModel)
+                        {
+                            string fileName = foulderPath + "/" + objModel.key.Substring(currentFolder.folderKey.Length);
+                            downloadfile(objModel.bucketName, objModel.key, fileName);
+                        }
+                        else
+                        {
+                            downloadFolder(objModel.bucketName, objModel.key, foulderPath + "/" + objModel.key.Substring(currentFolder.folderKey.Length));
+                        }
                     }
                 }
 
              }
        }
-        
+
+       private async void uploadSingleFile()
+       {
+
+       }
+
+
+       public async void uploadFile()
+       {
+           string[] fileNames = fileFolderDialogService.openFileDialog();
+           if (fileNames != null)
+           {
+               foreach (string fileName in fileNames)
+               {
+
+               }
+
+           }
+          
+
+       }
+
+       public void uploadFolder()
+       {
+
+       }
          
          public FolderContainterListModel folderListModel;
          public FolderContainterModel currentFolder;
