@@ -41,7 +41,7 @@ namespace OssClientMetro
                 buckets = new BucketListModel(ossClient);
                 await buckets.refreshBuckets();
 
-                folders = new FolderContainterListModel(ossClient);
+                folders = new FolderListModel(ossClient);
 
                // objects = new ObjectListModel(ossClient);
 
@@ -61,7 +61,7 @@ namespace OssClientMetro
 
         public BucketListModel buckets { get;  private set;}
 
-        public FolderContainterListModel folders { get; private set; }
+        public FolderListModel folders { get; private set; }
 
        // public ObjectListModel objects { get; private set; }
 

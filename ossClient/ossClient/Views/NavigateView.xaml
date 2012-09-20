@@ -6,7 +6,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              Width="300" Height="600">
     <Grid>
-        <ListBox  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  Margin="0,0,0,197">
+        <ListBox  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  Margin="0,131,0,154">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"  
@@ -15,9 +15,16 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27" Margin="23,482,0,0" VerticalAlignment="Top" Width="106"/>
-        <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27" Margin="159,482,0,0" VerticalAlignment="Top" Width="106"/>
-        <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" Margin="37,430,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
-        <Button x:Name="refreshBuckets" Content="refresh" HorizontalAlignment="Left" Height="28" Margin="78,533,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27" Margin="24,512,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27" Margin="159,512,0,0" VerticalAlignment="Top" Width="106"/>
+        <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" Margin="38,467,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
+        <Button x:Name="refreshBuckets" Content="refresh" HorizontalAlignment="Left" Height="28" Margin="84,562,0,0" VerticalAlignment="Top" Width="120"/>
+        <Expander Header="Expander" cal:Message.Attach="[Event Expanded] = [Action expanded()]"    HorizontalAlignment="Left" Margin="24,23,0,0" VerticalAlignment="Top" Width="215">
+            <ListBox Margin="10,4,0,0" SelectedIndex="{Binding SelectedViewIndex}">
+                <ListBoxItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"  Content="downloading" Height="24"></ListBoxItem>
+                <ListBoxItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Content="uploading" Height="24"></ListBoxItem>
+                <ListBoxItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]" Content="compeleted" Height="24"></ListBoxItem>
+            </ListBox>
+        </Expander>
     </Grid>
 </UserControl>

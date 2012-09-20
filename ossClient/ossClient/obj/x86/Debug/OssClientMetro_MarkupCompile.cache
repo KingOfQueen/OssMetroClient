@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\github\ossClient\ossClient\ossClient\App.xaml
-8-1691255884
+91211825383
 
-41365617100
+431205177869
 24-566784353
-Views\CreateFolderView.xaml;Views\ObjectView.xaml;Resources\Icons.xaml;Views\NavigateView.xaml;Views\RightView.xaml;Views\LoginView.xaml;Views\LeftView.xaml;MainWindowView.xaml;
+Views\CreateFolderView.xaml;Views\DownloadView.xaml;Views\ObjectView.xaml;Resources\Icons.xaml;Views\NavigateView.xaml;Views\RightView.xaml;Views\LoginView.xaml;Views\LeftView.xaml;MainWindowView.xaml;
 
 False
 

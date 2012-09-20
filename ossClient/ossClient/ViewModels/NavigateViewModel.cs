@@ -113,6 +113,50 @@ namespace OssClientMetro.ViewModels
             }
         }
 
+        private bool isExpened;
+
+        public void expanded()
+        {
+             SelectedViewIndex = 0;
+             downloadingView();
+        }
+
+        private int selectedViewIndex;
+
+        public int SelectedViewIndex
+        {
+            get
+            {
+                return this.selectedViewIndex;
+            }
+            set
+            {
+                this.selectedViewIndex = value;
+                NotifyOfPropertyChange(() => this.SelectedViewIndex);               
+            }
+        }
+
+
+        public void downloadingView()
+        {
+
+        }
+
+        public void uploadingView()
+        {
+
+        }
+
+
+        public void compeletedView() 
+       {
+
+
+       }
+
+
+
+
 
         public BucketListModel buckets { get; set; }
 

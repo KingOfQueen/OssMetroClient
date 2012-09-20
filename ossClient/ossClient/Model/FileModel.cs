@@ -5,8 +5,8 @@ using System.Text;
 
 namespace OssClientMetro.Model
 {
-    class FileModel : ObjectModel
+    public class FileModel : ObjectModel
     {
-
+        public long size;
     }
 }

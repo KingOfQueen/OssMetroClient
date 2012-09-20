@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace OssClientMetro.Views
 {
     /// <summary>
-    /// NavigateView.xaml 的交互逻辑
+    /// DownloadView.xaml 的交互逻辑
     /// </summary>
-    public partial class NavigateView : UserControl
+    public partial class DownloadView : UserControl
     {
-        public NavigateView()
+        public DownloadView()
         {
             InitializeComponent();
-        }
-
-        private void Expander_Expanded_1(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

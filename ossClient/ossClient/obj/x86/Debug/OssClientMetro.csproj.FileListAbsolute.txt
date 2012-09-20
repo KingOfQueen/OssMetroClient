@@ -121,3 +121,5 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\MainWindowView.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.g.resources
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.Properties.Resources.resources
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.csproj.GenerateResource.Cache
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.baml
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.g.cs

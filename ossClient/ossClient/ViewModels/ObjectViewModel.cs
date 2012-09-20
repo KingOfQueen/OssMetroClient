@@ -73,7 +73,7 @@ namespace OssClientMetro.ViewModels
            s.Dispose();
        }
 
-        public void refreshObjectList(FolderContainterModel folderModel)
+        public void refreshObjectList(FolderModel folderModel)
         {
             if (folderModel == null)
             {
@@ -81,21 +81,9 @@ namespace OssClientMetro.ViewModels
             }
             else
             {
-                IEnumerable<OssObjectSummary> list = folderModel.objList;
-
                 objectList.Clear();
-
-                foreach (OssObjectSummary obj in list)
-                {
-                    if (obj.Key != folderModel.folderKey)
-                        objectList.Add(new FileModel() { bucketName = obj.BucketName, key = obj.Key });
-                }
-
-                foreach (string prefix in folderModel.CommonPrefixes)
-                {
-
-                    objectList.Add(new FolderModel() { bucketName = folderModel.buketName, key = prefix });
-                }
+                objectList.AddRange(folderModel.objList);
+                objectList.AddRange(folderModel.folderList);
             }
 
         }
@@ -114,7 +102,7 @@ namespace OssClientMetro.ViewModels
 
         public async void refresh()
         {
-            currentFolder = await folderListModel.refreshFolderModel(currentFolder.buketName, currentFolder.folderKey);
+            currentFolder = await folderListModel.refreshFolderModel(currentFolder.bucketName, currentFolder.key);
             refreshObjectList(currentFolder);
         }
 
@@ -143,7 +131,7 @@ namespace OssClientMetro.ViewModels
          {
              try
              {
-                  await createFolder(currentFolder.buketName, currentFolder.folderKey, message.folderName);
+                  await createFolder(currentFolder.bucketName, currentFolder.key, message.folderName);
                   refresh();
 
              }
@@ -186,7 +174,7 @@ namespace OssClientMetro.ViewModels
        async Task refreshPath()
        {
            string[] ss = history.NowPath.Split('/');
-           if (currentFolder.buketName != ss[0])
+           if (currentFolder.bucketName != ss[0])
            {
                events.Publish(new BuketSelectedUiUpdateEvent(ss[0]));
            }
@@ -203,7 +191,7 @@ namespace OssClientMetro.ViewModels
          }
 
 
-       async void downloadfile(string bucketName, string key, string fileName)
+       async Task downloadfile(string bucketName, string key, string fileName)
        {
            OssObject obj = await folderListModel.downloadFile(bucketName, key);        
            Stream stream = obj.Content;
@@ -215,25 +203,24 @@ namespace OssClientMetro.ViewModels
            stream.Close();
        }
 
-       async void downloadFolder(string bucketName, string key, string  savePath)
+       async Task downloadFolder(string bucketName, string key, string  savePath)
        {
            if(!Directory.Exists(savePath))
                Directory.CreateDirectory(savePath);
 
-           FolderContainterModel folderModel = await folderListModel.getFolderModel(bucketName, key);
+           FolderModel folderModel = await folderListModel.getFolderModel(bucketName, key);
 
-           IEnumerable<OssObjectSummary> list = folderModel.objList;
+          // IEnumerable<OssObjectSummary> list = folderModel.objList;
 
 
-           foreach (OssObjectSummary obj in list)
+           foreach (FileModel file in folderModel.objList)
            {
-               if (obj.Key != folderModel.folderKey)
-                   downloadfile(obj.BucketName, obj.Key, savePath + "/" + obj.Key.Substring(folderModel.folderKey.Length));
+               downloadfile(file.bucketName, file.key, savePath + "/" + file.key.Substring(folderModel.key.Length));
            }
 
-           foreach (string prefix in folderModel.CommonPrefixes)
+           foreach (FolderModel folder in folderModel.folderList)
            {
-               downloadFolder(bucketName, prefix, savePath + "/" + prefix.Substring(folderModel.folderKey.Length));
+               downloadFolder(folder.bucketName, folder.key, savePath + "/" + folder.key.Substring(folderModel.key.Length));
            }
        }
 
@@ -249,18 +236,23 @@ namespace OssClientMetro.ViewModels
                 string foulderPath = fileFolderDialogService.openFolderDialog();
                 if (foulderPath != null)
                 {
+                    if (foulderPath[foulderPath.Length - 1] != System.IO.Path.DirectorySeparatorChar)
+                    {
+                        foulderPath += System.IO.Path.DirectorySeparatorChar;
+                    }
+
                     ObjectModel objModel = objectList[selectedIndex];
                     if (objModel != null)
                     {
 
                         if (objModel is FileModel)
                         {
-                            string fileName = foulderPath + "/" + objModel.key.Substring(currentFolder.folderKey.Length);
-                            downloadfile(objModel.bucketName, objModel.key, fileName);
+                            string fileName = foulderPath  + objModel.key.Substring(currentFolder.key.Length);
+                           await downloadfile(objModel.bucketName, objModel.key, fileName);
                         }
                         else
                         {
-                            downloadFolder(objModel.bucketName, objModel.key, foulderPath + "/" + objModel.key.Substring(currentFolder.folderKey.Length));
+                            await downloadFolder(objModel.bucketName, objModel.key, foulderPath + objModel.key.Substring(currentFolder.key.Length));
                         }
                     }
                 }
@@ -268,7 +260,7 @@ namespace OssClientMetro.ViewModels
              }
        }
 
-       private async void uploadSingleFile(string bucket, string parentKey, string fileName)
+       private async Task uploadSingleFile(string bucket, string parentKey, string fileName)
        {
            FileInfo fileInfo = new FileInfo(fileName);
            FileStream fs = new FileStream(fileName, FileMode.Open);
@@ -287,7 +279,7 @@ namespace OssClientMetro.ViewModels
 
            FileInfo[] fileInfos = dirInfo.GetFiles();
            foreach (FileInfo fileinfo in fileInfos)
-               uploadSingleFile(bucket, currentKey, fileinfo.FullName);
+                uploadSingleFile(bucket, currentKey, fileinfo.FullName);
 
            DirectoryInfo[] sonDirInfos = dirInfo.GetDirectories();
            foreach (DirectoryInfo sonDirInfo in sonDirInfos)
@@ -297,7 +289,7 @@ namespace OssClientMetro.ViewModels
 
        }
 
-        private async void uploadfoldeZip(string bucket, string parentKey, string dir)
+        private async Task uploadfoldeZip(string bucket, string parentKey, string dir)
        {
            DirectoryInfo dirInfo = new DirectoryInfo(dir);
            string zipFileName = dirInfo.FullName + ".zip";
@@ -310,7 +302,7 @@ namespace OssClientMetro.ViewModels
            
 
            ZipFile.CreateFromDirectory(dir, zipFileName);
-           uploadSingleFile(bucket, parentKey, zipFileName);
+           await uploadSingleFile(bucket, parentKey, zipFileName);
        }
 
 
@@ -325,7 +317,7 @@ namespace OssClientMetro.ViewModels
                {
                    foreach (string fileName in fileNames)
                    {
-                       uploadSingleFile(currentFolder.buketName, currentFolder.folderKey, fileName);
+                        await uploadSingleFile(currentFolder.bucketName, currentFolder.key, fileName);
                    }
                    refresh();
 
@@ -342,27 +334,27 @@ namespace OssClientMetro.ViewModels
                string foulderPath = fileFolderDialogService.openFolderDialog();
                if (foulderPath != null)
                {
-                   uploadfolder(currentFolder.buketName, currentFolder.folderKey, foulderPath);
+                   uploadfolder(currentFolder.bucketName, currentFolder.key, foulderPath);
                }
                refresh();
            }
 
        }
 
-       public void uploadFolderZipOperate()
+       public async void uploadFolderZipOperate()
        {
            if (currentFolder != null)
            {
                string foulderPath = fileFolderDialogService.openFolderDialog();
                if (foulderPath != null)
                {
-                   uploadfoldeZip(currentFolder.buketName, currentFolder.folderKey, foulderPath);
+                  await uploadfoldeZip(currentFolder.bucketName, currentFolder.key, foulderPath);
                }
                refresh();
            }
        }
-         public FolderContainterListModel folderListModel;
-         public FolderContainterModel currentFolder;
+         public FolderListModel folderListModel;
+         public FolderModel currentFolder;
          public BindableCollection<ObjectModel> objectList { get; set; }
          public History history{get;set;}
     }

@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Oss;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OssClientMetro.Model
 {
-    class FolderModel : ObjectModel
+    public class FolderModel : ObjectModel
     {
+        public List<FileModel> objList { get; set; }
+        public List<FolderModel> folderList { get; set; }
 
-        public List<FileModel>  
+        //public List<OssObjectSummary> objList2 { get; set; }
+        //public List<string> CommonPrefixes2 { get; set; }
+
     }
 }

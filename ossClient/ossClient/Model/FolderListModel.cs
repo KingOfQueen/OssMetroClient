@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace OssClientMetro.Model
 {
-    public class FolderContainterListModel : List<FolderContainterModel>
+    public class FolderListModel : List<FolderModel>
     {
 
-        public FolderContainterListModel(OssClient _client) 
+        public FolderListModel(OssClient _client) 
         {
             client = _client;
         }
 
-        public async Task<FolderContainterModel> getFolderModel(string buketName, string folderKey = "")
+        public async Task<FolderModel> getFolderModel(string buketName, string folderKey = "")
         {
-            FolderContainterModel folderModle = find(buketName, folderKey);
+            FolderModel folderModle = find(buketName, folderKey);
             if (folderModle == null)
             {
                 return await getFolderModelFromWeb(buketName, folderKey);
@@ -30,12 +30,12 @@ namespace OssClientMetro.Model
 
         }
 
-        FolderContainterModel find(string buketName, string folderKey)
+        FolderModel find(string buketName, string folderKey)
         {
-            return this.Find(x => x.buketName == buketName && x.folderKey == folderKey);
+            return this.Find(x => x.bucketName == buketName && x.key == folderKey);
         }
 
-        async Task<FolderContainterModel> getFolderModelFromWeb(string buketName, string folderKey = "")
+        async Task<FolderModel> getFolderModelFromWeb(string buketName, string folderKey = "")
         {
             List<OssObjectSummary> resultObjList = new List<OssObjectSummary>();
             List<string> resultCommonPrefixes = new List<string>();
@@ -56,19 +56,33 @@ namespace OssClientMetro.Model
                 resultCommonPrefixes.AddRange(reslut.CommonPrefixes);
             }
 
-            FolderContainterModel folderModel = new FolderContainterModel();
-            folderModel.buketName = buketName;
-            folderModel.folderKey = folderKey;
-            folderModel.objList = resultObjList;
-            folderModel.CommonPrefixes = resultCommonPrefixes;
+            FolderModel folderModel = new FolderModel();
+            folderModel.bucketName = buketName;
+            folderModel.key = folderKey;
+            folderModel.objList = new List<FileModel>();
+
+            foreach (OssObjectSummary ossObj in resultObjList)
+            {
+                if (ossObj.Key != folderKey)
+                {
+                    folderModel.objList.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, size = ossObj .Size});
+                }
+            }
+
+            folderModel.folderList = new List<FolderModel>();
+            foreach (string prefix in resultCommonPrefixes)
+            {
+                folderModel.folderList.Add(new FolderModel() { bucketName = folderModel.bucketName, key = prefix });
+            }
+;
             this.Add(folderModel);
 
             return folderModel;
         }
 
-        public async Task<FolderContainterModel> refreshFolderModel(string buketName, string folderKey = "")
+        public async Task<FolderModel> refreshFolderModel(string buketName, string folderKey = "")
         {
-            FolderContainterModel folderModle = find(buketName, folderKey);
+            FolderModel folderModle = find(buketName, folderKey);
             this.Remove(folderModle);
 
             return await getFolderModelFromWeb(buketName, folderKey);
@@ -76,10 +90,10 @@ namespace OssClientMetro.Model
 
         public async Task deleteFolder(string buketName, string key)
         {
-            FolderContainterModel folderModle = await getFolderModel(buketName, key);
-            foreach (OssObjectSummary ossObjSummary in folderModle.objList)
+            FolderModel folderModle = await getFolderModel(buketName, key);
+            foreach (FileModel file in folderModle.objList)
             {
-                await client.DeleteObject(ossObjSummary.BucketName, ossObjSummary.Key);
+                await client.DeleteObject(file.bucketName, file.key);
             }
             this.Remove(folderModle);
 
@@ -100,7 +114,7 @@ namespace OssClientMetro.Model
                 await client.DeleteObject(ossObjSummary.BucketName, ossObjSummary.Key);
             }
 
-            this.RemoveAll(x => x.buketName == buketName);
+            this.RemoveAll(x => x.bucketName == buketName);
         }
 
         public async Task<OssObject> downloadFile(string buketName, string key)

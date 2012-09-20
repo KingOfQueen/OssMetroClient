@@ -89,6 +89,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DownloadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ObjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,18 +129,22 @@
     <Compile Include="ClientService.cs" />
     <Compile Include="Events\BuketSelectedUiUpdateEvent.cs" />
     <Compile Include="Events\CreateFolderEvent.cs" />
+    <Compile Include="Events\DownloadViewEvent.cs" />
     <Compile Include="Events\LoginResultEvent.cs" />
     <Compile Include="Events\BuketSelectedEvent.cs" />
     <Compile Include="Framework\IClientService.cs" />
-    <Compile Include="Model\FolderContainterListModel.cs" />
-    <Compile Include="Model\FolderModel.cs" />
+    <Compile Include="Model\FolderListModel.cs" />
     <Compile Include="Model\ObjectListModel.cs" />
     <Compile Include="Services\FileFolderDialogService.cs" />
     <Compile Include="Services\History.cs" />
     <Compile Include="Services\IFileFolderDialogService.cs" />
     <Compile Include="ViewModels\CreateFolderViewModel.cs" />
+    <Compile Include="ViewModels\DownloadViewModel.cs" />
     <Compile Include="Views\CreateFolderView.xaml.cs">
       <DependentUpon>CreateFolderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DownloadView.xaml.cs">
+      <DependentUpon>DownloadView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ObjectView.xaml.cs">
       <DependentUpon>ObjectView.xaml</DependentUpon>
@@ -172,7 +180,7 @@
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Model\BucketListModel.cs" />
     <Compile Include="Model\BucketModel.cs" />
-    <Compile Include="Model\FolderContainterModel.cs" />
+    <Compile Include="Model\FolderModel.cs" />
     <Compile Include="Model\FileModel.cs" />
     <Compile Include="Model\ObjectModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
