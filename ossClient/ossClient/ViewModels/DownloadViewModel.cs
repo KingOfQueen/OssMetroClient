@@ -32,10 +32,17 @@ namespace OssClientMetro.ViewModels
         {
             try
             {
-                objectList.Clear();
                 if (message.type == BuketSelectedEventType.DOWNLOADINGVIEW)
-                {       
-                    objectList.AddRange(downloadingListModel);
+                {
+                    ObjectList = downloadingListModel;
+                }
+                else if (message.type == BuketSelectedEventType.UPLOADINGVIEW)
+                {
+                    ObjectList = uploadingListModel;
+                }
+                else if (message.type == BuketSelectedEventType.COMPELETEDVIEW)
+                {
+                    ObjectList = compeletedListModel;
                 }
 
             }
@@ -48,11 +55,27 @@ namespace OssClientMetro.ViewModels
 
 
 
-        public FolderListModel downloadingListModel;
-        public FolderListModel uploadingListModel;
-        public FolderListModel compeletedListModel;
+        public BindableCollection<ObjectModel> downloadingListModel = new BindableCollection<ObjectModel>();
+        public BindableCollection<ObjectModel> uploadingListModel = new BindableCollection<ObjectModel>();
+        public BindableCollection<ObjectModel> compeletedListModel = new BindableCollection<ObjectModel>();
 
-        public BindableCollection<ObjectModel> objectList { get; set; }
+        private BindableCollection<ObjectModel> objectList;
+
+
+
+
+        public BindableCollection<ObjectModel> ObjectList 
+        {
+            get
+            {
+                return this.objectList;
+            }
+            set
+            {
+                this.objectList = value;
+                NotifyOfPropertyChange(() => this.ObjectList);
+            }
+        }
 
     }
 }

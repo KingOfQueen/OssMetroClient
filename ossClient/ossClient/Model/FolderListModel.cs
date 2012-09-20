@@ -65,7 +65,7 @@ namespace OssClientMetro.Model
             {
                 if (ossObj.Key != folderKey)
                 {
-                    folderModel.objList.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, size = ossObj .Size});
+                    folderModel.objList.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj .Size});
                 }
             }
 

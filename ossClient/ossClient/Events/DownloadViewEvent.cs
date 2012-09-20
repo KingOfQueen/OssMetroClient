@@ -11,7 +11,6 @@ namespace OssClientMetro.Events
         DOWNLOADINGVIEW,
         UPLOADINGVIEW,
         COMPELETEDVIEW,
-        DEFALT
     };
 
 
