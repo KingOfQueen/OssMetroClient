@@ -11,6 +11,7 @@ using OssClientMetro.Events;
 using OssClientMetro.Model;
 using System.IO;
 using OssClientMetro.Services;
+using System.IO.Compression;
 
 namespace OssClientMetro.ViewModels
 {
@@ -296,6 +297,22 @@ namespace OssClientMetro.ViewModels
 
        }
 
+        private async void uploadfoldeZip(string bucket, string parentKey, string dir)
+       {
+           DirectoryInfo dirInfo = new DirectoryInfo(dir);
+           string zipFileName = dirInfo.FullName + ".zip";
+            int i = 0;
+
+            while (File.Exists(zipFileName))
+            {
+                zipFileName = dirInfo.FullName + "_" + i.ToString() + ".zip";
+            }
+           
+
+           ZipFile.CreateFromDirectory(dir, zipFileName);
+           uploadSingleFile(bucket, parentKey, zipFileName);
+       }
+
 
 
 
@@ -331,7 +348,19 @@ namespace OssClientMetro.ViewModels
            }
 
        }
-         
+
+       public void uploadFolderZipOperate()
+       {
+           if (currentFolder != null)
+           {
+               string foulderPath = fileFolderDialogService.openFolderDialog();
+               if (foulderPath != null)
+               {
+                   uploadfoldeZip(currentFolder.buketName, currentFolder.folderKey, foulderPath);
+               }
+               refresh();
+           }
+       }
          public FolderContainterListModel folderListModel;
          public FolderContainterModel currentFolder;
          public BindableCollection<ObjectModel> objectList { get; set; }

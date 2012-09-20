@@ -8,5 +8,7 @@ namespace OssClientMetro.Model
 {
     class FolderModel : ObjectModel
     {
+
+        public List<FileModel>  
     }
 }
