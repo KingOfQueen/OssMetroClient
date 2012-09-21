@@ -14,7 +14,7 @@ namespace OssClientMetro.ViewModels
 
 
      [Export(typeof(IRightView))]
-    class RightViewModel : Conductor<IRightWorkSpace>.Collection.OneActive, IRightView, IHandle<LoginResultEvent>
+    class RightViewModel : Conductor<IRightWorkSpace>.Collection.OneActive, IRightView, IHandle<LoginResultEvent>, IHandle<DownloadViewEvent>, IHandle<BuketSelectedEvent>
     {
         readonly IEventAggregator events;
         readonly IClientService clientService;
@@ -37,12 +37,23 @@ namespace OssClientMetro.ViewModels
             if (loginResult.result == Result.SUCCESS)
             {
                 objectViewModel = new ObjectViewModel(events, clientService, windowManager, fileFolderDialogService);
+                downloadViewModel = new DownloadViewModel(events, clientService, windowManager);
                 ActivateItem(objectViewModel);
             }
 
         }
 
+        public void Handle(DownloadViewEvent dowloadViewEvent)
+        {
+            ActivateItem(downloadViewModel);
+        }
 
+        public void Handle(BuketSelectedEvent buketSelectedEvent)
+        {
+            ActivateItem(objectViewModel);
+        }
+
+        DownloadViewModel downloadViewModel;
         ObjectViewModel objectViewModel;
 
     }

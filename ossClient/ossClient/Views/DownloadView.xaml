@@ -8,11 +8,18 @@
         <ListBox  x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}" Height="400" VerticalAlignment="Top" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                    
                     <TextBlock Text="{Binding key}"  
                                        Margin='2 0 12 0'   
                                        FontSize='14' />
 
+                        <TextBlock Text="{Binding Percent}"  
+                                       Margin='2 0 12 0'   
+                                       FontSize='14' />
+                    </StackPanel>
                 </DataTemplate>
+                
             </ListBox.ItemTemplate>
          </ListBox>
 

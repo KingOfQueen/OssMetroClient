@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace OssClientMetro.Events
 {
-    public enum BuketSelectedEventType
+    public enum DownloadViewEventType
     {
         DOWNLOADINGVIEW,
         UPLOADINGVIEW,
-        COMPELETEDVIEW,
+        COMPELETEDVIEW
     };
 
 
 
     public class DownloadViewEvent
     {
-        public DownloadViewEvent(BuketSelectedEventType _type)
+        public DownloadViewEvent(DownloadViewEventType _type)
         {
             type = _type;
         }
-        public BuketSelectedEventType type;
+        public DownloadViewEventType type;
 
     }
 }

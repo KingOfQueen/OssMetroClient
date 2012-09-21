@@ -1,13 +1,20 @@
 ﻿using Caliburn.Micro;
+using Oss;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace OssClientMetro.Model
 {
     public abstract class ObjectModel : PropertyChangedBase
     {
+        public static TaskFactory factory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+
+
+        public abstract void callback(HttpProcessData httpProcessData);
+
         public string bucketName { get; set; }
         public string displayName { get; set; }
         public string key { get; set; }
@@ -56,7 +63,7 @@ namespace OssClientMetro.Model
             }
             set
             {
-                this.processSize = value;
+                this.percent = value;
                 NotifyOfPropertyChange(() => this.Percent);
             }
         }

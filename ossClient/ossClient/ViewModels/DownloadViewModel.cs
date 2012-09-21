@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OssClientMetro.ViewModels
 {
-    class DownloadViewModel : PropertyChangedBase, IHandle<DownloadViewEvent>
+    class DownloadViewModel : PropertyChangedBase, IRightWorkSpace, IHandle<DownloadViewEvent>, IHandle<TaskEvent>
     {
 
 
@@ -32,17 +32,41 @@ namespace OssClientMetro.ViewModels
         {
             try
             {
-                if (message.type == BuketSelectedEventType.DOWNLOADINGVIEW)
+                if (message.type == DownloadViewEventType.DOWNLOADINGVIEW)
                 {
                     ObjectList = downloadingListModel;
                 }
-                else if (message.type == BuketSelectedEventType.UPLOADINGVIEW)
+                else if (message.type == DownloadViewEventType.UPLOADINGVIEW)
                 {
                     ObjectList = uploadingListModel;
                 }
-                else if (message.type == BuketSelectedEventType.COMPELETEDVIEW)
+                else if (message.type == DownloadViewEventType.COMPELETEDVIEW)
                 {
                     ObjectList = compeletedListModel;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void Handle(TaskEvent taskEvent)
+        {
+            try
+            {
+                if (taskEvent.type == TaskEventType.DOWNLOADING)
+                {
+                    downloadingListModel.Add(taskEvent.obj);
+                }
+                else if (taskEvent.type == TaskEventType.UPLOADING)
+                {
+                    uploadingListModel.Add(taskEvent.obj);
+                }
+                else if (taskEvent.type == TaskEventType.DOWNLOADCOMPELETED)
+                {
+                    downloadingListModel.Remove(taskEvent.obj);
+                    compeletedListModel.Add(taskEvent.obj);
                 }
 
             }

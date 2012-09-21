@@ -117,13 +117,10 @@ namespace OssClientMetro.Model
             this.RemoveAll(x => x.bucketName == buketName);
         }
 
-        public async Task<OssObject> downloadFile(string buketName, string key)
+        public async Task<OssObject> downloadFile(string buketName, string key, Action<HttpProcessData> callback = null)
         {
-            return await client.GetObject(buketName, key);
+            return await client.GetObject(buketName, key, callback);
         }
-
-
-        
        public  OssClient client{get; set;}
     }
 }

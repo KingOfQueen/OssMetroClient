@@ -11,7 +11,8 @@ namespace OssClientMetro.Events
     {
         DOWNLOADING,
         UPLOADING,
-        COMPELETED
+        DOWNLOADCOMPELETED,
+        UPLOADCOMPELETED
     }
 
 

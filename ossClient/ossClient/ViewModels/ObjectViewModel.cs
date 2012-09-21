@@ -191,9 +191,9 @@ namespace OssClientMetro.ViewModels
          }
 
 
-       async Task downloadfile(string bucketName, string key, string fileName)
+       async Task downloadfile(string bucketName, string key, string fileName, System.Action<HttpProcessData> callback = null)
        {
-           OssObject obj = await folderListModel.downloadFile(bucketName, key);        
+           OssObject obj = await folderListModel.downloadFile(bucketName, key, callback);        
            Stream stream = obj.Content;
            FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
            await stream.CopyToAsync(fs);
@@ -248,7 +248,9 @@ namespace OssClientMetro.ViewModels
                         if (objModel is FileModel)
                         {
                             string fileName = foulderPath  + objModel.key.Substring(currentFolder.key.Length);
-                           await downloadfile(objModel.bucketName, objModel.key, fileName);
+                            events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
+                            await downloadfile(objModel.bucketName, objModel.key, fileName, objModel.callback);
+                            events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
                         }
                         else
                         {
@@ -260,12 +262,12 @@ namespace OssClientMetro.ViewModels
              }
        }
 
-       private async Task uploadSingleFile(string bucket, string parentKey, string fileName)
+       private async Task uploadSingleFile(string bucket, string parentKey, string fileName, System.Action<HttpProcessData> callback = null)
        {
            FileInfo fileInfo = new FileInfo(fileName);
            FileStream fs = new FileStream(fileName, FileMode.Open);
            ObjectMetadata oMetaData = new ObjectMetadata();
-           await folderListModel.client.PutObject(bucket, parentKey + fileInfo.Name, fs, oMetaData);
+           await folderListModel.client.PutObject(bucket, parentKey + fileInfo.Name, fs, oMetaData, callback);
            fs.Dispose();
        }
 

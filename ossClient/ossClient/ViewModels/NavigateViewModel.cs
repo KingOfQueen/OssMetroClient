@@ -136,21 +136,25 @@ namespace OssClientMetro.ViewModels
             }
         }
 
+        DownloadViewEvent downloadViewEvent = new DownloadViewEvent(DownloadViewEventType.DOWNLOADINGVIEW);
+
+        DownloadViewEvent uploadingViewEvent = new DownloadViewEvent(DownloadViewEventType.UPLOADINGVIEW);
+        DownloadViewEvent compeletedViewEvent = new DownloadViewEvent(DownloadViewEventType.COMPELETEDVIEW);
 
         public void downloadingView()
         {
-
+            events.Publish(downloadViewEvent);
         }
 
         public void uploadingView()
         {
-
+            events.Publish(uploadingViewEvent);
         }
 
 
         public void compeletedView() 
        {
-
+           events.Publish(compeletedViewEvent);
 
        }
 
