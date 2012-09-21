@@ -203,7 +203,8 @@ namespace OssClientMetro.ViewModels
            stream.Close();
        }
 
-       async Task downloadFolder(string bucketName, string key, string  savePath)
+
+       async Task downloadFolder(string bucketName, string key, string  savePath, System.Action<HttpProcessData> callback = null)
        {
            if(!Directory.Exists(savePath))
                Directory.CreateDirectory(savePath);
@@ -212,16 +213,22 @@ namespace OssClientMetro.ViewModels
 
           // IEnumerable<OssObjectSummary> list = folderModel.objList;
 
+           List<Task> taskList = new List<Task>();
 
            foreach (FileModel file in folderModel.objList)
            {
-               downloadfile(file.bucketName, file.key, savePath + "/" + file.key.Substring(folderModel.key.Length));
+               taskList.Add(downloadfile(file.bucketName, file.key, savePath + "/" + file.key.Substring(folderModel.key.Length), callback));
            }
+
+
 
            foreach (FolderModel folder in folderModel.folderList)
            {
-               downloadFolder(folder.bucketName, folder.key, savePath + "/" + folder.key.Substring(folderModel.key.Length));
+               taskList.Add(downloadFolder(folder.bucketName, folder.key, savePath + "/" + folder.key.Substring(folderModel.key.Length), callback));
            }
+
+           await Task.WhenAll(taskList);
+
        }
 
        public async void download()
@@ -256,8 +263,12 @@ namespace OssClientMetro.ViewModels
                         }
                         else
                         {
-                            long size = await folderListModel.getFolderSize(objModel.bucketName, objModel.key);
-                            await downloadFolder(objModel.bucketName, objModel.key, foulderPath + objModel.key.Substring(currentFolder.key.Length));
+                            objModel.Size = await folderListModel.getFolderSize(objModel.bucketName, objModel.key);
+
+                            events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
+                            await downloadFolder(objModel.bucketName, objModel.key,
+                                foulderPath + objModel.key.Substring(currentFolder.key.Length), objModel.callback);
+                            events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
                         }
                     }
                 }

@@ -14,12 +14,15 @@ namespace OssClientMetro.Model
 
         override public void callback(HttpProcessData httpProcessData)
         {
-            factory.StartNew((stateobj) =>
+            if (httpProcessData.ProgressPercentage == 100)
             {
-                HttpProcessData data = (HttpProcessData)stateobj;
-                ProcessSize += data.BytesTransferred;
-                Percent = (int)(1.0 * ProcessSize / Size);
-            }, httpProcessData);
+                factory.StartNew((stateobj) =>
+                {
+                    HttpProcessData data = (HttpProcessData)stateobj;
+                    ProcessSize += (long)data.TotalBytes;
+                    Percent = (int)(1.0 * ProcessSize / Size);
+                }, httpProcessData);
+            }
         }
 
         //public List<OssObjectSummary> objList2 { get; set; }
