@@ -51,6 +51,8 @@ namespace OssClientMetro.Model
             {
                 ListObjectsRequest listRequest2 = new ListObjectsRequest(buketName);
                 listRequest2.Marker = reslut.NextMarker;
+                if (folderKey != "")
+                    listRequest2.Prefix = folderKey;
                 reslut = await client.ListObjects(listRequest2);
                 resultObjList.AddRange(reslut.ObjectSummaries);
                 resultCommonPrefixes.AddRange(reslut.CommonPrefixes);
@@ -122,30 +124,35 @@ namespace OssClientMetro.Model
             return await client.GetObject(buketName, key, callback);
         }
 
-        public async Task<long> getFolderSize(string buketName, string folderKey = "")
+        public async Task initFolderForDownload(FolderModel folderModel)
         {
             List<OssObjectSummary> resultObjList = new List<OssObjectSummary>();
-            ListObjectsRequest listRequest = new ListObjectsRequest(buketName);
+            ListObjectsRequest listRequest = new ListObjectsRequest(folderModel.bucketName);
 
-            if (folderKey != "")
-                listRequest.Prefix = folderKey;
+            if (folderModel.key != "")
+                listRequest.Prefix = folderModel.key;
 
             ObjectListing reslut = await client.ListObjects(listRequest);
             resultObjList.AddRange(reslut.ObjectSummaries);
             while (reslut.IsTrunked)
             {
-                ListObjectsRequest listRequest2 = new ListObjectsRequest(buketName);
+                ListObjectsRequest listRequest2 = new ListObjectsRequest(folderModel.bucketName);
                 listRequest2.Marker = reslut.NextMarker;
+                if (folderModel.key != "")
+                    listRequest2.Prefix = folderModel.key;
                 reslut = await client.ListObjects(listRequest2);
                 resultObjList.AddRange(reslut.ObjectSummaries);
             }
             long size = 0;
-            foreach (OssObjectSummary ossObjetSummary in resultObjList)
+            folderModel.objListAll = new List<FileModel>();
+            foreach (OssObjectSummary ossObj in resultObjList)
             {
-                size += ossObjetSummary.Size;
+              if (!ossObj.Key.EndsWith("/"))
+               folderModel.objListAll.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj.Size });
+                size += ossObj.Size;
             }
+            folderModel.Size = size;
 
-            return size;
         }
 
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace OssClientMetro.Model
 {
@@ -12,19 +13,32 @@ namespace OssClientMetro.Model
     {
         public static TaskFactory factory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
 
-
-        public abstract void callback(HttpProcessData httpProcessData);
-
         public string bucketName { get; set; }
         public string displayName { get; set; }
         public string key { get; set; }
 
+        public DispatcherTimer timer;
 
+        public abstract  void callback(HttpProcessData httpProcessData);
 
         private long? size;
         private long processSize = 0;
         private int percent;
 
+        private long speed;
+
+        public long Speed
+        {
+            get
+            {
+                return this.speed;
+            }
+            set
+            {
+                this.speed = value;
+                NotifyOfPropertyChange(() => this.Speed);
+            }
+        }
 
 
         public long? Size

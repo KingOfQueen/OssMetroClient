@@ -17,7 +17,7 @@ namespace OssClientMetro.ViewModels
 {
     class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, IHandle<BuketSelectedEvent>, IHandle<CreateFolderEvent>
     {
-            readonly IEventAggregator events;
+        readonly IEventAggregator events;
         readonly IClientService clientService;
         readonly IWindowManager windowManager;
         readonly IFileFolderDialogService fileFolderDialogService;
@@ -114,11 +114,7 @@ namespace OssClientMetro.ViewModels
              {
                  currentFolder = await folderListModel.getFolderModel(message.BuketName);
                  refreshObjectList(currentFolder);
-
                  history.add(message.BuketName + "/");
-                
-
-
              }
              else
              {
@@ -204,32 +200,86 @@ namespace OssClientMetro.ViewModels
        }
 
 
-       async Task downloadFolder(string bucketName, string key, string  savePath, System.Action<HttpProcessData> callback = null)
+       async Task downloadfile(FileModel fileModel, string fileName)
        {
-           if(!Directory.Exists(savePath))
-               Directory.CreateDirectory(savePath);
+           OssObject obj = await folderListModel.downloadFile(fileModel.bucketName, fileModel.key, fileModel.callback);
+           Stream stream = obj.Content;
+           FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
+           await stream.CopyToAsync(fs);
+           fs.Position = 0;
+           fs.Flush();
+           fs.Close();
+           stream.Close();
+       }
 
-           FolderModel folderModel = await folderListModel.getFolderModel(bucketName, key);
-
-          // IEnumerable<OssObjectSummary> list = folderModel.objList;
-
+       async Task downloadFolder(FolderModel folderModel, string savePath)
+       {
            List<Task> taskList = new List<Task>();
-
-           foreach (FileModel file in folderModel.objList)
+           foreach (FileModel file in folderModel.objListAll)
            {
-               taskList.Add(downloadfile(file.bucketName, file.key, savePath + "/" + file.key.Substring(folderModel.key.Length), callback));
-           }
+               string fileName = savePath + "/" + file.key.Substring(folderModel.key.Length);
+               FileInfo fileInfo = new FileInfo(fileName);
+               if (!Directory.Exists(fileInfo.DirectoryName))
+                   Directory.CreateDirectory(fileInfo.DirectoryName);
 
-
-
-           foreach (FolderModel folder in folderModel.folderList)
-           {
-               taskList.Add(downloadFolder(folder.bucketName, folder.key, savePath + "/" + folder.key.Substring(folderModel.key.Length), callback));
+               taskList.Add(downloadfile(file, fileName));
            }
 
            await Task.WhenAll(taskList);
 
+           //if (!Directory.Exists(savePath))
+           //    Directory.CreateDirectory(savePath);
+
+           //FolderModel folderModel = await folderListModel.getFolderModel(bucketName, key);
+
+           //IEnumerable<OssObjectSummary> list = folderModel.objList;
+
+           //List<Task> taskList = new List<Task>();
+
+           //foreach (FileModel file in folderModel.objList)
+           //{
+           //    taskList.Add(downloadfile(file, savePath + "/" + file.key.Substring(folderModel.key.Length)));
+           //}
+
+
+
+           //foreach (FolderModel folder in folderModel.folderList)
+           //{
+           //    taskList.Add(downloadFolder(folder.bucketName, folder.key, savePath + "/" + folder.key.Substring(folderModel.key.Length)));
+           //}
+
+           //await Task.WhenAll(taskList);
+
        }
+
+
+
+       //async Task downloadFolder(string bucketName, string key, string savePath, System.Action<HttpProcessData> callback = null)
+       //{
+       //    if (!Directory.Exists(savePath))
+       //        Directory.CreateDirectory(savePath);
+
+       //    FolderModel folderModel = await folderListModel.getFolderModel(bucketName, key);
+
+       //    IEnumerable<OssObjectSummary> list = folderModel.objList;
+
+       //    List<Task> taskList = new List<Task>();
+
+       //    foreach (FileModel file in folderModel.objList)
+       //    {
+       //        taskList.Add(downloadfile(file.bucketName, file.key, savePath + "/" + file.key.Substring(folderModel.key.Length), callback));
+       //    }
+
+
+
+       //    foreach (FolderModel folder in folderModel.folderList)
+       //    {
+       //        taskList.Add(downloadFolder(folder.bucketName, folder.key, savePath + "/" + folder.key.Substring(folderModel.key.Length), callback));
+       //    }
+
+       //    await Task.WhenAll(taskList);
+
+       //}
 
        public async void download()
        {
@@ -258,16 +308,17 @@ namespace OssClientMetro.ViewModels
                            
                             string fileName = foulderPath  + objModel.key.Substring(currentFolder.key.Length);
                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
-                            await downloadfile(objModel.bucketName, objModel.key, fileName, objModel.callback);
+                            ((FileModel)objModel).startTimer();
+                            await downloadfile((FileModel)objModel, fileName);
                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
                         }
                         else
                         {
-                            objModel.Size = await folderListModel.getFolderSize(objModel.bucketName, objModel.key);
+                            await folderListModel.initFolderForDownload((FolderModel)objModel);
 
                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
-                            await downloadFolder(objModel.bucketName, objModel.key,
-                                foulderPath + objModel.key.Substring(currentFolder.key.Length), objModel.callback);
+                            ((FolderModel)objModel).startTimer();
+                            await downloadFolder((FolderModel)objModel, foulderPath + objModel.key.Substring(currentFolder.key.Length));
                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
                         }
                     }

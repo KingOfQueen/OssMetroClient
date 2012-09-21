@@ -125,3 +125,5 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.g.cs
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.g.cs
