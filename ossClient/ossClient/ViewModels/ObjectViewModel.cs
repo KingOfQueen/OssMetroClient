@@ -247,6 +247,8 @@ namespace OssClientMetro.ViewModels
 
                         if (objModel is FileModel)
                         {
+
+                           
                             string fileName = foulderPath  + objModel.key.Substring(currentFolder.key.Length);
                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
                             await downloadfile(objModel.bucketName, objModel.key, fileName, objModel.callback);
@@ -254,6 +256,7 @@ namespace OssClientMetro.ViewModels
                         }
                         else
                         {
+                            long size = await folderListModel.getFolderSize(objModel.bucketName, objModel.key);
                             await downloadFolder(objModel.bucketName, objModel.key, foulderPath + objModel.key.Substring(currentFolder.key.Length));
                         }
                     }
@@ -319,7 +322,11 @@ namespace OssClientMetro.ViewModels
                {
                    foreach (string fileName in fileNames)
                    {
-                        await uploadSingleFile(currentFolder.bucketName, currentFolder.key, fileName);
+                       FileInfo fileInfo = new FileInfo(fileName);
+                       FileModel objModel = new FileModel() { bucketName = currentFolder.bucketName, key = currentFolder.key + fileInfo.Name };
+                       events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADING));
+                       await uploadSingleFile(currentFolder.bucketName, currentFolder.key, fileName, objModel.callback);
+                        events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
                    }
                    refresh();
 

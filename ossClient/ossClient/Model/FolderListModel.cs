@@ -121,6 +121,34 @@ namespace OssClientMetro.Model
         {
             return await client.GetObject(buketName, key, callback);
         }
+
+        public async Task<long> getFolderSize(string buketName, string folderKey = "")
+        {
+            List<OssObjectSummary> resultObjList = new List<OssObjectSummary>();
+            ListObjectsRequest listRequest = new ListObjectsRequest(buketName);
+
+            if (folderKey != "")
+                listRequest.Prefix = folderKey;
+
+            ObjectListing reslut = await client.ListObjects(listRequest);
+            resultObjList.AddRange(reslut.ObjectSummaries);
+            while (reslut.IsTrunked)
+            {
+                ListObjectsRequest listRequest2 = new ListObjectsRequest(buketName);
+                listRequest2.Marker = reslut.NextMarker;
+                reslut = await client.ListObjects(listRequest2);
+                resultObjList.AddRange(reslut.ObjectSummaries);
+            }
+            long size = 0;
+            foreach (OssObjectSummary ossObjetSummary in resultObjList)
+            {
+                size += ossObjetSummary.Size;
+            }
+
+            return size;
+        }
+
+
        public  OssClient client{get; set;}
     }
 }

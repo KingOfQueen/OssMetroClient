@@ -17,10 +17,8 @@ namespace OssClientMetro.Model
             factory.StartNew((stateobj) =>
             {
                 HttpProcessData data = (HttpProcessData)stateobj;
-                Percent = data.ProgressPercentage;
-                Size = data.TotalBytes;
-                ProcessSize = data.BytesTransferred;
-
+                ProcessSize += data.BytesTransferred;
+                Percent = (int)(1.0 * ProcessSize / Size);
             }, httpProcessData);
         }
 

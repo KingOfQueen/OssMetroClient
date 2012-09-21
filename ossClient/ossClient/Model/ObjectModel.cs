@@ -22,7 +22,7 @@ namespace OssClientMetro.Model
 
 
         private long? size;
-        private long processSize;
+        private long processSize = 0;
         private int percent;
 
 
