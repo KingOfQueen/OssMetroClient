@@ -99,7 +99,7 @@ namespace OssClientMetro.ViewModels
             else
             {
                 string bucketName = buckets[selectedBuketIndex].Name;
-                await clientService.folders.deleteBuket(bucketName);
+                await clientService.folders.deleteBuketResource(bucketName);
                 await buckets.deleteBucket(bucketName);
             }
         }

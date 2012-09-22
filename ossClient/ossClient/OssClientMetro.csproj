@@ -135,6 +135,7 @@
     <Compile Include="Events\TaskEvent.cs" />
     <Compile Include="Framework\IClientService.cs" />
     <Compile Include="Model\FolderListModel.cs" />
+    <Compile Include="Model\LargeFileModel.cs" />
     <Compile Include="Model\ObjectListModel.cs" />
     <Compile Include="Services\FileFolderDialogService.cs" />
     <Compile Include="Services\History.cs" />

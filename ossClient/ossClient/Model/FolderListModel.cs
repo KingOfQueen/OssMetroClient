@@ -123,7 +123,7 @@ namespace OssClientMetro.Model
             await client.DeleteObject(buketName, key);
         }
 
-        public async Task deleteBuket(string buketName)
+        public async Task deleteBuketResource(string buketName)
         {
             List<ObjectListing> listObjectListing = await getObjectListing(buketName);
 

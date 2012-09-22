@@ -213,35 +213,6 @@ namespace OssClientMetro.ViewModels
            }
        }
 
-
-
-       //async Task downloadFolder(string bucketName, string key, string savePath, System.Action<HttpProcessData> callback = null)
-       //{
-       //    if (!Directory.Exists(savePath))
-       //        Directory.CreateDirectory(savePath);
-
-       //    FolderModel folderModel = await folderListModel.getFolderModel(bucketName, key);
-
-       //    IEnumerable<OssObjectSummary> list = folderModel.objList;
-
-       //    List<Task> taskList = new List<Task>();
-
-       //    foreach (FileModel file in folderModel.objList)
-       //    {
-       //        taskList.Add(downloadfile(file.bucketName, file.key, savePath + "/" + file.key.Substring(folderModel.key.Length), callback));
-       //    }
-
-
-
-       //    foreach (FolderModel folder in folderModel.folderList)
-       //    {
-       //        taskList.Add(downloadFolder(folder.bucketName, folder.key, savePath + "/" + folder.key.Substring(folderModel.key.Length), callback));
-       //    }
-
-       //    await Task.WhenAll(taskList);
-
-       //}
-
        public async void download()
        {
             if (selectedIndex < 0)
@@ -308,13 +279,6 @@ namespace OssClientMetro.ViewModels
            folderModel.bucketName = bucket;
            folderModel.key = parentKey + dirInfo.Name + "/";
 
-         //  List<FileModel> result = new List<FileModel>();
-         //  DirectoryInfo dirInfo = new DirectoryInfo(dir);
-
-         //  string currentKey = parentKey + dirInfo.Name + "/";
-
-           //await createFolder(bucket, currentKey);
-
            FileInfo[] fileInfos = dirInfo.GetFiles();
            foreach (FileInfo fileInfo in fileInfos)
            {
@@ -374,6 +338,22 @@ namespace OssClientMetro.ViewModels
            }
        }
 
+       //private async Task uploadLargeFile(string fileName)
+       //{
+       //    FileInfo fileInfo = new FileInfo(fileName);
+       //    FileModel objModel = new FileModel() { bucketName = currentFolder.bucketName, key = currentFolder.key + fileInfo.Name };
+       //    objModel.localPath = fileName;
+
+       //    long bufferSize = 
+
+
+          
+
+
+       //}
+
+
+
 
 
     
@@ -396,9 +376,6 @@ namespace OssClientMetro.ViewModels
             {
                await uploadSingleFile(fileMode);
             }
-
-            //await Task.WhenAll(taskList);
-
         }
 
 
@@ -417,8 +394,6 @@ namespace OssClientMetro.ViewModels
 
                }
            }
-          
-
        }
 
        public async void uploadFolderOperate()
