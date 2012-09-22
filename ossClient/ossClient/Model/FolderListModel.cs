@@ -30,6 +30,31 @@ namespace OssClientMetro.Model
 
         }
 
+        public async Task<List<ObjectListing>> getObjectListing(string buketName, string folderKey = "", bool hasDelimiter = false)
+        {
+            List<ObjectListing> resultList = new List<ObjectListing>();
+            ListObjectsRequest listRequest = new ListObjectsRequest(buketName);
+
+            if (folderKey != "")
+                listRequest.Prefix = folderKey;
+
+            if (hasDelimiter)
+                listRequest.Delimiter = "/";
+            ObjectListing reslut = await client.ListObjects(listRequest);
+            resultList.Add(reslut);
+
+            while (reslut.IsTrunked)
+            {
+                listRequest.Marker = reslut.NextMarker;
+                reslut = await client.ListObjects(listRequest);
+                resultList.Add(reslut);
+            }
+
+            return resultList;
+        }
+
+
+
         FolderModel find(string buketName, string folderKey)
         {
             return this.Find(x => x.bucketName == buketName && x.key == folderKey);
@@ -37,46 +62,33 @@ namespace OssClientMetro.Model
 
         async Task<FolderModel> getFolderModelFromWeb(string buketName, string folderKey = "")
         {
-            List<OssObjectSummary> resultObjList = new List<OssObjectSummary>();
-            List<string> resultCommonPrefixes = new List<string>();
-            ListObjectsRequest listRequest = new ListObjectsRequest(buketName);
 
-            if (folderKey != "")
-                listRequest.Prefix = folderKey;
-            listRequest.Delimiter = "/";
-            ObjectListing reslut = await client.ListObjects(listRequest);
-            resultObjList.AddRange(reslut.ObjectSummaries);
-            resultCommonPrefixes.AddRange(reslut.CommonPrefixes);
-            while (reslut.IsTrunked)
-            {
-                ListObjectsRequest listRequest2 = new ListObjectsRequest(buketName);
-                listRequest2.Marker = reslut.NextMarker;
-                if (folderKey != "")
-                    listRequest2.Prefix = folderKey;
-                reslut = await client.ListObjects(listRequest2);
-                resultObjList.AddRange(reslut.ObjectSummaries);
-                resultCommonPrefixes.AddRange(reslut.CommonPrefixes);
-            }
+
+            List<ObjectListing> listObjectListing = await getObjectListing(buketName, folderKey, true);
+          
 
             FolderModel folderModel = new FolderModel();
             folderModel.bucketName = buketName;
             folderModel.key = folderKey;
             folderModel.objList = new List<FileModel>();
+            folderModel.folderList = new List<FolderModel>();
 
-            foreach (OssObjectSummary ossObj in resultObjList)
+            foreach (ObjectListing objectlisting in listObjectListing)
             {
-                if (ossObj.Key != folderKey)
+                foreach (OssObjectSummary ossObj in objectlisting.ObjectSummaries)
                 {
-                    folderModel.objList.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj .Size});
+                    if (ossObj.Key != folderKey)
+                    {
+                        folderModel.objList.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj.Size });
+                    }
+                }
+
+                foreach (string prefix in objectlisting.CommonPrefixes)
+                {
+                    folderModel.folderList.Add(new FolderModel() { bucketName = folderModel.bucketName, key = prefix });
                 }
             }
 
-            folderModel.folderList = new List<FolderModel>();
-            foreach (string prefix in resultCommonPrefixes)
-            {
-                folderModel.folderList.Add(new FolderModel() { bucketName = folderModel.bucketName, key = prefix });
-            }
-;
             this.Add(folderModel);
 
             return folderModel;
@@ -92,11 +104,16 @@ namespace OssClientMetro.Model
 
         public async Task deleteFolder(string buketName, string key)
         {
-            FolderModel folderModle = await getFolderModel(buketName, key);
-            foreach (FileModel file in folderModle.objList)
+            List<ObjectListing> listObjectListing = await getObjectListing(buketName, key);
+
+            foreach (ObjectListing objectlisting in listObjectListing)
             {
-                await client.DeleteObject(file.bucketName, file.key);
+                foreach (OssObjectSummary ossObj in objectlisting.ObjectSummaries)
+                {
+                    await client.DeleteObject(ossObj.BucketName, ossObj.Key);
+                }
             }
+            FolderModel folderModle = find(buketName, key);
             this.Remove(folderModle);
 
         }
@@ -108,12 +125,14 @@ namespace OssClientMetro.Model
 
         public async Task deleteBuket(string buketName)
         {
-            ListObjectsRequest listRequest = new ListObjectsRequest(buketName);
-            ObjectListing reslut = await client.ListObjects(listRequest);
+            List<ObjectListing> listObjectListing = await getObjectListing(buketName);
 
-            foreach (OssObjectSummary ossObjSummary in reslut.ObjectSummaries)
+            foreach (ObjectListing objectlisting in listObjectListing)
             {
-                await client.DeleteObject(ossObjSummary.BucketName, ossObjSummary.Key);
+                foreach (OssObjectSummary ossObj in objectlisting.ObjectSummaries)
+                {
+                    await client.DeleteObject(ossObj.BucketName, ossObj.Key);
+                }
             }
 
             this.RemoveAll(x => x.bucketName == buketName);
@@ -126,33 +145,25 @@ namespace OssClientMetro.Model
 
         public async Task initFolderForDownload(FolderModel folderModel)
         {
-            List<OssObjectSummary> resultObjList = new List<OssObjectSummary>();
-            ListObjectsRequest listRequest = new ListObjectsRequest(folderModel.bucketName);
+            List<ObjectListing> listObjectListing = await getObjectListing(folderModel.bucketName, folderModel.key);
 
-            if (folderModel.key != "")
-                listRequest.Prefix = folderModel.key;
+         
 
-            ObjectListing reslut = await client.ListObjects(listRequest);
-            resultObjList.AddRange(reslut.ObjectSummaries);
-            while (reslut.IsTrunked)
-            {
-                ListObjectsRequest listRequest2 = new ListObjectsRequest(folderModel.bucketName);
-                listRequest2.Marker = reslut.NextMarker;
-                if (folderModel.key != "")
-                    listRequest2.Prefix = folderModel.key;
-                reslut = await client.ListObjects(listRequest2);
-                resultObjList.AddRange(reslut.ObjectSummaries);
-            }
+
             long size = 0;
             folderModel.objListAll = new List<FileModel>();
-            foreach (OssObjectSummary ossObj in resultObjList)
+
+
+            foreach (ObjectListing objectlisting in listObjectListing)
             {
-              if (!ossObj.Key.EndsWith("/"))
-               folderModel.objListAll.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj.Size });
-                size += ossObj.Size;
+                foreach (OssObjectSummary ossObj in objectlisting.ObjectSummaries)
+                {
+                    if (!ossObj.Key.EndsWith("/"))
+                        folderModel.objListAll.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj.Size });
+                    size += ossObj.Size;
+                }
             }
             folderModel.Size = size;
-
         }
 
 

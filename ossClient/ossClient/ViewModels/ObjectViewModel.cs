@@ -376,11 +376,7 @@ namespace OssClientMetro.ViewModels
 
 
 
-       
-
-
-
-
+    
         private async Task uploadFileInCurrentFolder(string fileName)
         {
             FileInfo fileInfo = new FileInfo(fileName);
