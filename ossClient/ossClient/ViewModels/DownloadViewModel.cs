@@ -68,6 +68,11 @@ namespace OssClientMetro.ViewModels
                     downloadingListModel.Remove(taskEvent.obj);
                     compeletedListModel.Add(taskEvent.obj);
                 }
+                else if (taskEvent.type == TaskEventType.UPLOADCOMPELETED)
+                {
+                    uploadingListModel.Remove(taskEvent.obj);
+                    compeletedListModel.Add(taskEvent.obj);
+                }
 
             }
             catch (Exception ex)

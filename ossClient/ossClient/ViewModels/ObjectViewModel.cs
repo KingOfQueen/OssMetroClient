@@ -60,14 +60,14 @@ namespace OssClientMetro.ViewModels
            windowManager.ShowWindow(createFolderVM);
        }
 
-       private async Task createFolder(string bucketName, string parentKey, string folderName)  //key is the parent 
+       private async Task createFolder(string bucketName, string key)  //key is the parent 
        {
            MemoryStream s = new MemoryStream();
            ObjectMetadata oMetaData = new ObjectMetadata();
            OssObjectSummary ossObjSummary = new OssObjectSummary();
            ossObjSummary.BucketName = bucketName;
 
-           ossObjSummary.Key = parentKey + folderName + "/";
+           ossObjSummary.Key = key;
 
            await clientService.ossClient.PutObject(ossObjSummary.BucketName, ossObjSummary.Key, s, oMetaData);
            s.Dispose();
@@ -126,8 +126,8 @@ namespace OssClientMetro.ViewModels
          public async void Handle(CreateFolderEvent message)
          {
              try
-             {
-                  await createFolder(currentFolder.bucketName, currentFolder.key, message.folderName);
+             { 
+                  await createFolder(currentFolder.bucketName, currentFolder.key + message.folderName + "/");
                   refresh();
 
              }
@@ -187,19 +187,6 @@ namespace OssClientMetro.ViewModels
          }
 
 
-       async Task downloadfile(string bucketName, string key, string fileName, System.Action<HttpProcessData> callback = null)
-       {
-           OssObject obj = await folderListModel.downloadFile(bucketName, key, callback);        
-           Stream stream = obj.Content;
-           FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
-           await stream.CopyToAsync(fs);
-           fs.Position = 0;
-           fs.Flush();
-           fs.Close();
-           stream.Close();
-       }
-
-
        async Task downloadfile(FileModel fileModel, string fileName)
        {
            OssObject obj = await folderListModel.downloadFile(fileModel.bucketName, fileModel.key, fileModel.callback);
@@ -222,34 +209,8 @@ namespace OssClientMetro.ViewModels
                if (!Directory.Exists(fileInfo.DirectoryName))
                    Directory.CreateDirectory(fileInfo.DirectoryName);
 
-               taskList.Add(downloadfile(file, fileName));
+               await downloadfile(file, fileName);
            }
-
-           await Task.WhenAll(taskList);
-
-           //if (!Directory.Exists(savePath))
-           //    Directory.CreateDirectory(savePath);
-
-           //FolderModel folderModel = await folderListModel.getFolderModel(bucketName, key);
-
-           //IEnumerable<OssObjectSummary> list = folderModel.objList;
-
-           //List<Task> taskList = new List<Task>();
-
-           //foreach (FileModel file in folderModel.objList)
-           //{
-           //    taskList.Add(downloadfile(file, savePath + "/" + file.key.Substring(folderModel.key.Length)));
-           //}
-
-
-
-           //foreach (FolderModel folder in folderModel.folderList)
-           //{
-           //    taskList.Add(downloadFolder(folder.bucketName, folder.key, savePath + "/" + folder.key.Substring(folderModel.key.Length)));
-           //}
-
-           //await Task.WhenAll(taskList);
-
        }
 
 
@@ -327,52 +288,122 @@ namespace OssClientMetro.ViewModels
              }
        }
 
-       private async Task uploadSingleFile(string bucket, string parentKey, string fileName, System.Action<HttpProcessData> callback = null)
+       private async Task uploadSingleFile(FileModel fileModel)
        {
-           FileInfo fileInfo = new FileInfo(fileName);
-           FileStream fs = new FileStream(fileName, FileMode.Open);
+           FileInfo fileInfo = new FileInfo(fileModel.localPath);
+           FileStream fs = new FileStream(fileModel.localPath, FileMode.Open);
            ObjectMetadata oMetaData = new ObjectMetadata();
-           await folderListModel.client.PutObject(bucket, parentKey + fileInfo.Name, fs, oMetaData, callback);
+           await folderListModel.client.PutObject(fileModel.bucketName, fileModel.key, fs, oMetaData, fileModel.callback);
            fs.Dispose();
        }
 
-       private async void uploadfolder(string bucket, string parentKey, string dir)
+       private  FolderModel uploadfolderInit(string bucket, string parentKey, string dir)
        {
+
            DirectoryInfo dirInfo = new DirectoryInfo(dir);
 
-           await createFolder(bucket, parentKey, dirInfo.Name);
+           FolderModel folderModel = new FolderModel();
+           folderModel.objListAll = new List<FileModel>();
+           folderModel.Size = 0;
+           folderModel.bucketName = bucket;
+           folderModel.key = parentKey + dirInfo.Name + "/";
 
-           string currentKey = parentKey + dirInfo.Name + "/";
+         //  List<FileModel> result = new List<FileModel>();
+         //  DirectoryInfo dirInfo = new DirectoryInfo(dir);
+
+         //  string currentKey = parentKey + dirInfo.Name + "/";
+
+           //await createFolder(bucket, currentKey);
 
            FileInfo[] fileInfos = dirInfo.GetFiles();
-           foreach (FileInfo fileinfo in fileInfos)
-                uploadSingleFile(bucket, currentKey, fileinfo.FullName);
+           foreach (FileInfo fileInfo in fileInfos)
+           {
+               folderModel.objListAll.Add(new FileModel() { bucketName = folderModel.bucketName, key = folderModel.key + fileInfo.Name, localPath = fileInfo.FullName });
+               folderModel.Size += fileInfo.Length;
+           }
 
            DirectoryInfo[] sonDirInfos = dirInfo.GetDirectories();
            foreach (DirectoryInfo sonDirInfo in sonDirInfos)
            {
-               uploadfolder(bucket, currentKey, sonDirInfo.FullName);
+               FolderModel model = uploadfolderInit(bucket, folderModel.key, sonDirInfo.FullName);
+               folderModel.objListAll.AddRange(model.objListAll);
+               folderModel.Size += model.Size;
            }
 
+           return folderModel;
+
        }
 
-        private async Task uploadfoldeZip(string bucket, string parentKey, string dir)
+
+       private List<FileModel> uploadfolderGetALLFile(string bucket, string parentKey, string localDir)
        {
-           DirectoryInfo dirInfo = new DirectoryInfo(dir);
-           string zipFileName = dirInfo.FullName + ".zip";
-            int i = 0;
+           List<FileModel> result = new List<FileModel>();
+           DirectoryInfo dirInfo = new DirectoryInfo(localDir);
 
-            while (File.Exists(zipFileName))
-            {
-                zipFileName = dirInfo.FullName + "_" + i.ToString() + ".zip";
-            }
+
+           string currentKey = parentKey + dirInfo.Name + "/";
+
+           FileInfo[] fileInfos = dirInfo.GetFiles();
+           foreach (FileInfo fileInfo in fileInfos)
+           {
+               result.Add(new FileModel() { bucketName = bucket, key = currentKey + fileInfo.Name, localPath = fileInfo.FullName });
+           }
+
+           DirectoryInfo[] sonDirInfos = dirInfo.GetDirectories();
+           foreach (DirectoryInfo sonDirInfo in sonDirInfos)
+           {
+               result.AddRange(uploadfolderGetALLFile(bucket, currentKey, sonDirInfo.FullName));
+           }
+
+           return result;
+
+       }
+
+       private async Task createFolders(FolderModel folderModel, string localDir)
+       {
+           DirectoryInfo dirInfo = new DirectoryInfo(localDir);
+
            
+           await createFolder(folderModel.bucketName, folderModel.key);
 
-           ZipFile.CreateFromDirectory(dir, zipFileName);
-           await uploadSingleFile(bucket, parentKey, zipFileName);
+           DirectoryInfo[] sonDirInfos = dirInfo.GetDirectories();
+           foreach (DirectoryInfo sonDirInfo in sonDirInfos)
+           {
+               await createFolders(new FolderModel() { bucketName = folderModel.bucketName, key = folderModel.key + sonDirInfo.Name + "/" }, 
+                   sonDirInfo.FullName);
+           }
        }
 
 
+
+       
+
+
+
+
+        private async Task uploadFileInCurrentFolder(string fileName)
+        {
+            FileInfo fileInfo = new FileInfo(fileName);
+            FileModel objModel = new FileModel() { bucketName = currentFolder.bucketName, key = currentFolder.key + fileInfo.Name };
+            objModel.localPath = fileName;
+            events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADING));
+            objModel.startTimer();
+            await uploadSingleFile(objModel);
+            events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+        }
+
+
+        async Task uploadFolder(FolderModel folderModel)
+        {
+            List<Task> taskList = new List<Task>();
+            foreach (FileModel fileMode in folderModel.objListAll)
+            {
+               await uploadSingleFile(fileMode);
+            }
+
+            //await Task.WhenAll(taskList);
+
+        }
 
 
        public async void uploadFileOperate()
@@ -384,11 +415,7 @@ namespace OssClientMetro.ViewModels
                {
                    foreach (string fileName in fileNames)
                    {
-                       FileInfo fileInfo = new FileInfo(fileName);
-                       FileModel objModel = new FileModel() { bucketName = currentFolder.bucketName, key = currentFolder.key + fileInfo.Name };
-                       events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADING));
-                       await uploadSingleFile(currentFolder.bucketName, currentFolder.key, fileName, objModel.callback);
-                        events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+                       await uploadFileInCurrentFolder(fileName);
                    }
                    refresh();
 
@@ -398,14 +425,24 @@ namespace OssClientMetro.ViewModels
 
        }
 
-       public void uploadFolderOperate()
+       public async void uploadFolderOperate()
        {
            if (currentFolder != null)
            {
                string foulderPath = fileFolderDialogService.openFolderDialog();
                if (foulderPath != null)
                {
-                   uploadfolder(currentFolder.bucketName, currentFolder.key, foulderPath);
+
+                   FolderModel folderModel = uploadfolderInit(currentFolder.bucketName, currentFolder.key, foulderPath);
+                  
+
+                   events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADING));
+                   folderModel.startTimer();
+                   await createFolders(folderModel, foulderPath);
+                   await uploadFolder(folderModel);
+                   events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCOMPELETED));
+
+                  
                }
                refresh();
            }
@@ -419,7 +456,18 @@ namespace OssClientMetro.ViewModels
                string foulderPath = fileFolderDialogService.openFolderDialog();
                if (foulderPath != null)
                {
-                  await uploadfoldeZip(currentFolder.bucketName, currentFolder.key, foulderPath);
+                   DirectoryInfo dirInfo = new DirectoryInfo(foulderPath);
+                   string zipFileName = dirInfo.FullName + ".zip";
+                   int i = 0;
+
+                   while (File.Exists(zipFileName))
+                   {
+                       zipFileName = dirInfo.FullName + "_" + i.ToString() + ".zip";
+                   }
+
+                   ZipFile.CreateFromDirectory(foulderPath, zipFileName);
+
+                   await uploadFileInCurrentFolder(zipFileName);               
                }
                refresh();
            }

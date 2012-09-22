@@ -81,5 +81,7 @@ namespace OssClientMetro.Model
                 NotifyOfPropertyChange(() => this.Percent);
             }
         }
+
+        public string localPath;
     } 
 }
