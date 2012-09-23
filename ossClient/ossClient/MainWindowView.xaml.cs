@@ -20,7 +20,7 @@ namespace OssClientMetro
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindowView : MetroWindow
+    public partial class MainWindowView
     {
         public MainWindowView()
         {

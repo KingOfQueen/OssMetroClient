@@ -7,12 +7,12 @@
              mc:Ignorable="d" 
              xmlns:controls="clr-namespace:OssClientMetro.Controls" Width="256.169" Height="708.161">
     <Border BorderThickness="0,0,2,0">
-        <Border.BorderBrush>
+        <!--<Border.BorderBrush>
             <LinearGradientBrush  StartPoint="0.,0.5" EndPoint="1,0.5">
                 <GradientStop Color="{StaticResource HighlightLightColor}" Offset="0"/>
                 <GradientStop Color="White" Offset="1"/>
             </LinearGradientBrush>
-        </Border.BorderBrush>
+        </Border.BorderBrush>-->
         <Grid>
         
 
