@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="ClientService.cs" />
+    <Compile Include="Controls\PasswordBoxAssistant.cs" />
     <Compile Include="Events\BuketSelectedUiUpdateEvent.cs" />
     <Compile Include="Events\CreateFolderEvent.cs" />
     <Compile Include="Events\DownloadViewEvent.cs" />
