@@ -16,21 +16,6 @@ namespace OssClientMetro
 
         }
 
-        //static ClientService current;
-
-        //static public ClientService Current
-        //{
-        //    get
-        //    {
-        //        if (current == null)
-        //        {
-        //            current = new ClientService();
-        //        }
-        //        return current;
-
-        //    }
-
-        //}
 
         public async Task login(string userName, string userPassword)
         {

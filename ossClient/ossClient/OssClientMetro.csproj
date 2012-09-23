@@ -85,6 +85,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\WelcomeView.xaml.cs">
+      <DependentUpon>WelcomeView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\CreateFolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,11 +141,17 @@
     <Compile Include="Model\FolderListModel.cs" />
     <Compile Include="Model\LargeFileModel.cs" />
     <Compile Include="Model\ObjectListModel.cs" />
+    <Compile Include="Services\InfoDir.cs" />
     <Compile Include="Services\FileFolderDialogService.cs" />
     <Compile Include="Services\History.cs" />
     <Compile Include="Services\IFileFolderDialogService.cs" />
+    <Compile Include="Services\IniFile.cs" />
+    <Compile Include="Services\MemoryPassword.cs" />
+    <Compile Include="Services\User.cs" />
+    <Compile Include="Services\UserInfoFile.cs" />
     <Compile Include="ViewModels\CreateFolderViewModel.cs" />
     <Compile Include="ViewModels\DownloadViewModel.cs" />
+    <Compile Include="ViewModels\WelcomeViewModel.cs" />
     <Compile Include="Views\CreateFolderView.xaml.cs">
       <DependentUpon>CreateFolderView.xaml</DependentUpon>
     </Compile>
@@ -178,6 +187,10 @@
       <DependentUpon>MainWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\WelcomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindowViewModel.cs" />
@@ -217,6 +230,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\aliyun.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

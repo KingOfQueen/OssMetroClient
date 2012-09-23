@@ -6,19 +6,32 @@
             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              xmlns:controls="clr-namespace:OssClientMetro.Controls" Width="256.169" Height="708.161">
-    <Grid>
+    <Border BorderThickness="0,0,2,0">
+        <Border.BorderBrush>
+            <LinearGradientBrush  StartPoint="0.,0.5" EndPoint="1,0.5">
+                <GradientStop Color="{StaticResource HighlightLightColor}" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Grid>
+        
 
-        <TextBox x:Name="UserName" Controls:TextboxHelper.Watermark="Enter Username"
-                                     Controls:TextboxHelper.ClearTextButton="True"
+            <TextBox x:Name="UserName" Controls:TextboxHelper.Watermark="Enter Username"
+                                         Controls:TextboxHelper.ClearTextButton="True"
 
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Left"
-                                         Width="204"
-										 VerticalContentAlignment="Center" Margin="25,249,0,0" />
-        <PasswordBox x:Name="UserPassword" Controls:TextboxHelper.Watermark="Enter Password"
-											 VerticalContentAlignment="Center" Margin="25,289,0,0" 
-                     controls:PasswordBoxAssistant.BindPassword="true"  controls:PasswordBoxAssistant.BoundPassword="{Binding Path=UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="204" Height="20" VerticalAlignment="Top"/>
-        <Button x:Name="login" Content="login" HorizontalAlignment="Left" Margin="81,346,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,1.364"/>
+                                             VerticalAlignment="Top"
+                                             HorizontalAlignment="Left"
+                                             Width="204"
+										     VerticalContentAlignment="Center" Margin="26,58,0,0" />
+            <PasswordBox x:Name="UserPassword" Controls:TextboxHelper.Watermark="Enter Password"
+											     VerticalContentAlignment="Center" Margin="26,98,0,0" 
+                         controls:PasswordBoxAssistant.BindPassword="true"  controls:PasswordBoxAssistant.BoundPassword="{Binding Path=UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="204" Height="20" VerticalAlignment="Top"/>
+            <Button x:Name="login" Style="{DynamicResource SquareButtonStyle}" Content="登录" HorizontalAlignment="Left" Margin="155,298,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,1.364"/>
+            <CheckBox x:Name="RememberKey" Content="记住密码" HorizontalAlignment="Left" Margin="26,136,0,0" VerticalAlignment="Top"/>
+            <CheckBox x:Name="AutoLogin"  Content="自动登录" HorizontalAlignment="Left" Margin="138,136,0,0" VerticalAlignment="Top"/>
+            <Controls:ProgressRing IsActive="{Binding ProgressActive}" Margin="90,184,101,464" Height="55" Width="48"/>
+            <TextBlock x:Name="Status"  Foreground="Red" HorizontalAlignment="Left" Height="83" Margin="26,171,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
 
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

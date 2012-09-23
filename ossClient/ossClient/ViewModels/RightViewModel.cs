@@ -30,6 +30,8 @@ namespace OssClientMetro.ViewModels
               events.Subscribe(this);
               fileFolderDialogService = _fileFolderDialogService;    
               clientService = _clientService;
+              welcomeViewModel = new WelcomeViewModel();
+              ActivateItem(welcomeViewModel);
          }
 
         public void Handle(LoginResultEvent loginResult)
@@ -55,6 +57,7 @@ namespace OssClientMetro.ViewModels
 
         DownloadViewModel downloadViewModel;
         ObjectViewModel objectViewModel;
+        WelcomeViewModel welcomeViewModel;
 
     }
 

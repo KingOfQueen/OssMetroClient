@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using OssClientMetro.Events;
 using OssClientMetro.Framework;
+using OssClientMetro.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -19,13 +20,30 @@ namespace OssClientMetro.ViewModels
         {
             events = _events;
             clientService = _clientService;
-            userName = "bm9crcnr0rtnuw8bnrfvq7w8";
-            userPassword = "RbtJoExTnA8vYLynUfDh7Ior+oM=";
+            initUserData();
+            if (AutoLogin)
+            {
+                login();
+            }
+            
 
+        }
+
+        void initUserData()
+        {
+            User user = UserInfoFile.readFile();
+            userName = user.UserName;
+            userPassword = user.UserPassword;
+            RememberKey = Properties.Settings.Default.RememberKey;
+            AutoLogin = Properties.Settings.Default.AutoLogin;
         }
 
         private string userName;
         private string userPassword;
+        private bool autoLogin;
+        private bool rememberKey;
+        private bool progressActive;
+        private string status;
 
 
         public string UserName
@@ -53,20 +71,91 @@ namespace OssClientMetro.ViewModels
                 NotifyOfPropertyChange(() => this.UserPassword);
             }
         }
+        
 
+        public bool RememberKey
+        {
+            get
+            {
+                return this.rememberKey;
+            }
+            set
+            {
+                this.rememberKey = value;
+                NotifyOfPropertyChange(() => this.RememberKey);
+            }
+        }
+
+        public bool AutoLogin
+        {
+            get
+            {
+                return this.autoLogin;
+            }
+            set
+            {
+                this.autoLogin = value;
+                NotifyOfPropertyChange(() => this.AutoLogin);
+            }
+        }
+
+        public bool ProgressActive
+        {
+            get
+            {
+                return this.progressActive;
+            }
+            set
+            {
+                this.progressActive = value;
+                NotifyOfPropertyChange(() => this.ProgressActive);
+            }
+        }
+
+        public string Status
+        {
+            get
+            {
+                return this.status;
+            }
+            set
+            {
+                this.status = value;
+                NotifyOfPropertyChange(() => this.Status);
+            }
+        }
 
         public  async void login()
         {
             try
             {
+                ProgressActive = true;
                 await clientService.login(UserName, UserPassword);
+                events.Publish(new LoginResultEvent(Result.SUCCESS, null));
+                saveData();
             }
             catch (Exception ex)
             {
-
-            }
-
-            events.Publish(new LoginResultEvent(Result.SUCCESS, null));
+                Status = ex.Message;
+                ProgressActive = false;
+                AutoLogin = false;
+            }            
         }
+
+        void saveData()
+        {
+            Properties.Settings.Default.AutoLogin = AutoLogin;
+            Properties.Settings.Default.RememberKey = RememberKey;
+            Properties.Settings.Default.Save();
+            if (AutoLogin || RememberKey)
+                UserInfoFile.saveFile(new User(userName, MemoryPassword.EncryptDES(userPassword)));
+            else
+                UserInfoFile.saveFile(new User(userName, ""));
+
+
+
+        }
+
+
     }
 }
