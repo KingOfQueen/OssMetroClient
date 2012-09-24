@@ -23,7 +23,8 @@
 
     </UserControl.Resources>
     <Grid>
-        <ListView  x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top" >
+        <ListView  x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top" AllowDrop="True"   
+                   cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="displayName" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200"/>

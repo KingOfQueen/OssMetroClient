@@ -12,6 +12,7 @@ using OssClientMetro.Model;
 using System.IO;
 using OssClientMetro.Services;
 using System.IO.Compression;
+using System.Windows;
 
 namespace OssClientMetro.ViewModels
 {
@@ -396,6 +397,20 @@ namespace OssClientMetro.ViewModels
            }
        }
 
+       private async Task uploadFolderInCurrentFolder(string Path)
+       {
+           FolderModel folderModel = uploadfolderInit(currentFolder.bucketName, currentFolder.key, Path);
+
+
+           events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADING));
+           folderModel.startTimer();
+           await createFolders(folderModel, Path);
+           await uploadFolder(folderModel);
+           events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCOMPELETED));
+
+       }
+
+
        public async void uploadFolderOperate()
        {
            if (currentFolder != null)
@@ -404,16 +419,8 @@ namespace OssClientMetro.ViewModels
                if (foulderPath != null)
                {
 
-                   FolderModel folderModel = uploadfolderInit(currentFolder.bucketName, currentFolder.key, foulderPath);
-                  
-
-                   events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADING));
-                   folderModel.startTimer();
-                   await createFolders(folderModel, foulderPath);
-                   await uploadFolder(folderModel);
-                   events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCOMPELETED));
-
-                  
+                   await uploadFolderInCurrentFolder(foulderPath);
+                 
                }
                refresh();
            }
@@ -443,6 +450,27 @@ namespace OssClientMetro.ViewModels
                refresh();
            }
        }
+
+       public async void DragEnter(DragEventArgs e)
+       {
+           string[] FileOrfolderList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+           foreach (string fileOrFolderName in FileOrfolderList)
+           {
+               if (Directory.Exists(fileOrFolderName))
+               {
+                   await uploadFolderInCurrentFolder(fileOrFolderName);
+               }
+               else
+               {
+                   await uploadFileInCurrentFolder(fileOrFolderName);
+               }
+               refresh();
+
+           }
+
+       }
+
          public FolderListModel folderListModel;
          public FolderModel currentFolder;
          public BindableCollection<ObjectModel> objectList { get; set; }
