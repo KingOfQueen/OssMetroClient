@@ -3,9 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Height="403.007" Width="394.406">
+             Height="400" Width="600">
+    <UserControl.Resources>
+        <DataTemplate x:Key="FileNameColumnDataTemplate">
+            <Grid Height="50">
+                <ProgressBar Value="{Binding Percent}"  IsIndeterminate="False" Height="50"></ProgressBar>
+                <TextBlock Text="{Binding displayName}"></TextBlock>
+            </Grid>
+
+        </DataTemplate>
+
+        <DataTemplate x:Key="ModifyTimeColumnDataTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Speed}"/>
+                <TextBlock Text="{Binding ProcessSize, Converter={StaticResource LongSizeToString}}" Margin="10,0,0,0"/>
+                <TextBlock Text="/" />
+                <TextBlock Text="{Binding Size, Converter={StaticResource LongSizeToString}}"/>
+            </StackPanel>
+
+        </DataTemplate>
+
+    </UserControl.Resources>
     <Grid>
-        <ListBox  x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}" Height="400" VerticalAlignment="Top" >
+
+        <ListView  x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="displayName" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" />
+                    <GridViewColumn Header="Size"  CellTemplate="{StaticResource ModifyTimeColumnDataTemplate}" Width="200"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!--<ListBox  x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}" Height="400" VerticalAlignment="Top" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -25,7 +55,7 @@
                 </DataTemplate>
                 
             </ListBox.ItemTemplate>
-         </ListBox>
+         </ListBox>-->
 
     </Grid>
 </UserControl>
