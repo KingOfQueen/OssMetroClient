@@ -6,12 +6,19 @@
              xmlns:cal="http://www.caliburnproject.org"
              Height="551.997" Width="686.613">
     <UserControl.Resources>
-        <DataTemplate x:Key="SelectButtonColumnDataTemplate">
+        <DataTemplate x:Key="FileNameColumnDataTemplate">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Select"/>
-                <TextBlock Text="{Binding key}"/>
+                <Image Source="{Binding IconUri}" Width="15" Height="15"/>
+                <TextBlock Text="{Binding displayName}"/>
             </StackPanel>
             
+        </DataTemplate>
+
+        <DataTemplate x:Key="ModifyTimeColumnDataTemplate">
+            <StackPanel Orientation="Horizontal" Visibility="{Binding modifyTimeVisible,  Converter={StaticResource BoolToVisibleConverter}}">
+                <TextBlock Text="{Binding ModifyTime}"/>
+            </StackPanel>
+
         </DataTemplate>
 
     </UserControl.Resources>
@@ -19,8 +26,9 @@
         <ListView  x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="key" CellTemplate="{StaticResource SelectButtonColumnDataTemplate}"/>
-                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Size}" />
+                    <GridViewColumn Header="displayName" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200"/>
+                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="200"/>
+                    <GridViewColumn Header="modifyTime" CellTemplate="{StaticResource ModifyTimeColumnDataTemplate}" Width="200"/>
                    
                 </GridView>
             </ListView.View>

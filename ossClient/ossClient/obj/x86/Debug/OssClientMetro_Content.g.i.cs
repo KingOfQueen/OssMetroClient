@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/aliyun.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/diskdrive.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/filedefault.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/folder.png")]
 
 

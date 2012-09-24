@@ -9,6 +9,29 @@ namespace OssClientMetro.Model
 {
     public class FolderModel : ObjectModel
     {
+       public  FolderModel()
+       {
+           modifyTimeVisible = false;
+       }
+
+
+       public void initial()
+       {
+           try
+           {
+               modifyTimeVisible = false;
+               string[] fileNames = key.Split('/');
+               displayName = fileNames[fileNames.Length - 2];
+               setIcon();
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
+
+
+
         public List<FileModel> objList { get; set; }
         public List<FolderModel> folderList { get; set; }
 
@@ -65,6 +88,11 @@ namespace OssClientMetro.Model
                     Percent = (int)(1.0 * ProcessSize / Size * 100);
                 }, httpProcessData);
             }
+        }
+
+        public void setIcon()
+        {
+            IconUri = new Uri("pack://application:,,,/Images/folder.png");
         }
 
         public List<OssObjectSummary> objList2 { get; set; }

@@ -79,13 +79,18 @@ namespace OssClientMetro.Model
                 {
                     if (ossObj.Key != folderKey)
                     {
-                        folderModel.objList.Add(new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj.Size });
+                        FileModel fileModel = new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj.Size };
+                        fileModel.modifyTime = ossObj.LastModified;
+                        fileModel.initial();
+                        folderModel.objList.Add(fileModel);
                     }
                 }
 
                 foreach (string prefix in objectlisting.CommonPrefixes)
                 {
-                    folderModel.folderList.Add(new FolderModel() { bucketName = folderModel.bucketName, key = prefix });
+                    FolderModel folder= new FolderModel() { bucketName = folderModel.bucketName, key = prefix };
+                    folder.initial();
+                    folderModel.folderList.Add(folder);
                 }
             }
 

@@ -1,6 +1,8 @@
 ﻿using Caliburn.Micro;
 using Oss;
+using OssClientMetro.Services;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +15,24 @@ namespace OssClientMetro.Model
     {
         public static TaskFactory factory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
 
+        public static Hashtable iconsInfo = RegisteredFileType.GetFileTypeAndIcon();
+
         public string bucketName { get; set; }
         public string displayName { get; set; }
         public string key { get; set; }
 
+        public bool modifyTimeVisible { get; set; }
+
+        public DateTime modifyTime;
+
         public DispatcherTimer timer;
 
+
+
         public abstract  void callback(HttpProcessData httpProcessData);
+
+        private object iconUri;
+
 
         private long? size;
         private long processSize = 0;
@@ -79,6 +92,30 @@ namespace OssClientMetro.Model
             {
                 this.percent = value;
                 NotifyOfPropertyChange(() => this.Percent);
+            }
+        }
+
+
+        public object IconUri
+        {
+            get
+            {
+                return this.iconUri;
+            }
+            set
+            {
+                this.iconUri = value;
+                NotifyOfPropertyChange(() => this.IconUri);
+            }
+        }
+
+       // public DateTime modifyTime
+
+        public string ModifyTime
+        {
+            get
+            {
+                return this.modifyTime.ToString();
             }
         }
 
