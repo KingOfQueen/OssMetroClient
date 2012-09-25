@@ -11,7 +11,6 @@
 
 using MahApps.Metro.Controls;
 using OssClientMetro.Controls;
-using OssClientMetro.Converters;
 using System;
 using System.Diagnostics;
 using System.Windows;

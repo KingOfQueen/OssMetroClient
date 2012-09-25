@@ -5,6 +5,7 @@
         xmlns:views="clr-namespace:OssClientMetro"
         x:Class="OssClientMetro.MainWindowView"
         ShowTitleBar="True"
+        Icon="Images/2.ico"
         Title="OssMetroClient" Height="594" Width="938" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>

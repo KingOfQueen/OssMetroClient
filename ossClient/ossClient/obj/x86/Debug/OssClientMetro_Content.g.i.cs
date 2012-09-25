@@ -8,8 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/diskdrive.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/filedefault.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/folder.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/2.ico")]
 
 

@@ -34,8 +34,16 @@ namespace OssClientMetro.ViewModels
             User user = UserInfoFile.readFile();
             userName = user.UserName;
             userPassword = user.UserPassword;
-            RememberKey = Properties.Settings.Default.RememberKey;
-            AutoLogin = Properties.Settings.Default.AutoLogin;
+            if (userName == "")
+            {
+                RememberKey = false;
+                AutoLogin = false;
+            }
+            else
+            {
+                RememberKey = Properties.Settings.Default.RememberKey;
+                AutoLogin = Properties.Settings.Default.AutoLogin;
+            }
         }
 
         private string userName;
