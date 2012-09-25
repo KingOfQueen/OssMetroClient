@@ -240,6 +240,7 @@ namespace OssClientMetro.ViewModels
 
                            
                             string fileName = foulderPath  + objModel.key.Substring(currentFolder.key.Length);
+                            objModel.localPath = fileName;
                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
                             ((FileModel)objModel).startTimer();
                             await downloadfile((FileModel)objModel, fileName);
@@ -248,7 +249,7 @@ namespace OssClientMetro.ViewModels
                         else
                         {
                             await folderListModel.initFolderForDownload((FolderModel)objModel);
-
+                            objModel.localPath = foulderPath + objModel.key.Substring(currentFolder.key.Length);
                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
                             ((FolderModel)objModel).startTimer();
                             await downloadFolder((FolderModel)objModel, foulderPath + objModel.key.Substring(currentFolder.key.Length));
@@ -400,7 +401,7 @@ namespace OssClientMetro.ViewModels
        private async Task uploadFolderInCurrentFolder(string Path)
        {
            FolderModel folderModel = uploadfolderInit(currentFolder.bucketName, currentFolder.key, Path);
-
+           folderModel.localPath = Path;
 
            events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADING));
            folderModel.startTimer();

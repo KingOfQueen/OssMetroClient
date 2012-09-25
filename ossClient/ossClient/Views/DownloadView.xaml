@@ -3,37 +3,70 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:cal="http://www.caliburnproject.org"
              Height="400" Width="600">
     <UserControl.Resources>
-        <DataTemplate x:Key="FileNameColumnDataTemplate">
-            <Grid Height="50">
-                <ProgressBar Value="{Binding Percent}"  IsIndeterminate="False" Height="50"></ProgressBar>
-                <TextBlock Text="{Binding displayName}"></TextBlock>
-            </Grid>
 
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
 
-        <DataTemplate x:Key="ModifyTimeColumnDataTemplate">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Speed}"/>
-                <TextBlock Text="{Binding ProcessSize, Converter={StaticResource LongSizeToString}}" Margin="10,0,0,0"/>
-                <TextBlock Text="/" />
-                <TextBlock Text="{Binding Size, Converter={StaticResource LongSizeToString}}"/>
-            </StackPanel>
+            </ResourceDictionary.MergedDictionaries>
 
-        </DataTemplate>
 
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="FileNameColumnDataTemplate">
+                <Grid Height="50">
+                    <ProgressBar Value="{Binding Percent}"  IsIndeterminate="False" Height="30" VerticalAlignment="Center"></ProgressBar>
+                    <TextBlock Text="{Binding displayName}" Foreground="White" VerticalAlignment="Center"></TextBlock>
+                </Grid>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="ModifyTimeColumnDataTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Speed,Converter={StaticResource LongSizeToString}}"/>
+                    <TextBlock Text="/S" />
+                    <TextBlock Text="{Binding ProcessSize, Converter={StaticResource LongSizeToString}}" Margin="10,0,0,0"/>
+                    <TextBlock Text="/" />
+                    <TextBlock Text="{Binding Size, Converter={StaticResource LongSizeToString}}"/>
+                </StackPanel>
+
+            </DataTemplate>
+        </Grid.Resources>
 
         <ListView  x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top">
+            <ListView.Resources>
+
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="displayName" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" />
                     <GridViewColumn Header="Size"  CellTemplate="{StaticResource ModifyTimeColumnDataTemplate}" Width="200"/>
-
                 </GridView>
             </ListView.View>
+            <ListView.ItemContainerStyle>
+                
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Resources>
+                        <ContextMenu x:Key="ItemContextMenu" cal:Action.TargetWithoutContext="{Binding ElementName=LayoutRoot, Path=DataContext}">
+                            <MenuItem Header="打开本地文件"  cal:Message.Attach="[Event Click] = [Action openLocalFolder()]"></MenuItem>
+                        </ContextMenu>
+                    </Style.Resources>
+                    <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [OpenFolder()]" />
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
+                    
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
         <!--<ListBox  x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}" Height="400" VerticalAlignment="Top" >
             <ListBox.ItemTemplate>

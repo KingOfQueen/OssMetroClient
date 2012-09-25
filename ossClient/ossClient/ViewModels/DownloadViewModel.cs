@@ -5,6 +5,8 @@ using OssClientMetro.Model;
 using OssClientMetro.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,7 +83,18 @@ namespace OssClientMetro.ViewModels
             }
         }
 
+        public void openLocalFolder()
+        {
+            ObjectModel objModel = objectList[selectedIndex];
 
+            Process ExplorerWindowProcess = new Process();
+
+            ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
+            ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + objModel.localPath + "\""; ;
+
+            ExplorerWindowProcess.Start();
+
+        }
 
 
         public BindableCollection<ObjectModel> downloadingListModel = new BindableCollection<ObjectModel>();
@@ -90,7 +103,20 @@ namespace OssClientMetro.ViewModels
 
         private BindableCollection<ObjectModel> objectList;
 
+        private int m_selectedIndex = 0;
 
+        public int selectedIndex
+        {
+            get
+            {
+                return this.m_selectedIndex;
+            }
+            set
+            {
+                this.m_selectedIndex = value;
+                NotifyOfPropertyChange(() => this.selectedIndex);
+            }
+        }
 
 
         public BindableCollection<ObjectModel> ObjectList 
