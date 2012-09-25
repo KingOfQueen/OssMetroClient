@@ -4,6 +4,7 @@ using OssClientMetro.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace OssClientMetro.Model
 {
     public abstract class ObjectModel : PropertyChangedBase
     {
+
+       
         public static TaskFactory factory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
 
         public static Hashtable iconsInfo = RegisteredFileType.GetFileTypeAndIcon();
@@ -54,6 +57,9 @@ namespace OssClientMetro.Model
         }
 
 
+
+
+
         public long? Size
         {
             get
@@ -67,7 +73,17 @@ namespace OssClientMetro.Model
             }
         }
 
+        public void openLocalFolder()
+        {
 
+            Process ExplorerWindowProcess = new Process();
+
+            ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
+            ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + localPath + "\""; ;
+
+            ExplorerWindowProcess.Start();
+
+        }
 
         public long ProcessSize
         {
@@ -115,10 +131,10 @@ namespace OssClientMetro.Model
         {
             get
             {
-                return this.modifyTime.ToString();
+                return this.modifyTime.ToLocalTime().ToString();
             }
         }
 
-        public string localPath;
+        public string localPath { get; set; }
     } 
 }

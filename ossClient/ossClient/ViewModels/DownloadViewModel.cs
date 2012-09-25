@@ -83,20 +83,6 @@ namespace OssClientMetro.ViewModels
             }
         }
 
-        public void openLocalFolder()
-        {
-            ObjectModel objModel = objectList[selectedIndex];
-
-            Process ExplorerWindowProcess = new Process();
-
-            ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
-            ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + objModel.localPath + "\""; ;
-
-            ExplorerWindowProcess.Start();
-
-        }
-
-
         public BindableCollection<ObjectModel> downloadingListModel = new BindableCollection<ObjectModel>();
         public BindableCollection<ObjectModel> uploadingListModel = new BindableCollection<ObjectModel>();
         public BindableCollection<ObjectModel> compeletedListModel = new BindableCollection<ObjectModel>();
@@ -132,5 +118,16 @@ namespace OssClientMetro.ViewModels
             }
         }
 
+        public void openLocalFolder()
+        {
+            string localPath = objectList[selectedIndex].localPath;
+            Process ExplorerWindowProcess = new Process();
+
+            ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
+            ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + localPath + "\""; ;
+
+            ExplorerWindowProcess.Start();
+
+        }
     }
 }

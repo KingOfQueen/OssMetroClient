@@ -9,6 +9,7 @@ using System.Windows;
 using System.ComponentModel.Composition.Primitives;
 using System.ComponentModel.Composition;
 using OssClientMetro.Services;
+using System.Windows.Controls;
 
 namespace OssClientMetro
 {
@@ -24,6 +25,8 @@ namespace OssClientMetro
             @"${nsbefore}Views.${nsafter}${basename}View",
             @"(([A-Za-z_]\w*\.)*)?ViewModels\.([A-Za-z_]\w*\.)*[A-Za-z_]\w*ViewModel$"
             );
+
+            ConventionManager.AddElementConvention<MenuItem>(MenuItem.ItemsSourceProperty, "DataContext", "Click");
 
             container = new CompositionContainer(new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()));
 

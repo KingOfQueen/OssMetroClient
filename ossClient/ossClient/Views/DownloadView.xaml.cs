@@ -24,5 +24,10 @@ namespace OssClientMetro.Views
         {
             InitializeComponent();
         }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = (MenuItem)sender;
+        }
     }
 }

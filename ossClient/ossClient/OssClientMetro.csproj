@@ -88,6 +88,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToVisibleConverter.cs" />
     <Compile Include="Converters\LongSizeToString.cs" />
+    <Compile Include="Model\import.cs" />
     <Compile Include="Services\RegisteredFileType.cs" />
     <Compile Include="Views\WelcomeView.xaml.cs">
       <DependentUpon>WelcomeView.xaml</DependentUpon>
