@@ -73,7 +73,12 @@ namespace OssClientMetro.Services
 
                     //Go to the key that specifies the default icon associates with this file type.
                     string defaultIcon = defaultValue.ToString() + "\\DefaultIcon";
-                    RegistryKey rkFileIcon = rkRoot.OpenSubKey(defaultIcon);
+                    RegistryKey rkFileIcon;
+                    if (defaultIcon.Length > 255)
+                        rkFileIcon = null;
+                    else
+                        rkFileIcon = rkRoot.OpenSubKey(defaultIcon);
+
                     if (rkFileIcon != null)
                     {
                         //Get the file contains the icon and the index of the icon in that file.
