@@ -9,6 +9,8 @@
                     <local:AppBootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="Theme/Converters.xaml"/>
+                <ResourceDictionary Source="Theme/Expander.xaml"/>
+               
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

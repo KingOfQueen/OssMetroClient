@@ -33,7 +33,7 @@
         <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27" Margin="159,512,0,0" VerticalAlignment="Top" Width="106"/>
         <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" Margin="38,467,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
         <Button x:Name="refreshBuckets" Content="refresh" HorizontalAlignment="Left" Height="28" Margin="84,562,0,0" VerticalAlignment="Top" Width="120"/>
-        <Expander Header="Expander" cal:Message.Attach="[Event Expanded] = [Action expanded()]"    HorizontalAlignment="Left" Margin="24,23,0,0" VerticalAlignment="Top" Width="215">
+        <Expander Header="Expander" cal:Message.Attach="[Event Expanded] = [Action expanded()]" Style="{StaticResource ExpanderStyle1}"   HorizontalAlignment="Left" Margin="24,23,0,0" VerticalAlignment="Top" Width="215">
             <ListBox Margin="10,4,0,0" SelectedIndex="{Binding SelectedViewIndex}">
                 <ListBoxItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"  Content="downloading" Height="24"></ListBoxItem>
                 <ListBoxItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Content="uploading" Height="24"></ListBoxItem>
