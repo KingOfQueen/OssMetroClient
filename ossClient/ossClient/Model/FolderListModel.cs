@@ -172,6 +172,9 @@ namespace OssClientMetro.Model
         }
 
 
+
+
+
        public  OssClient client{get; set;}
     }
 }

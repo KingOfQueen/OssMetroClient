@@ -224,11 +224,34 @@ namespace OssClientMetro.ViewModels
             }
 
             refreshObjectList(folderModel);
-
-  
-   
-
         }
+
+
+       public async void searchOpenLoaction()
+       {
+           ObjectModel objModel = objectList[selectedIndex];
+           string[] ss = objModel.key.Split('/');
+           string pathKey = "";
+           if (objModel.key.EndsWith("/"))
+           {
+               for (int i = 0; i < ss.Length - 2; i++)
+                   pathKey += ss[i] + "/";
+           }
+           else if (objModel.key == "")
+           {
+               pathKey = "";
+           }
+           else
+           {
+               for (int i = 0; i < ss.Length - 1; i++)
+                   pathKey += ss[i] + "/";
+           }
+           currentFolder = await folderListModel.getFolderModel(objModel.bucketName, pathKey);
+           refreshObjectList(currentFolder);
+           history.add(objModel.bucketName + "/" + pathKey);
+           ObjectModel temp = objectList.First(x => objModel.bucketName == x.bucketName && objModel.key == x.key);
+           selectedIndex = objectList.IndexOf(temp);
+       }
 
 
 

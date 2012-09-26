@@ -70,6 +70,7 @@
                                         <Grid.ContextMenu >
                                             <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                                                <MenuItem Header="打开"  cal:Message.Attach="[Event Click] = [OpenFolder()]"></MenuItem>
+                                                <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
                                             </ContextMenu>
                                          </Grid.ContextMenu>
                                         <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
