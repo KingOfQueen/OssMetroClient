@@ -141,15 +141,17 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>-->
-        <Button x:Name="createFolderOperate" Content="Create Folder" HorizontalAlignment="Left" Height="25" Margin="32,504,0,0" VerticalAlignment="Top" Width="86"/>
-        <Button x:Name="refresh"  Content="Refresh" HorizontalAlignment="Left" Height="25" Margin="137,504,0,0" VerticalAlignment="Top" Width="84"/>
-        <Button x:Name="delete" Content="delete" HorizontalAlignment="Left" Height="25" Margin="255,503,0,0" VerticalAlignment="Top" Width="87"/>
+        <Button x:Name="createFolderOperate" Content="Create Folder" HorizontalAlignment="Left" Height="25" Margin="32,504,0,0" VerticalAlignment="Top" Width="67"/>
+        <Button x:Name="refresh"  Content="Refresh" HorizontalAlignment="Left" Height="25" Margin="114,504,0,0" VerticalAlignment="Top" Width="73"/>
+        <Button x:Name="delete" Content="delete" HorizontalAlignment="Left" Height="25" Margin="201,504,0,0" VerticalAlignment="Top" Width="72"/>
         <TextBlock  Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="32,453,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="430"/>
-        <Button x:Name="goback" Content="goback" HorizontalAlignment="Left" Height="25" Margin="32,405,0,0" VerticalAlignment="Top" Width="86" IsEnabled="{Binding history.CanGoBack}"/>
-        <Button x:Name="gofoward" Content="gofoward" HorizontalAlignment="Left" Height="25" Margin="137,405,0,0" VerticalAlignment="Top" Width="84" IsEnabled="{Binding history.CanGoForward}"/>
-        <Button x:Name="download" Content="download" HorizontalAlignment="Left" Height="25" Margin="255,405,0,0" VerticalAlignment="Top" Width="87"/>
-        <Button x:Name="uploadFileOperate" Content="uploadFile" HorizontalAlignment="Left" Height="25" Margin="371,405,0,0" VerticalAlignment="Top" Width="91"/>
-        <Button  x:Name="uploadFolderOperate" Content="uploadFolder" HorizontalAlignment="Left" Height="22" Margin="371,507,0,0" VerticalAlignment="Top" Width="91" RenderTransformOrigin="0.411,1.676"/>
-        <Button x:Name="uploadFolderZipOperate"  Content="uploadFolderAndZip" HorizontalAlignment="Left" Height="25" Margin="496,405,0,0" VerticalAlignment="Top" Width="92"/>
+        <Button x:Name="goback" Content="goback" HorizontalAlignment="Left" Height="25" Margin="32,405,0,0" VerticalAlignment="Top" Width="67" IsEnabled="{Binding history.CanGoBack}"/>
+        <Button x:Name="gofoward" Content="gofoward" HorizontalAlignment="Left" Height="25" Margin="114,405,0,0" VerticalAlignment="Top" Width="73" IsEnabled="{Binding history.CanGoForward}"/>
+        <Button x:Name="download" Content="download" HorizontalAlignment="Left" Height="25" Margin="201,405,0,0" VerticalAlignment="Top" Width="72"/>
+        <Button x:Name="uploadFileOperate" Content="uploadFile" HorizontalAlignment="Left" Height="25" Margin="293,405,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button  x:Name="uploadFolderOperate" Content="uploadFolder" HorizontalAlignment="Left" Height="22" Margin="293,504,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.411,1.676"/>
+        <Button x:Name="uploadFolderZipOperate"  Content="uploadFolderAndZip" HorizontalAlignment="Left" Height="25" Margin="381,405,0,0" VerticalAlignment="Top" Width="92"/>
+        <TextBox Name="searchTextBox" HorizontalAlignment="Left" Height="23" Margin="381,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92"/>
+        <Button  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]" Content="search" HorizontalAlignment="Left" Height="25" Margin="492,504,0,0" VerticalAlignment="Top" Width="64"/>
     </Grid>
 </UserControl>

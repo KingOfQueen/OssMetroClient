@@ -20,6 +20,14 @@ namespace OssClientMetro.Model
 
         }
 
+        public static string lastName(string _key)
+        {
+            string[] fileNames = _key.Split('/');
+            return fileNames[fileNames.Length - 1];
+        }
+
+
+
 
         public void initial()
         {

@@ -14,6 +14,13 @@ namespace OssClientMetro.Model
            modifyTimeVisible = false;
        }
 
+       public static string lastName(string _key)
+       {
+           string[] fileNames = _key.Split('/');
+           return  fileNames[fileNames.Length - 2];
+       }
+
+
 
        public void initial()
        {
