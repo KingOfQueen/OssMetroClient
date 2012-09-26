@@ -20,7 +20,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Name="root">
         <Grid.Resources>
             <DataTemplate x:Key="FileNameColumnDataTemplate">
                 <Grid Height="50">
@@ -58,7 +58,6 @@
             
             <ListView.ItemContainerStyle>              
                 <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [OpenFolder()]" />
                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
                     <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -70,7 +69,12 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
                                 <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                                    <Grid>
+                                    <Grid Tag="{Binding DataContext, ElementName=root}">
+                                        <Grid.ContextMenu >
+                                            <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                                <MenuItem Header="打开本地文件"  cal:Message.Attach="[Event Click] = [openLocalFolder()]"></MenuItem>
+                                            </ContextMenu>
+                                        </Grid.ContextMenu>
                                         <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                         <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
                                     </Grid>

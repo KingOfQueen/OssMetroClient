@@ -73,18 +73,6 @@ namespace OssClientMetro.Model
             }
         }
 
-        public void openLocalFolder()
-        {
-
-            Process ExplorerWindowProcess = new Process();
-
-            ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
-            ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + localPath + "\""; ;
-
-            ExplorerWindowProcess.Start();
-
-        }
-
         public long ProcessSize
         {
             get

@@ -1,6 +1,6 @@
 ﻿
-FK:\github\ossClient\ossClient\ossClient\App.xaml;;
-FK:\github\ossClient\ossClient\ossClient\Theme\Converters.xaml;;
-FK:\github\ossClient\ossClient\ossClient\Views\LoginView.xaml;;
-FK:\github\ossClient\ossClient\ossClient\MainWindowView.xaml;;
+FD:\github\ossClient\ossClient\ossClient\App.xaml;;
+FD:\github\ossClient\ossClient\ossClient\Theme\Converters.xaml;;
+FD:\github\ossClient\ossClient\ossClient\Views\LoginView.xaml;;
+FD:\github\ossClient\ossClient\ossClient\MainWindowView.xaml;;
 
