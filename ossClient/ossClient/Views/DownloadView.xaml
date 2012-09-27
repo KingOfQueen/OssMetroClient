@@ -41,9 +41,6 @@
 
 
             </DataTemplate>
-            <ContextMenu x:Key="ItemContextMenu" cal:Action.TargetWithoutContext="{Binding }">
-                <MenuItem Header="打开本地文件"  cal:Message.Attach="[Event Click] = [openLocalFolder()]"></MenuItem>
-            </ContextMenu>
 
         </Grid.Resources>
 
@@ -58,7 +55,6 @@
             
             <ListView.ItemContainerStyle>              
                 <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
                     <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />

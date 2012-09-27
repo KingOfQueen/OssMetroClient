@@ -12,7 +12,6 @@ using System.Windows.Threading;
 
 namespace OssClientMetro.Model
 {
-   [Serializable]
     public abstract class ObjectModel : PropertyChangedBase
     {
 

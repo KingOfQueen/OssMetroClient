@@ -34,8 +34,25 @@ namespace OssClientMetro.ViewModels
             var temp = CompleteTaskListFile.readFromFile();
             if (temp != null)
             {
-                foreach (ObjectModel obj in temp)
-                    compeletedListModel.Add(obj);
+                foreach (ObjectModelForSerial obj in temp)
+                {
+
+                    if (obj.key.EndsWith("/"))
+                    {
+                        FolderModel folder = new FolderModel() { bucketName = obj.bucketName, key = obj.key };
+                        folder.initial();
+                        folder.localPath = obj.localPath;
+                        folder.Size = obj.size;
+                        compeletedListModel.Add(folder);
+                    }
+                    else
+                    {
+                        FileModel fileModel = new FileModel() { bucketName = obj.bucketName, key = obj.key, Size = obj.size };
+                        fileModel.initial();
+                        fileModel.localPath = obj.localPath;
+                        compeletedListModel.Add(fileModel);
+                    }
+                }
             }
  
 
@@ -98,11 +115,28 @@ namespace OssClientMetro.ViewModels
             }
         }
 
+        public string bucketName { get; set; }
+        public string displayName { get; set; }
+        public string key { get; set; }
+        public string localPath { get; set; }
+        public long size { get; set; }
         void addToCompleteList(ObjectModel obj)
         {
               compeletedListModel.Add(obj);
-              List<ObjectModel> temp = new List<ObjectModel>();
-              temp.AddRange(compeletedListModel);
+              List<ObjectModelForSerial> temp = new List<ObjectModelForSerial>();
+              foreach (ObjectModel objM in compeletedListModel)
+              {
+                  temp.Add(new ObjectModelForSerial()
+                  {
+                      bucketName = objM.bucketName,
+                      key = objM.key,
+                      displayName = objM.displayName,
+                      localPath = objM.localPath,
+                      size = objM.Size
+                  });
+              }
+
+
               CompleteTaskListFile.writeToFile(temp);
         }
 

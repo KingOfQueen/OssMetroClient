@@ -15,7 +15,7 @@ namespace OssClientMetro.Services
         public static string fileName = fileDir.ToString() + @"/completeObject.dat";
 
 
-        static public List<ObjectModel> readFromFile()
+        static public List<ObjectModelForSerial> readFromFile()
         {
             if (File.Exists(fileName))
             {
@@ -25,7 +25,7 @@ namespace OssClientMetro.Services
                     {
                         BinaryFormatter bin = new BinaryFormatter();
 
-                        return (List<ObjectModel>)bin.Deserialize(fs);
+                        return (List<ObjectModelForSerial>)bin.Deserialize(fs);
                     }
                     else
                         return null;
@@ -35,7 +35,7 @@ namespace OssClientMetro.Services
                 return null;
         }
 
-        static public void writeToFile(List<ObjectModel> data)
+        static public void writeToFile(List<ObjectModelForSerial> data)
         {
             using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
