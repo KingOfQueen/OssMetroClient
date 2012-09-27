@@ -88,6 +88,9 @@ K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.exe
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.pdb
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\WelcomeView.baml
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\WelcomeView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Converters.baml
+K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Converters.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Expander.baml
 C:\github\ossClient\ossClient\ossClient\bin\Debug\NLog.config
 C:\github\ossClient\ossClient\ossClient\bin\Debug\OssClientMetro.exe.config
 C:\github\ossClient\ossClient\ossClient\bin\Debug\OssClientMetro.exe
@@ -103,6 +106,7 @@ C:\github\ossClient\ossClient\ossClient\bin\Debug\NLog.xml
 C:\github\ossClient\ossClient\ossClient\bin\Debug\Oss.pdb
 C:\github\ossClient\ossClient\ossClient\bin\Debug\System.Net.Http.Formatting.xml
 C:\github\ossClient\ossClient\ossClient\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
+C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Expander.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\CreateFolderView.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\DownloadView.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\ObjectView.baml
@@ -134,7 +138,3 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.csproj.Gene
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.exe
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.pdb
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.csprojResolveAssemblyReference.cache
-D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Converters.baml
-K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Converters.baml
-C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Expander.baml
-D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Expander.baml
