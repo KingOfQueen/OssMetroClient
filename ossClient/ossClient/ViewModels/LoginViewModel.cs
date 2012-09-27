@@ -152,13 +152,15 @@ namespace OssClientMetro.ViewModels
 
         void saveData()
         {
-            Properties.Settings.Default.AutoLogin = AutoLogin;
-            Properties.Settings.Default.RememberKey = RememberKey;
-            Properties.Settings.Default.Save();
+
             if (AutoLogin || RememberKey)
                 UserInfoFile.saveFile(new User(userName, MemoryPassword.EncryptDES(userPassword)));
             else
                 UserInfoFile.saveFile(new User(userName, ""));
+
+            Properties.Settings.Default.AutoLogin = AutoLogin;
+            Properties.Settings.Default.RememberKey = RememberKey;
+            Properties.Settings.Default.Save();
 
 
 

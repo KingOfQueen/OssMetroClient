@@ -137,3 +137,4 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.csprojResol
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Converters.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Converters.baml
 C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Expander.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Expander.baml

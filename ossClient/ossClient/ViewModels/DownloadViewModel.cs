@@ -28,6 +28,20 @@ namespace OssClientMetro.ViewModels
             clientService = _clientService;
             windowManager = _windowManager;
             events.Subscribe(this);
+        downloadingListModel = new BindableCollection<ObjectModel>();
+         uploadingListModel = new BindableCollection<ObjectModel>();
+            compeletedListModel = new BindableCollection<ObjectModel>();
+            var temp = CompleteTaskListFile.readFromFile();
+            if (temp != null)
+            {
+                foreach (ObjectModel obj in temp)
+                    compeletedListModel.Add(obj);
+            }
+ 
+
+
+        
+            
         }
 
         public  void Handle(DownloadViewEvent message)
@@ -68,12 +82,13 @@ namespace OssClientMetro.ViewModels
                 else if (taskEvent.type == TaskEventType.DOWNLOADCOMPELETED)
                 {
                     downloadingListModel.Remove(taskEvent.obj);
-                    compeletedListModel.Add(taskEvent.obj);
+                    addToCompleteList(taskEvent.obj);
+
                 }
                 else if (taskEvent.type == TaskEventType.UPLOADCOMPELETED)
                 {
                     uploadingListModel.Remove(taskEvent.obj);
-                    compeletedListModel.Add(taskEvent.obj);
+                    addToCompleteList(taskEvent.obj);
                 }
 
             }
@@ -83,9 +98,17 @@ namespace OssClientMetro.ViewModels
             }
         }
 
-        public BindableCollection<ObjectModel> downloadingListModel = new BindableCollection<ObjectModel>();
-        public BindableCollection<ObjectModel> uploadingListModel = new BindableCollection<ObjectModel>();
-        public BindableCollection<ObjectModel> compeletedListModel = new BindableCollection<ObjectModel>();
+        void addToCompleteList(ObjectModel obj)
+        {
+              compeletedListModel.Add(obj);
+              List<ObjectModel> temp = new List<ObjectModel>();
+              temp.AddRange(compeletedListModel);
+              CompleteTaskListFile.writeToFile(temp);
+        }
+
+        public BindableCollection<ObjectModel> downloadingListModel;
+        public BindableCollection<ObjectModel> uploadingListModel;
+        public BindableCollection<ObjectModel> compeletedListModel;
 
         private BindableCollection<ObjectModel> objectList;
 
