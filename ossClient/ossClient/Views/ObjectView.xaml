@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
-             Height="551.997" Width="686.613">
+             Height="551.997" Width="686.613"
+            xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -53,15 +54,16 @@
         </Button>
         <Button x:Name="gofoward" BorderThickness="0" Background="Transparent"
                             		Height="35"
-                            		Width="35" HorizontalAlignment="Left"  Margin="60,0,0,0" VerticalAlignment="Bottom" IsEnabled="{Binding history.CanGoForward}" RenderTransformOrigin="0.487,-0.006">
+                            		Width="35" HorizontalAlignment="Left"  Margin="45,0,0,0" VerticalAlignment="Bottom" IsEnabled="{Binding history.CanGoForward}" RenderTransformOrigin="0.487,-0.006">
         <Image Source="../Images/right.png" Margin="-10"></Image>
 
         </Button>
 
-        <Button x:Name="refresh"   HorizontalAlignment="Left" Height="35" Margin="100,0,0,0" VerticalAlignment="Bottom" Width="35">
-            <Image Source="{StaticResource appbar_refresh}"  Margin="-10"></Image>
+        <Button x:Name="refresh"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Bottom" Width="35">
+            <Image Source="../Images/repeat.png" ></Image>
 
         </Button>
+        <TextBox Name="searchTextBox" Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="34" Margin="515,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
 
         <ListView  Grid.Row="2" x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="302" VerticalAlignment="Top" AllowDrop="True"   
                    cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]" Margin="0,0,0,0">
@@ -169,14 +171,14 @@
         <Button x:Name="createFolderOperate" Content="Create Folder" HorizontalAlignment="Left" Height="25" Margin="32,504,0,0" VerticalAlignment="Top" Width="67"/>
         
         <Button x:Name="delete" Content="delete" HorizontalAlignment="Left" Height="25" Margin="201,504,0,0" VerticalAlignment="Top" Width="72"/>
-        <TextBox  Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="147,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="382"/>
+        <TextBox  Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="356"/>
         
         
         <Button x:Name="download" Content="download" HorizontalAlignment="Left" Height="25" Margin="201,449,0,0" VerticalAlignment="Top" Width="72"/>
         <Button x:Name="uploadFileOperate" Content="uploadFile" HorizontalAlignment="Left" Height="25" Margin="293,449,0,0" VerticalAlignment="Top" Width="70"/>
         <Button  x:Name="uploadFolderOperate" Content="uploadFolder" HorizontalAlignment="Left" Height="22" Margin="293,504,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.411,1.676"/>
         <Button x:Name="uploadFolderZipOperate"  Content="uploadFolderAndZip" HorizontalAlignment="Left" Height="25" Margin="381,449,0,0" VerticalAlignment="Top" Width="92"/>
-        <TextBox Name="searchTextBox" HorizontalAlignment="Left" Height="23" Margin="381,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92"/>
+        
         <Button  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]" Content="search" HorizontalAlignment="Left" Height="25" Margin="492,504,0,0" VerticalAlignment="Top" Width="64"/>
     </Grid>
 </UserControl>
