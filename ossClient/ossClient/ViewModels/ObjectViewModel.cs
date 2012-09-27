@@ -34,7 +34,6 @@ namespace OssClientMetro.ViewModels
             objectList = new BindableCollection<ObjectModel>();
             folderListModel = _clientService.folders;
             history = new History();
-
         }
 
 

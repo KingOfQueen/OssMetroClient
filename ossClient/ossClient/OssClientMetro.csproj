@@ -98,6 +98,10 @@
     <Compile Include="Views\WelcomeView.xaml.cs">
       <DependentUpon>WelcomeView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Theme\Buttons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Theme\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -265,6 +269,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\fileDefault.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\right.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
