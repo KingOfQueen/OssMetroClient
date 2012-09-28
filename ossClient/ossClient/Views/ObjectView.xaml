@@ -44,8 +44,8 @@
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <Button x:Name="goback"  ToolTip="后退" BorderThickness="0" Background="Transparent"
+
+        <Button x:Name="goback"  ToolTip="后退" BorderThickness="0" Background="Transparent"  Style="{StaticResource MyMetroButton}" 
                             		Height="35"
                             		Width="35"
                             		VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0"  IsEnabled="{Binding history.CanGoBack}">
@@ -63,16 +63,31 @@
             <Image Source="../Images/refresh.png"  Margin="-10" ></Image>
 
         </Button>
-        <TextBox  Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="356"/>
-        <TextBox Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+        <TextBox   VerticalContentAlignment="Center" Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="356"/>
+        <TextBox VerticalContentAlignment="Center"  Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
         <Button BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left" Height="35" Margin="640,25,0,0" VerticalAlignment="Top" Width="35">
         <Image Source="../Images/search.png" ></Image>
 
         </Button>
 
-        <Button Grid.Row="1" x:Name="download" Content="download" HorizontalAlignment="Left" Height="25" Margin="0,0,0,0" VerticalAlignment="Top" Width="72"/>
-
-        <Button Grid.Row="1"  x:Name="uploadFileOperate" Content="uploadFile" HorizontalAlignment="Left" Height="25" Margin="226,0,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button  Style="{StaticResource MyMetroButton}" BorderThickness="0" Background="Transparent" Grid.Row="1" x:Name="download"  HorizontalAlignment="Left" Height="25" Margin="0,0,0,0" VerticalAlignment="Top" Width="90" HorizontalContentAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../Images/download.png" Margin="-5,-10,-5, -10"></Image>
+                <TextBlock Text="Download"></TextBlock>
+            </StackPanel>
+        </Button>
+        <Button  Click="Button_Click" ContextMenuService.IsEnabled="False" Style="{StaticResource MyMetroButton}" Grid.Row="1"  x:Name="uploadFileOperate"  HorizontalAlignment="Left" Height="25" Margin="226,0,0,0" VerticalAlignment="Top" Width="100">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../Images/upload.png" Margin="-5,-10,-5, -10"></Image>
+                <TextBlock Text="upload"></TextBlock>
+                <Image Source="../Images/down.png" Margin="-5,-10,-5, -10"></Image>
+            </StackPanel>
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header ="asdas"></MenuItem>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
         <Button Grid.Row="1" x:Name="uploadFolderOperate" Content="uploadFolder" HorizontalAlignment="Left" Height="22" Margin="94,0,0,0" VerticalAlignment="Top" Width="108" />
         <Button Grid.Row="1"  x:Name="uploadFolderZipOperate"  Content="uploadFolderAndZip" HorizontalAlignment="Left" Height="25" Margin="352,0,0,0" VerticalAlignment="Top" Width="115"/>
         <Button  Grid.Row="1"  x:Name="createFolderOperate" Content="Create Folder" HorizontalAlignment="Left" Height="25" Margin="19,25,0,0" VerticalAlignment="Top" Width="91"/>

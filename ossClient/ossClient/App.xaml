@@ -10,7 +10,8 @@
                 </ResourceDictionary>
                 <ResourceDictionary Source="Theme/Converters.xaml"/>
                 <ResourceDictionary Source="Theme/Expander.xaml"/>
-               
+                <ResourceDictionary Source="Theme/Buttons.xaml"/>
+                
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
