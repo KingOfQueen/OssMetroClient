@@ -41,42 +41,43 @@
             </DataTemplate>
         </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#ffcccccc"></Border>
 
         <Button x:Name="goback"  ToolTip="后退" BorderThickness="0" Background="Transparent"  Style="{StaticResource MyMetroButton}" 
                             		Height="35"
                             		Width="35"
-                            		VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0"  IsEnabled="{Binding history.CanGoBack}">
+                            		VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  IsEnabled="{Binding history.CanGoBack}">
             <Image Source="../Images/left.png" Margin="-10"></Image>
 
         </Button>
         <Button x:Name="gofoward" ToolTip="前进" BorderThickness="0" Background="Transparent"
                             		Height="35"
-                            		Width="35" HorizontalAlignment="Left"  Margin="45,0,0,0" VerticalAlignment="Bottom" IsEnabled="{Binding history.CanGoForward}" RenderTransformOrigin="0.487,-0.006">
+                            		Width="35" HorizontalAlignment="Left"  Margin="45,0,0,0" VerticalAlignment="Center" IsEnabled="{Binding history.CanGoForward}" RenderTransformOrigin="0.487,-0.006">
         <Image Source="../Images/right.png" Margin="-10"></Image>
 
         </Button>
 
-        <Button x:Name="refresh"  ToolTip="刷新" BorderThickness="0" Background="Transparent"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Bottom" Width="35">
+        <Button x:Name="refresh"  ToolTip="刷新" BorderThickness="0" Background="Transparent"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Center" Width="35">
             <Image Source="../Images/refresh.png"  Margin="-10" ></Image>
 
         </Button>
-        <TextBox   VerticalContentAlignment="Center" Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="356"/>
-        <TextBox VerticalContentAlignment="Center"  Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
-        <Button BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left" Height="35" Margin="642,25,0,0" VerticalAlignment="Top" Width="35">
+        <TextBox   VerticalContentAlignment="Center" Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Width="356"/>
+        <TextBox VerticalContentAlignment="Center"  Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="162"/>
+        <Button BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left" Height="35" Margin="642,0,0,0" VerticalAlignment="Center" Width="35">
              <Image Source="../Images/search.png" ></Image>
         </Button>
 
-        <Button  Style="{StaticResource MyMetroButton}" BorderThickness="0" Background="Transparent" Grid.Row="1" x:Name="download"  HorizontalAlignment="Left" Height="24" Margin="162,18,0,18" VerticalAlignment="Center" Width="90" HorizontalContentAlignment="Left">
+        <Button  Style="{StaticResource MyMetroButton}" BorderThickness="0" Background="Transparent" Grid.Row="1" x:Name="download"  HorizontalAlignment="Left" Height="24" Margin="162,0,0,0" VerticalAlignment="Center" Width="90" HorizontalContentAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/download.png" Margin="-5,-12,-5, -12"></Image>
                 <TextBlock Text="下载" FontSize="16" ></TextBlock>
             </StackPanel>
         </Button>
-        <Button  Click="Button_Click" ContextMenuService.IsEnabled="False" Style="{StaticResource MyMetroButton}" Grid.Row="1"   HorizontalAlignment="Left" Height="24" Margin="266,18,0,18" VerticalAlignment="Center" Width="100">
+        <Button  Click="Button_Click" ContextMenuService.IsEnabled="False" Style="{StaticResource MyMetroButton}" Grid.Row="1"   HorizontalAlignment="Left" Height="24" Margin="266,0,0,0" VerticalAlignment="Center" Width="100">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/upload.png" Margin="-5,-12,-5, -12"></Image>
                 <TextBlock Text="上传" FontSize="16"></TextBlock>
@@ -98,16 +99,22 @@
                 <TextBlock Text="创建文件夹" FontSize="16"  ></TextBlock>
             </StackPanel>
         </Button>
-        <Button  Grid.Row="1" Style="{StaticResource MyMetroButton}"  x:Name="delete" HorizontalAlignment="Left" Height="24" Margin="412,18,0,18" VerticalAlignment="Center" Width="84">
+        <Button  Grid.Row="1" Style="{StaticResource MyMetroButton}"  x:Name="delete" HorizontalAlignment="Left" Height="24" Margin="412,0,0,0" VerticalAlignment="Center" Width="84">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/delete.png" Margin="-5,-12,-5,-12"></Image>
                 <TextBlock Text="删除" FontSize="16" ></TextBlock>
             </StackPanel>
         </Button>
 
-        <ListView  Grid.Row="2" x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="302" VerticalAlignment="Top" AllowDrop="True"   
+        <ListView  Grid.Row="2" x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="429" VerticalAlignment="Top" AllowDrop="True"   
                    cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]" Margin="0,0,10,0" ext:ListViewBehavior.HeaderSort="True">
-            <ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="打开"  cal:Message.Attach="[Event Click] = [OpenFolder()]"></MenuItem>
+                    <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+                <ListView.View>
                 <GridView>
                     <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" ext:ListViewBehavior.SortField="displayName"/>
                     <GridViewColumn Header="大小" DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="200" ext:ListViewBehavior.SortField="Size"/>
@@ -133,12 +140,12 @@
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
                                 <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
                                     <Grid Tag="{Binding DataContext, ElementName=root}">
-                                        <Grid.ContextMenu >
+                                        <!--<Grid.ContextMenu >
                                             <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                                                <MenuItem Header="打开"  cal:Message.Attach="[Event Click] = [OpenFolder()]"></MenuItem>
                                                 <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
                                             </ContextMenu>
-                                         </Grid.ContextMenu>
+                                         </Grid.ContextMenu>-->
                                         <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                         <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
                                     </Grid>
