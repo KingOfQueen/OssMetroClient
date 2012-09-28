@@ -8,28 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/1.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/ai.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/avi.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/dll.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/dmg.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/excel.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/exe.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/flv.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/gif.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon_256.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon_mini.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/jpg.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/mov.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/mpg.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/pdf.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/png.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/powerpoint.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/psd.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/rar.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/scv.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/wma.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/word.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/zip.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/folder2.png")]
 
 

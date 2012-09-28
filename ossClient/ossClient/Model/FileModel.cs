@@ -94,81 +94,106 @@ namespace OssClientMetro.Model
                 Icon icon = null;
                 string[] fileNams = key.Split('.');
                 string fileType = null;
+
+                
                 if (fileNams.Length > 1)
                 {
                     fileType = "." + fileNams[fileNams.Length - 1];
-                    switch (fileType)
-                    {
-                        case ".rar":
-                            IconUri = new Uri("pack://application:,,,/Images/rar.png");
-                            break;
-                        case ".avi":
-                            IconUri = new Uri("pack://application:,,,/Images/avi.png");
-                            break;
-                        case ".dll":
-                            IconUri = new Uri("pack://application:,,,/Images/dll.png");
-                            break;
-                        case ".dmg":
-                            IconUri = new Uri("pack://application:,,,/Images/dmg.png");
-                            break;
-                        case ".exe":
-                            IconUri = new Uri("pack://application:,,,/Images/exe.png");
-                            break;
-                        case ".flv":
-                            IconUri = new Uri("pack://application:,,,/Images/flv.png");
-                            break;
-                        case ".gif":
-                            IconUri = new Uri("pack://application:,,,/Images/gif.png");
-                            break;
-                        case ".mov":
-                            IconUri = new Uri("pack://application:,,,/Images/mov.png");
-                            break;
-                        case ".mpg":
-                            IconUri = new Uri("pack://application:,,,/Images/mpg.png");
-                            break;
-                        case ".pdf":
-                            IconUri = new Uri("pack://application:,,,/Images/pdf.png");
-                            break;
-                        case ".png":
-                            IconUri = new Uri("pack://application:,,,/Images/png.png");
-                            break;
-                        case ".ppt":
-                        case ".pptx":
-                            IconUri = new Uri("pack://application:,,,/Images/powerpoint.png");
-                            break;
-                        case ".doc":
-                        case ".docx":
-                            IconUri = new Uri("pack://application:,,,/Images/word.png");
-                            break;
-                        case ".xls":
-                        case ".xlsx":
-                            IconUri = new Uri("pack://application:,,,/Images/excel.png");
-                            break;
 
-                        case ".psd":
-                            IconUri = new Uri("pack://application:,,,/Images/psd.png");
-                            break;
-                        case ".scv":
-                            IconUri = new Uri("pack://application:,,,/Images/scv.png");
-                            break;
-
-                        case ".wma":
-                            IconUri = new Uri("pack://application:,,,/Images/wma.png");
-                            break;
-
-
-                        case ".zip":
-                            IconUri = new Uri("pack://application:,,,/Images/zip.png");
-                            break;
-                        case ".jpg":
-                            IconUri = new Uri("pack://application:,,,/Images/jpg.png");
-                            break;
-
-                  }
+                if(iconsInfo[fileType] != null)
+                {
+                    string fileAndParam = (iconsInfo[fileType]).ToString();
+                    icon = RegisteredFileType.ExtractIconFromFile(fileAndParam, true);
                 }
 
-                if (IconUri == null)
+
+
+
+                  //  switch (fileType)
+                  //  {
+                  //      case ".rar":
+                  //          IconUri = new Uri("pack://application:,,,/Images/rar.png");
+                  //          break;
+                  //      case ".avi":
+                  //          IconUri = new Uri("pack://application:,,,/Images/avi.png");
+                  //          break;
+                  //      case ".dll":
+                  //          IconUri = new Uri("pack://application:,,,/Images/dll.png");
+                  //          break;
+                  //      case ".dmg":
+                  //          IconUri = new Uri("pack://application:,,,/Images/dmg.png");
+                  //          break;
+                  //      case ".exe":
+                  //          IconUri = new Uri("pack://application:,,,/Images/exe.png");
+                  //          break;
+                  //      case ".flv":
+                  //          IconUri = new Uri("pack://application:,,,/Images/flv.png");
+                  //          break;
+                  //      case ".gif":
+                  //          IconUri = new Uri("pack://application:,,,/Images/gif.png");
+                  //          break;
+                  //      case ".mov":
+                  //          IconUri = new Uri("pack://application:,,,/Images/mov.png");
+                  //          break;
+                  //      case ".mpg":
+                  //          IconUri = new Uri("pack://application:,,,/Images/mpg.png");
+                  //          break;
+                  //      case ".pdf":
+                  //          IconUri = new Uri("pack://application:,,,/Images/pdf.png");
+                  //          break;
+                  //      case ".png":
+                  //          IconUri = new Uri("pack://application:,,,/Images/png.png");
+                  //          break;
+                  //      case ".ppt":
+                  //      case ".pptx":
+                  //          IconUri = new Uri("pack://application:,,,/Images/powerpoint.png");
+                  //          break;
+                  //      case ".doc":
+                  //      case ".docx":
+                  //          IconUri = new Uri("pack://application:,,,/Images/word.png");
+                  //          break;
+                  //      case ".xls":
+                  //      case ".xlsx":
+                  //          IconUri = new Uri("pack://application:,,,/Images/excel.png");
+                  //          break;
+
+                  //      case ".psd":
+                  //          IconUri = new Uri("pack://application:,,,/Images/psd.png");
+                  //          break;
+                  //      case ".scv":
+                  //          IconUri = new Uri("pack://application:,,,/Images/scv.png");
+                  //          break;
+
+                  //      case ".wma":
+                  //          IconUri = new Uri("pack://application:,,,/Images/wma.png");
+                  //          break;
+
+
+                  //      case ".zip":
+                  //          IconUri = new Uri("pack://application:,,,/Images/zip.png");
+                  //          break;
+                  //      case ".jpg":
+                  //          IconUri = new Uri("pack://application:,,,/Images/jpg.png");
+                  //          break;
+
+                  //}
+                }
+                if (icon != null)
+                {
+                    IconUri = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                     icon.ToBitmap().GetHbitmap(),
+                     IntPtr.Zero,
+                     System.Windows.Int32Rect.Empty,
+                     BitmapSizeOptions.FromWidthAndHeight(300, 300));
+
+                    // IconUri = ScreenCapture.UriSource;
+                }
+                else //if the icon is invalid, show an error image.
                     IconUri = new Uri("pack://application:,,,/Images/file.png");
+
+
+                //if (IconUri == null)
+                //    IconUri = new Uri("pack://application:,,,/Images/file.png");
             }
             catch (Exception ex)
             {

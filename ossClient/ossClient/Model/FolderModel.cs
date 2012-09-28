@@ -99,7 +99,7 @@ namespace OssClientMetro.Model
 
         public void setIcon()
         {
-            IconUri = new Uri("pack://application:,,,/Images/folder.png");
+            IconUri = new Uri("pack://application:,,,/Images/folder2.png");
         }
 
         public List<OssObjectSummary> objList2 { get; set; }

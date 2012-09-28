@@ -143,3 +143,5 @@ C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Generic.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Buttons.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Expander.baml
 K:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Generic.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.csprojResolveAssemblyReference.cache
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Theme\Generic.baml
