@@ -108,12 +108,12 @@
 
         <ListView  Grid.Row="2" x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="429" VerticalAlignment="Top" AllowDrop="True"   
                    cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]" Margin="0,0,10,0" ext:ListViewBehavior.HeaderSort="True">
-            <ListView.ContextMenu>
+            <!--<ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="打开"  cal:Message.Attach="[Event Click] = [OpenFolder()]"></MenuItem>
-                    <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
+                  
+                  
                 </ContextMenu>
-            </ListView.ContextMenu>
+            </ListView.ContextMenu>-->
                 <ListView.View>
                 <GridView>
                     <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" ext:ListViewBehavior.SortField="displayName"/>
@@ -130,24 +130,23 @@
                     </Style.Resources>
                     <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [OpenFolder()]" />
                     <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
                     <Setter Property="MinHeight" Value="25" />
                     <Setter Property="Margin" Value="0,0,0,0" />
                     <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
+                 
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
                                 <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
                                     <Grid Tag="{Binding DataContext, ElementName=root}">
-                                        <!--<Grid.ContextMenu >
+                                        <Grid.ContextMenu >
                                             <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                                               <MenuItem Header="打开"  cal:Message.Attach="[Event Click] = [OpenFolder()]"></MenuItem>
+                                                <MenuItem Header="打开"  cal:Message.Attach="[Event MouseDown] = [OpenFolder()]"></MenuItem>
                                                 <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
                                             </ContextMenu>
-                                         </Grid.ContextMenu>-->
+                                         </Grid.ContextMenu>
                                         <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                        <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
+                                        <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" VerticalAlignment="Center" />
                                     </Grid>
                                 </Border>
                                 <ControlTemplate.Triggers>

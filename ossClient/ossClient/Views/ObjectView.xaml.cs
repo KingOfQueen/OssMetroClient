@@ -36,5 +36,8 @@ namespace OssClientMetro.Views
 
             (sender as Button).ContextMenu.IsOpen = true;
         }
+
+
+
     }
 }

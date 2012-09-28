@@ -306,7 +306,34 @@
   <ItemGroup>
     <Resource Include="Images\delete.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\file.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\1.ico" />
+    <Resource Include="Images\ai.png" />
+    <Resource Include="Images\avi.png" />
+    <Resource Include="Images\dll.png" />
+    <Resource Include="Images\dmg.png" />
+    <Resource Include="Images\excel.png" />
+    <Resource Include="Images\exe.png" />
+    <Resource Include="Images\flv.png" />
+    <Resource Include="Images\gif.png" />
+    <Resource Include="Images\icon_256.png" />
+    <Resource Include="Images\icon_mini.png" />
+    <Resource Include="Images\jpg.png" />
+    <Resource Include="Images\mov.png" />
+    <Resource Include="Images\mpg.png" />
+    <Resource Include="Images\pdf.png" />
+    <Resource Include="Images\png.png" />
+    <Resource Include="Images\powerpoint.png" />
+    <Resource Include="Images\psd.png" />
+    <Resource Include="Images\rar.png" />
+    <Resource Include="Images\scv.png" />
+    <Resource Include="Images\wma.png" />
+    <Resource Include="Images\word.png" />
+    <Resource Include="Images\zip.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
