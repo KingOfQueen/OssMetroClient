@@ -91,10 +91,14 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToVisibleConverter.cs" />
     <Compile Include="Converters\LongSizeToString.cs" />
+    <Compile Include="Extension\ListSortDirector.cs" />
+    <Compile Include="Extension\ListViewBehavior.cs" />
     <Compile Include="Model\ObjectModelForSerial.cs" />
     <Compile Include="Services\CompleteTaskListFile.cs" />
     <Compile Include="Services\PathValue.cs" />
     <Compile Include="Services\RegisteredFileType.cs" />
+    <Compile Include="Extension\SortInfo.cs" />
+    <Compile Include="Extension\UIElementAdorner.cs" />
     <Compile Include="Views\WelcomeView.xaml.cs">
       <DependentUpon>WelcomeView.xaml</DependentUpon>
     </Compile>
@@ -109,6 +113,10 @@
     <Page Include="Theme\Expander.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CreateFolderView.xaml">
       <SubType>Designer</SubType>
@@ -291,6 +299,14 @@
   <ItemGroup>
     <Resource Include="Images\down.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add_folder.png" />
+    <Resource Include="Images\openfolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

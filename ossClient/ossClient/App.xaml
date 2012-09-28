@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="Theme/Converters.xaml"/>
                 <ResourceDictionary Source="Theme/Expander.xaml"/>
                 <ResourceDictionary Source="Theme/Buttons.xaml"/>
+                <ResourceDictionary Source="Theme/Generic.xaml"/>
                 
 
             </ResourceDictionary.MergedDictionaries>
