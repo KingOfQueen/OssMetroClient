@@ -59,11 +59,16 @@
 
         </Button>
 
-        <Button x:Name="refresh"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Bottom" Width="35">
-            <Image Source="../Images/repeat.png" ></Image>
+        <Button x:Name="refresh" BorderThickness="0" Background="Transparent"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Bottom" Width="35">
+            <Image Source="../Images/refresh.png"  Margin="-10" ></Image>
 
         </Button>
-        <TextBox Name="searchTextBox" Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="34" Margin="515,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+        <TextBox Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+        <Button BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left" Height="35" Margin="640,25,0,0" VerticalAlignment="Top" Width="35">
+        <Image Source="../Images/search.png" ></Image>
+
+        </Button>
+
 
         <ListView  Grid.Row="2" x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="302" VerticalAlignment="Top" AllowDrop="True"   
                    cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]" Margin="0,0,0,0">
@@ -179,6 +184,6 @@
         <Button  x:Name="uploadFolderOperate" Content="uploadFolder" HorizontalAlignment="Left" Height="22" Margin="293,504,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.411,1.676"/>
         <Button x:Name="uploadFolderZipOperate"  Content="uploadFolderAndZip" HorizontalAlignment="Left" Height="25" Margin="381,449,0,0" VerticalAlignment="Top" Width="92"/>
         
-        <Button  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]" Content="search" HorizontalAlignment="Left" Height="25" Margin="492,504,0,0" VerticalAlignment="Top" Width="64"/>
+        
     </Grid>
 </UserControl>

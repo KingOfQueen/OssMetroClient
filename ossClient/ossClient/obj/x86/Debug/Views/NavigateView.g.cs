@@ -11,6 +11,7 @@
 
 using Caliburn.Micro;
 using OssClientMetro.Controls;
+using OssClientMetro.Converters;
 using System;
 using System.Diagnostics;
 using System.Windows;

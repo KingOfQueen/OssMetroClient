@@ -188,41 +188,44 @@ namespace OssClientMetro.ViewModels
 
        public async void searchOperate(string text)
        {
-           FolderModel folderModel = new FolderModel();
-           folderModel.folderList = new List<FolderModel>();
-           folderModel.objList = new List<FileModel>();
+           if (text != "")
+           {
+               FolderModel folderModel = new FolderModel();
+               folderModel.folderList = new List<FolderModel>();
+               folderModel.objList = new List<FileModel>();
 
-           List<ObjectListing> listObjectListing = await folderListModel.getObjectListing(currentFolder.bucketName, "");
+               List<ObjectListing> listObjectListing = await folderListModel.getObjectListing(currentFolder.bucketName, "");
 
-            foreach (ObjectListing objectlisting in listObjectListing)
-            {
-                foreach (OssObjectSummary ossObj in objectlisting.ObjectSummaries)
-                {
+               foreach (ObjectListing objectlisting in listObjectListing)
+               {
+                   foreach (OssObjectSummary ossObj in objectlisting.ObjectSummaries)
+                   {
 
-                    if (ossObj.Key.EndsWith("/"))
-                    {
-                        if (FolderModel.lastName(ossObj.Key).Contains(text))
-                        {
-                            FolderModel folder = new FolderModel() { bucketName = ossObj.BucketName, key = ossObj.Key };
-                            folder.initial();
-                            folderModel.folderList.Add(folder);
-                        }
-                    }
-                    else
-                    {
-                        if (FileModel.lastName(ossObj.Key).Contains(text))
-                        {
-                            FileModel fileModel = new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj.Size };
-                            fileModel.modifyTime = ossObj.LastModified;
-                            fileModel.initial();
-                            folderModel.objList.Add(fileModel);
-                        }
-                    }
-                    
-                }
-            }
+                       if (ossObj.Key.EndsWith("/"))
+                       {
+                           if (FolderModel.lastName(ossObj.Key).Contains(text))
+                           {
+                               FolderModel folder = new FolderModel() { bucketName = ossObj.BucketName, key = ossObj.Key };
+                               folder.initial();
+                               folderModel.folderList.Add(folder);
+                           }
+                       }
+                       else
+                       {
+                           if (FileModel.lastName(ossObj.Key).Contains(text))
+                           {
+                               FileModel fileModel = new FileModel() { bucketName = ossObj.BucketName, key = ossObj.Key, Size = ossObj.Size };
+                               fileModel.modifyTime = ossObj.LastModified;
+                               fileModel.initial();
+                               folderModel.objList.Add(fileModel);
+                           }
+                       }
 
-            refreshObjectList(folderModel);
+                   }
+               }
+
+               refreshObjectList(folderModel);
+           }
         }
 
 
