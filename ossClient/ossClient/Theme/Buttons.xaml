@@ -7,8 +7,8 @@
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="10" />
-        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
-        <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
+        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding" Value="1,1" />

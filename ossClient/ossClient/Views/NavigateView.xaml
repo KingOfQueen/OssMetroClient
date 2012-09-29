@@ -22,7 +22,8 @@
     </UserControl.Resources>
     <StackPanel>
         <Expander Header="Butkets" FontSize="16"  Style="{StaticResource ExpanderStyle1}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="300">
-            <ListBox  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
+            <StackPanel Orientation="Vertical">
+                <ListBox  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"  
@@ -31,9 +32,13 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+                <TextBox Name ="textBox" Visibility="{Binding TextBoxActive}" ></TextBox>
+                <Button  Content="创建bucket" cal:Message.Attach="[Event Click] = [Action createBucket2()]"></Button>
+            </StackPanel>
         </Expander>
         <Expander Header="任务" FontSize="16" cal:Message.Attach="[Event Expanded] = [Action expanded()]" 
                   Style="{StaticResource ExpanderStyle1}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="300">
+      
 
 
             <ListBox Margin="0,0,0,0" SelectedIndex="{Binding SelectedViewIndex}">
@@ -41,6 +46,7 @@
                 <ListBoxItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Content="uploading" Height="24"></ListBoxItem>
                 <ListBoxItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]" Content="compeleted" Height="24"></ListBoxItem>
             </ListBox>
+
         </Expander>
         <Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>
         <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>

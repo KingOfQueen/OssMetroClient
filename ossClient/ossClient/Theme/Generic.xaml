@@ -9,7 +9,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type ext:ListSortDecorator}">
-					<Path x:Name="path" Data="M0,0L2,0 1,1z"
+                    <Path x:Name="path" Data="M0,1L2,1L1,0Z"
 						  Fill="{TemplateBinding Foreground}"
 						  Stroke="{TemplateBinding Foreground}"
 						  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -20,7 +20,8 @@
 								 Value="Descending">
 							<Setter TargetName="path"
 									Property="Data"
-									Value="M0,1L2,1L1,0Z"/>
+									Value= "M0,0L2,0 1,1z"/>
+                           
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>

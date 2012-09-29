@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OssClientMetro.ViewModels
 {
@@ -158,8 +159,25 @@ namespace OssClientMetro.ViewModels
 
        }
 
+        public void createBucket2()
+        {
+            TextBoxActive = Visibility.Visible;
+        }
 
+        Visibility textBoxActive = Visibility.Collapsed;
 
+        public Visibility TextBoxActive
+        {
+            get
+            {
+                return this.textBoxActive;
+            }
+            set
+            {
+                this.textBoxActive = value;
+                NotifyOfPropertyChange(() => this.TextBoxActive);
+            }
+         }
 
 
         public BucketListModel buckets { get; set; }
