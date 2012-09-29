@@ -29,5 +29,11 @@ namespace OssClientMetro.Views
         {
 
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ((TextBox)textBox).Visibility = Visibility.Visible;
+            ((TextBox)textBox).Focus();
+        }
     }
 }

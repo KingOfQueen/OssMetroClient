@@ -3,6 +3,7 @@ using Oss;
 using OssClientMetro.Events;
 using OssClientMetro.Framework;
 using OssClientMetro.Model;
+using OssClientMetro.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace OssClientMetro.ViewModels
 {
@@ -89,7 +91,21 @@ namespace OssClientMetro.ViewModels
 
         public async void createBucket()
         {
-            await buckets.createBucket(inputBucketName, CannedAccessControlList.Private);
+            try
+            {
+                if (errorInfoVis == Visibility.Visible)
+                {
+                    errorInfoVis = Visibility.Collapsed;
+                }
+                await buckets.createBucket(inputBucketName, CannedAccessControlList.Private);
+                TextBoxActive = Visibility.Collapsed;
+                inputBucketName = "";
+            }
+            catch (Exception ex)
+            {
+                errorInfo = ex.Message;
+                errorInfoVis = Visibility.Visible;
+            }
         }
 
         public async void deleteBucket()
@@ -161,7 +177,38 @@ namespace OssClientMetro.ViewModels
 
         public void createBucket2()
         {
-            TextBoxActive = Visibility.Visible;
+            if (TextBoxActive == Visibility.Visible && inputBucketName != "")
+            {
+                createBucket();
+            }
+        }
+
+
+
+
+        public void createBucket3(object sender)
+        {
+            NavigateView view = sender as NavigateView;
+            if (TextBoxActive == Visibility.Visible && inputBucketName != "")
+            {
+                createBucket();
+            }
+        }
+
+
+        string m_errorInfo;
+
+        public string errorInfo
+        {
+            get
+            {
+                return this.m_errorInfo;
+            }
+            set
+            {
+                this.m_errorInfo = value;
+                NotifyOfPropertyChange(() => this.errorInfo);
+            }
         }
 
         Visibility textBoxActive = Visibility.Collapsed;
@@ -178,6 +225,33 @@ namespace OssClientMetro.ViewModels
                 NotifyOfPropertyChange(() => this.TextBoxActive);
             }
          }
+
+        Visibility m_errorInfoVis = Visibility.Collapsed;
+        public Visibility errorInfoVis
+        {
+            get
+            {
+                return this.m_errorInfoVis;
+            }
+            set
+            {
+                this.m_errorInfoVis = value;
+                NotifyOfPropertyChange(() => this.errorInfoVis);
+            }
+        }
+
+        public void keydown(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+               
+
+                createBucket();
+            }
+
+        }
+
+
 
 
         public BucketListModel buckets { get; set; }

@@ -32,8 +32,9 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-                <TextBox Name ="textBox" Visibility="{Binding TextBoxActive}" ></TextBox>
-                <Button  Content="创建bucket" cal:Message.Attach="[Event Click] = [Action createBucket2()]"></Button>
+                <TextBlock x:Name="errorInfo" TextWrapping="Wrap" Foreground="Red" Visibility="{Binding errorInfoVis}" Height="Auto" FontSize="12"></TextBlock>
+                <TextBox Name ="textBox" Text="{Binding inputBucketName}" Visibility="{Binding TextBoxActive, Mode=TwoWay}"  cal:Message.Attach="[Event KeyDown] = [Action keydown($eventArgs)]"></TextBox>
+                <Button  Content="创建bucket" Click="Button_Click_1" cal:Message.Attach="[Event Click] = [Action createBucket2]" ></Button>
             </StackPanel>
         </Expander>
         <Expander Header="任务" FontSize="16" cal:Message.Attach="[Event Expanded] = [Action expanded()]" 
