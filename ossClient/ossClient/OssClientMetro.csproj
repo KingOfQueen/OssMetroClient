@@ -94,6 +94,7 @@
     <Compile Include="Extension\ListSortDirector.cs" />
     <Compile Include="Extension\ListViewBehavior.cs" />
     <Compile Include="Model\ObjectModelForSerial.cs" />
+    <Compile Include="Model\TempData.cs" />
     <Compile Include="Services\CompleteTaskListFile.cs" />
     <Compile Include="Services\PathValue.cs" />
     <Compile Include="Services\RegisteredFileType.cs" />

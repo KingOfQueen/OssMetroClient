@@ -34,6 +34,7 @@ namespace OssClientMetro.ViewModels
             objectList = new BindableCollection<ObjectModel>();
             folderListModel = _clientService.folders;
             history = new History();
+            Countries = new BindableCollection<TempData>();
         }
 
 
@@ -97,6 +98,7 @@ namespace OssClientMetro.ViewModels
                currentFolder = await folderListModel.getFolderModel(temp.bucketName, temp.key);
                refreshObjectList(currentFolder);
                history.add(temp.bucketName + "/" + temp.key);
+               Countries.Add(new TempData(temp.bucketName + "/" + temp.key));
            }
        }
 
@@ -542,6 +544,34 @@ namespace OssClientMetro.ViewModels
            }
 
        }
+
+       async Task refreshPath(string path)
+       {
+           string[] ss = path.Split('/');
+           if (currentFolder.bucketName != ss[0])
+           {
+               events.Publish(new BuketSelectedUiUpdateEvent(ss[0]));
+           }
+           currentFolder = await folderListModel.getFolderModel(ss[0], path.Substring(ss[0].Length + 1));
+           refreshObjectList(currentFolder);
+       }
+
+       string selectedSourceCountryTwoLetterCode;
+
+       public string SelectedSourceCountryTwoLetterCode
+       {
+           get { return this.selectedSourceCountryTwoLetterCode; }
+           set
+           {
+               this.selectedSourceCountryTwoLetterCode = value;
+               NotifyOfPropertyChange(() => this.SelectedSourceCountryTwoLetterCode);
+
+               refreshPath(SelectedSourceCountryTwoLetterCode);
+           }
+       }
+
+
+         public BindableCollection<TempData> Countries  { get; set; }
 
          public FolderListModel folderListModel;
          public FolderModel currentFolder;
