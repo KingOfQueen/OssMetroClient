@@ -53,6 +53,7 @@ namespace OssClientMetro.ViewModels
                         compeletedListModel.Add(fileModel);
                     }
                 }
+                events.Publish(new TaskCountEvent(compeletedListModel.Count ,TaskCountEventType.COMPELETED));
             }
  
 
@@ -91,21 +92,26 @@ namespace OssClientMetro.ViewModels
                 if (taskEvent.type == TaskEventType.DOWNLOADING)
                 {
                     downloadingListModel.Add(taskEvent.obj);
+                    events.Publish(new TaskCountEvent(downloadingListModel.Count, TaskCountEventType.DOWNLOADING));
                 }
                 else if (taskEvent.type == TaskEventType.UPLOADING)
                 {
                     uploadingListModel.Add(taskEvent.obj);
+                    events.Publish(new TaskCountEvent(uploadingListModel.Count, TaskCountEventType.UPLOADING));
                 }
                 else if (taskEvent.type == TaskEventType.DOWNLOADCOMPELETED)
                 {
                     downloadingListModel.Remove(taskEvent.obj);
                     addToCompleteList(taskEvent.obj);
+                    events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
+
 
                 }
                 else if (taskEvent.type == TaskEventType.UPLOADCOMPELETED)
                 {
                     uploadingListModel.Remove(taskEvent.obj);
                     addToCompleteList(taskEvent.obj);
+                    events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
                 }
 
             }

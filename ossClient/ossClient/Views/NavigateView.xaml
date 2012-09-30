@@ -20,7 +20,7 @@
         </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
+    <StackPanel Name="root">
         <StackPanel.Resources>
             <Style x:Key="ExpanderHeaderFocusVisual">
                 <Setter Property="Control.Template">
@@ -48,7 +48,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="19"/>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="25"/>
+              
                                     </Grid.ColumnDefinitions>
                                     <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                                         <Path.RenderTransform>
@@ -60,7 +60,7 @@
                                             </TransformGroup>
                                         </Path.RenderTransform>
                                     </Path>
-                                    <TextBlock Grid.Column="3" Foreground="{StaticResource HighlightBrush}"  Text="123"></TextBlock>
+                                   
                                     <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>
@@ -145,7 +145,7 @@
                                             </TransformGroup>
                                         </Path.RenderTransform>
                                     </Path>
-                                    <Button  Style="{DynamicResource MyMetroButton}" Grid.Column="2">
+                                    <Button  Style="{DynamicResource MyMetroButton}" Grid.Column="2" cal:Message.Attach="[Event Click] = [refreshBuckets()]">
                                         <Image Source="../Images/refresh.png"></Image>
                                     </Button>
                                     <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
@@ -204,8 +204,54 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
+            <Style x:Key="StandardListBox2" TargetType="{x:Type ListBox}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Style.Resources>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Setter Property="Background" Value="{StaticResource BackgroundNormal}"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">                                  
+                                        <Grid Margin="4,0,4,4" Tag="{Binding DataContext, ElementName=root}" Background="Transparent">
+                                            <Grid.ContextMenu >
+                                                <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                                    <MenuItem Header="打开"  cal:Message.Attach="[Event MouseDown] = [OpenFolder()]"></MenuItem>
+                                                    <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
+                                                    <MenuItem Header="下载"  cal:Message.Attach="[Event Click] = [download()]"></MenuItem>
+                                                    <MenuItem Header="创建文件夹"  cal:Message.Attach="[Event Click] = [createFolderOperate()]"></MenuItem>
+                                                    <MenuItem Header="删除"  cal:Message.Attach="[Event Click] = [delete()]"></MenuItem>
+                                                </ContextMenu>
+                                            </Grid.ContextMenu>
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" SnapsToDevicePixels="True"/>
+                                        <ContentPresenter Margin="8,5"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsMouseOver" Value="True" />
+                                                <Condition Property="IsSelected" Value="False"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource BackgroundHighlighted}" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushHighlighted}" />
+                                        </MultiTrigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource BackgroundSelected}" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushSelected}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Style.Resources>
+            </Style>
+
         </StackPanel.Resources>
-        <Expander Header="Butkets" FontSize="16"  Style="{StaticResource ExpanderStyle2}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="300">
+        <Expander Header="Butkets" FontSize="16"  Style="{StaticResource ExpanderStyle2}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
             <StackPanel Orientation="Vertical">
                 <ListBox  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
                 <ListBox.ItemTemplate>
@@ -215,6 +261,11 @@
                                        FontSize='30' />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [OpenFolder()]" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
             </ListBox>
                 <TextBlock x:Name="errorInfo" TextWrapping="Wrap" Foreground="Red" Visibility="{Binding errorInfoVis}" Height="Auto" FontSize="12"></TextBlock>
                 <TextBox Name ="textBox" Text="{Binding inputBucketName}" Visibility="{Binding TextBoxActive, Mode=TwoWay}"  cal:Message.Attach="[Event KeyDown] = [Action keydown($eventArgs)]"></TextBox>
@@ -223,13 +274,28 @@
         </Expander>
         <Expander Header="任务" FontSize="16" cal:Message.Attach="[Event Expanded] = [Action expanded()]" 
                   Style="{StaticResource ExpanderStyle1}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
-      
 
 
-            <ListBox Margin="0,0,0,0" SelectedIndex="{Binding SelectedViewIndex}">
-                <ListBoxItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"  Content="downloading" Height="24"></ListBoxItem>
-                <ListBoxItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Content="uploading" Height="24"></ListBoxItem>
-                <ListBoxItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]" Content="compeleted" Height="24"></ListBoxItem>
+
+            <ListBox Margin="0,0,0,0"  SelectedIndex="{Binding SelectedViewIndex}">
+                <ListBoxItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"   Height="24">
+                    <Grid>
+                        <TextBlock Text="Downloading"></TextBlock>
+                        <TextBlock Text="{Binding downloadingCount}" Foreground="{StaticResource HighlightBrush}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
+                    </Grid>
+                </ListBoxItem>
+                <ListBoxItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Height="24">
+                    <Grid>
+                        <TextBlock Text="Uploading"></TextBlock>
+                        <TextBlock   HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding uploadingCount}" Foreground="{StaticResource HighlightBrush}"></TextBlock>
+                    </Grid>
+                </ListBoxItem>
+                <ListBoxItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]"  Height="24">
+                    <Grid>
+                        <TextBlock Text="compeleted"></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding CompeletedCount}" Foreground="{StaticResource HighlightBrush}"></TextBlock>
+                    </Grid>
+                </ListBoxItem>
             </ListBox>
 
         </Expander>

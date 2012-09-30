@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace OssClientMetro.ViewModels
 {
-    class NavigateViewModel : PropertyChangedBase, ILeftWorkSpace, IHandle<BuketSelectedUiUpdateEvent>
+    class NavigateViewModel : PropertyChangedBase, ILeftWorkSpace, IHandle<BuketSelectedUiUpdateEvent>, IHandle<TaskCountEvent>
     {
         readonly IEventAggregator events;
         readonly IClientService clientService;
@@ -128,6 +128,19 @@ namespace OssClientMetro.ViewModels
                 uiSelected = false;
                 selectedBuketIndex = buckets.IndexOf(buckets.First(x => x.Name == message.BuketName));
             }
+        }
+
+        public void Handle(TaskCountEvent message)
+        {
+            if (message.type == TaskCountEventType.DOWNLOADING)
+                DownloadingCount = message.count;
+
+            if (message.type == TaskCountEventType.UPLOADING)
+                UploadingCount = message.count;
+
+            if (message.type == TaskCountEventType.COMPELETED)
+                CompeletedCount = message.count;
+
         }
 
         private bool isExpened;
@@ -251,7 +264,51 @@ namespace OssClientMetro.ViewModels
 
         }
 
+        int downloadingCount;
 
+        public int DownloadingCount
+        {
+            get
+            {
+                return this.downloadingCount;
+            }
+            set
+            {
+                this.downloadingCount = value;
+                NotifyOfPropertyChange(() => this.DownloadingCount);
+            }
+        }
+
+
+        int uploadingCount;
+
+        public int UploadingCount
+        {
+            get
+            {
+                return this.uploadingCount;
+            }
+            set
+            {
+                this.uploadingCount = value;
+                NotifyOfPropertyChange(() => this.UploadingCount);
+            }
+        }
+
+        int compeletedCount;
+        public int CompeletedCount
+        {
+            get
+            {
+                return this.compeletedCount;
+            }
+            set
+            {
+                this.compeletedCount = value;
+                NotifyOfPropertyChange(() => this.CompeletedCount);
+            }
+        }
+   
 
 
         public BucketListModel buckets { get; set; }
