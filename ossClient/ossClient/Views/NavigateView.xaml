@@ -281,13 +281,13 @@
                 <ListBoxItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"   Height="24">
                     <Grid>
                         <TextBlock Text="Downloading"></TextBlock>
-                        <TextBlock Text="{Binding downloadingCount}" Foreground="{StaticResource HighlightBrush}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
+                        <TextBlock Text="{Binding DownloadingCount}" Foreground="{StaticResource HighlightBrush}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
                     </Grid>
                 </ListBoxItem>
                 <ListBoxItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Height="24">
                     <Grid>
                         <TextBlock Text="Uploading"></TextBlock>
-                        <TextBlock   HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding uploadingCount}" Foreground="{StaticResource HighlightBrush}"></TextBlock>
+                        <TextBlock   HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding UploadingCount}" Foreground="{StaticResource HighlightBrush}"></TextBlock>
                     </Grid>
                 </ListBoxItem>
                 <ListBoxItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]"  Height="24">

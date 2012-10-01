@@ -24,7 +24,7 @@ namespace OssClientMetro
                 ossClient = new OssClient(userName, userPassword);
 
                 buckets = new BucketListModel(ossClient);
-          //      await buckets.refreshBuckets();
+                await buckets.refreshBuckets();
 
                 folders = new FolderListModel(ossClient);
                 
