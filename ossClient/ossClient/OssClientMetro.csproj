@@ -91,6 +91,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToVisibleConverter.cs" />
     <Compile Include="Converters\LongSizeToString.cs" />
+    <Compile Include="Events\ChangeThemeEvent.cs" />
     <Compile Include="Events\TaskCountEvent.cs" />
     <Compile Include="Extension\ListSortDirector.cs" />
     <Compile Include="Extension\ListViewBehavior.cs" />
@@ -338,6 +339,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\folder2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

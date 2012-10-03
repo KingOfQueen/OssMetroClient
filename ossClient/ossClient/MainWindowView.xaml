@@ -21,14 +21,51 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         </Window.Resources>
+    <Controls:MetroWindow.WindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="换肤" Click="Button_Click" ContextMenuService.IsEnabled="False">
+                <!--<StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Resources>
+                            <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                        </Rectangle.Resources>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+         
+                </StackPanel>-->
+                <Button.ContextMenu>
+                    <ContextMenu>
+                            <MenuItem Header="Light Red" Click="MiLightRed" />
+                            <MenuItem Header="Light Green" Click="MiLightGreen" />
+                            <MenuItem Header="Light Blue" Click="MiLightBlue" />
+                            <MenuItem Header="Light Purple" Click="MiLightPurple" />
+                            <Separator />
+                            <MenuItem Header="Dark Red" Click="MiDarkRed" />
+                            <MenuItem Header="Dark Green" Click="MiDarkGreen" />
+                            <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
+                            <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
 
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.WindowCommands>
+
+    <Controls:MetroContentControl>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="256"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ContentControl Grid.Column="0" x:Name="LeftView"/>
+            <!--<ListView>
+                <ListViewItem Content="1"></ListViewItem>
+                <ListViewItem Content="2"></ListViewItem>
+            </ListView>-->
+            <ContentControl Grid.Column="0" x:Name="LeftView"/>
         <ContentControl  Grid.Column="1" x:Name="RightView" HorizontalAlignment="Stretch"/>
     </Grid>
+    </Controls:MetroContentControl>
 </Controls:MetroWindow>

@@ -24,9 +24,7 @@ namespace OssClientMetro.ViewModels
             if (AutoLogin)
             {
                 login();
-            }
-            
-
+            } 
         }
 
         void initUserData()

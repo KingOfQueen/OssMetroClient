@@ -17,7 +17,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
@@ -28,6 +27,80 @@
             <Style TargetType="{x:Type Control}">
                 <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
             </Style>
+
+            <Style x:Key="test" TargetType="{x:Type ListViewItem}">
+
+                <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [OpenFolder()]" />
+                <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+                <Setter Property="MinHeight" Value="25" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+                <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                <Grid Tag="{Binding DataContext, ElementName=root}" Background="Transparent">
+                                    <Grid.ContextMenu >
+                                        <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                            <MenuItem Header="打开"  cal:Message.Attach="[Event MouseDown] = [OpenFolder()]"></MenuItem>
+                                            <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
+                                            <MenuItem Header="下载"  cal:Message.Attach="[Event Click] = [download()]"></MenuItem>
+                                            <MenuItem Header="创建文件夹"  cal:Message.Attach="[Event Click] = [createFolderOperate()]"></MenuItem>
+                                            <MenuItem Header="删除"  cal:Message.Attach="[Event Click] = [delete()]"></MenuItem>
+                                        </ContextMenu>
+                                    </Grid.ContextMenu>
+                                    <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                    <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                                    <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
+                                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{DynamicResource AccentColor3}" />
+                                        </Setter.Value>
+                                    </Setter>
+
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="true" />
+                                        <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="True" />
+                                        <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <DataTemplate x:Key="FileNameColumnDataTemplate">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="{Binding IconUri}" Width="15" Height="15" Margin="5,0,5,0"/>
@@ -109,7 +182,7 @@
             </StackPanel>
         </Button>
 
-        <ListView  Grid.Row="2" x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="429" VerticalAlignment="Top" AllowDrop="True"   
+        <ListView  ItemContainerStyle="{DynamicResource test}"  Grid.Row="2" x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="429" VerticalAlignment="Top" AllowDrop="True"   
                    cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]" Margin="0,0,10,0" ext:ListViewBehavior.HeaderSort="True">
             <!--<ListView.ContextMenu>
                 <ContextMenu>
@@ -125,84 +198,11 @@
                    
                 </GridView>
             </ListView.View>
-            <ListView.ItemContainerStyle>
+           
 
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Style.Resources>
-                     
-                    </Style.Resources>
-                    <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [OpenFolder()]" />
-                    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-                    <Setter Property="MinHeight" Value="25" />
-                    <Setter Property="Height" Value="30" />
-                    <Setter Property="Margin" Value="0,0,0,0" />
-                    <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
-                 
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                                    <Grid Tag="{Binding DataContext, ElementName=root}" Background="Transparent">
-                                        <Grid.ContextMenu >
-                                            <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                                                <MenuItem Header="打开"  cal:Message.Attach="[Event MouseDown] = [OpenFolder()]"></MenuItem>
-                                                <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
-                                                <MenuItem Header="下载"  cal:Message.Attach="[Event Click] = [download()]"></MenuItem>
-                                                <MenuItem Header="创建文件夹"  cal:Message.Attach="[Event Click] = [createFolderOperate()]"></MenuItem>
-                                                <MenuItem Header="删除"  cal:Message.Attach="[Event Click] = [delete()]"></MenuItem>
-                                            </ContextMenu>
-                                         </Grid.ContextMenu>
-                                        <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                        <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
-                                        <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="true">
-                                        <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="Bd" Property="Background">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                            </Setter.Value>
-                                        </Setter>
 
-                                    </Trigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsSelected" Value="true" />
-                                            <Condition Property="Selector.IsSelectionActive" Value="True" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="Bd">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                                    </MultiTrigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsSelected" Value="True" />
-                                            <Condition Property="Selector.IsSelectionActive" Value="False" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="Bd">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                                    </MultiTrigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
 
-            </ListView.ItemContainerStyle>
+           
         </ListView>
         <!--<ComboBox 
              ItemsSource="{Binding Countries}"

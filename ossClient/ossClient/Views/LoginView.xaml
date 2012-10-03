@@ -47,6 +47,7 @@
             <Controls:ProgressRing IsActive="{Binding ProgressActive}" Margin="90,184,101,464" Height="55" Width="48"/>
             <TextBlock x:Name="Status"  Foreground="Red" HorizontalAlignment="Left" Height="83" Margin="26,171,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
 
+
         </Grid>
     </Border>
 </UserControl>

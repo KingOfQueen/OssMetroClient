@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
              Width="300" Height="600" Background="#ffe5e5e5"
-              xmlns:controls="clr-namespace:OssClientMetro.Controls">
+              xmlns:controls="clr-namespace:OssClientMetro.Controls"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
     <UserControl.Resources>
     <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
@@ -20,7 +21,8 @@
         </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Name="root">
+    <Controls:MetroContentControl>
+        <StackPanel Name="root">
         <StackPanel.Resources>
             <Style x:Key="ExpanderHeaderFocusVisual">
                 <Setter Property="Control.Template">
@@ -238,26 +240,26 @@
 
 
 
-            <ListBox Margin="0,0,0,0"  SelectedIndex="{Binding SelectedViewIndex}">
-                <ListBoxItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"   Height="24">
+            <ListView Margin="0,0,0,0"  SelectedIndex="{Binding SelectedViewIndex}">
+                <ListViewItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"   Height="24">
                     <Grid>
                         <TextBlock Text="Downloading"></TextBlock>
-                        <TextBlock Text="{Binding DownloadingCount}" Foreground="{StaticResource HighlightBrush}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
+                        <TextBlock Text="{Binding DownloadingCount}" Foreground="{DynamicResource HighlightBrush}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
                     </Grid>
-                </ListBoxItem>
-                <ListBoxItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Height="24">
+                </ListViewItem>
+                <ListViewItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Height="24">
                     <Grid>
                         <TextBlock Text="Uploading"></TextBlock>
                         <TextBlock   HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding UploadingCount}" Foreground="{StaticResource HighlightBrush}"></TextBlock>
                     </Grid>
-                </ListBoxItem>
-                <ListBoxItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]"  Height="24">
+                </ListViewItem>
+                <ListViewItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]"  Height="24">
                     <Grid>
                         <TextBlock Text="compeleted"></TextBlock>
                         <TextBlock HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding CompeletedCount}" Foreground="{StaticResource HighlightBrush}"></TextBlock>
                     </Grid>
-                </ListBoxItem>
-            </ListBox>
+                 </ListViewItem>
+            </ListView>
 
         </Expander>
         <!--<Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>
@@ -265,5 +267,10 @@
         <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
         <Button x:Name="refreshBuckets" Content="refresh" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="120"/>-->
 
+            <!--<ListView>
+                <ListViewItem Content="1"></ListViewItem>
+                <ListViewItem Content="2"></ListViewItem>
+            </ListView>-->
     </StackPanel>
+        </Controls:MetroContentControl>
 </UserControl>
