@@ -68,7 +68,7 @@
             <Image Source="../Images/refresh.png"  Margin="-10" ></Image>
 
         </Button>
-        <TextBox   VerticalContentAlignment="Center" Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Width="356"/>
+        <TextBox  IsReadOnly="True" VerticalContentAlignment="Center" Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Width="356"/>
         <TextBox VerticalContentAlignment="Center"  Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="162"/>
         <Button BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left" Height="35" Margin="642,0,0,0" VerticalAlignment="Center" Width="35">
              <Image Source="../Images/search.png" ></Image>
@@ -204,14 +204,14 @@
 
             </ListView.ItemContainerStyle>
         </ListView>
-        <ComboBox 
+        <!--<ComboBox 
              ItemsSource="{Binding Countries}"
                     DisplayMemberPath="Path"
                     SelectedValue="{Binding SelectedSourceCountryTwoLetterCode}"
                     SelectedValuePath="Path"
     
             
-            HorizontalAlignment="Left" Height="28" Margin="162,434,0,0" Grid.Row="2" VerticalAlignment="Top" Width="345"/>
+            HorizontalAlignment="Left" Height="28" Margin="162,434,0,0" Grid.Row="2" VerticalAlignment="Top" Width="345"/>-->
 
         <!--<ListBox  x:Name="objectList" SelectedIndex="{Binding selectedIndex}" Height="400" VerticalAlignment="Top" >
             <ListBox.ItemTemplate>

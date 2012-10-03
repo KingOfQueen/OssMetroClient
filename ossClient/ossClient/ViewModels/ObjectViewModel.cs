@@ -98,8 +98,7 @@ namespace OssClientMetro.ViewModels
                currentFolder = await folderListModel.getFolderModel(temp.bucketName, temp.key);
                refreshObjectList(currentFolder);
                history.add(temp.bucketName + "/" + temp.key);
-               Countries.Add(new TempData(temp.bucketName + "/" + temp.key));
-               SelectedSourceCountryTwoLetterCode = Countries.LastOrDefault().Path;
+              // addToComboBox(temp.bucketName + "/" + temp.key);
            }
        }
 
@@ -118,8 +117,7 @@ namespace OssClientMetro.ViewModels
                  currentFolder = await folderListModel.getFolderModel(message.BuketName);
                  refreshObjectList(currentFolder);
                  history.add(message.BuketName + "/");
-                 Countries.Add(new TempData(message.BuketName + "/"));
-                 SelectedSourceCountryTwoLetterCode = Countries.LastOrDefault().Path;
+                // addToComboBox(message.BuketName + "/");
              }
              else
              {
@@ -169,6 +167,7 @@ namespace OssClientMetro.ViewModels
        public  void goback()
          {
             history.goBack();
+            //addToComboBox(history.NowPath);
             refreshPath();           
          }
 
@@ -187,6 +186,7 @@ namespace OssClientMetro.ViewModels
          {
 
              history.goForward();
+             //addToComboBox(history.NowPath);
              refreshPath();
 
          }
@@ -568,9 +568,17 @@ namespace OssClientMetro.ViewModels
            {
                this.selectedSourceCountryTwoLetterCode = value;
                NotifyOfPropertyChange(() => this.SelectedSourceCountryTwoLetterCode);
-
                refreshPath(SelectedSourceCountryTwoLetterCode);
            }
+       }
+
+
+       void addToComboBox(string path)
+       {
+           if (Countries.FirstOrDefault(x => x.Path == path) == null)
+                 Countries.Insert(0, new TempData(path));
+           SelectedSourceCountryTwoLetterCode = path;
+           
        }
 
 
