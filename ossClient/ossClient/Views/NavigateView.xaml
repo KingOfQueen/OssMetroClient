@@ -205,68 +205,29 @@
                 </Setter>
             </Style>
             
-            <Style x:Key="StandardListBox2" TargetType="{x:Type ListBox}">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Style.Resources>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Background" Value="{StaticResource BackgroundNormal}"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListBoxItem}">                                  
-                                        <Grid Margin="4,0,4,4" Tag="{Binding DataContext, ElementName=root}" Background="Transparent">
-                                            <Grid.ContextMenu >
-                                                <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                                                    <MenuItem Header="打开"  cal:Message.Attach="[Event MouseDown] = [OpenFolder()]"></MenuItem>
-                                                    <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
-                                                    <MenuItem Header="下载"  cal:Message.Attach="[Event Click] = [download()]"></MenuItem>
-                                                    <MenuItem Header="创建文件夹"  cal:Message.Attach="[Event Click] = [createFolderOperate()]"></MenuItem>
-                                                    <MenuItem Header="删除"  cal:Message.Attach="[Event Click] = [delete()]"></MenuItem>
-                                                </ContextMenu>
-                                            </Grid.ContextMenu>
-                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" SnapsToDevicePixels="True"/>
-                                        <ContentPresenter Margin="8,5"/>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <MultiTrigger>
-                                            <MultiTrigger.Conditions>
-                                                <Condition Property="IsMouseOver" Value="True" />
-                                                <Condition Property="IsSelected" Value="False"/>
-                                            </MultiTrigger.Conditions>
-                                            <Setter Property="Background" Value="{StaticResource BackgroundHighlighted}" />
-                                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushHighlighted}" />
-                                        </MultiTrigger>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource BackgroundSelected}" />
-                                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushSelected}" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Style.Resources>
-            </Style>
-
+          
         </StackPanel.Resources>
         <Expander Header="Butkets" FontSize="16"  Style="{StaticResource ExpanderStyle2}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
             <StackPanel Orientation="Vertical">
-                <ListBox  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
+                <ListBox HorizontalContentAlignment="Stretch"  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"  
-                                       Margin='2 0 12 0'   
-                                       FontSize='30' />
-                    </DataTemplate>
+                            <Grid Background="Transparent"  Tag="{Binding DataContext, ElementName=root}">
+                                <Grid.ContextMenu>
+                                    <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                        <MenuItem Header="删除" cal:Message.Attach="[Event Click] = [Action deleteBucket()]"/>
+                                    </ContextMenu>
+
+
+                                </Grid.ContextMenu>
+                                <TextBlock  Text="{Binding Name}"  
+                                       Margin='2 0 0 0'   
+                                       FontSize='30'  >
+                               </TextBlock>
+                            </Grid>
+                        </DataTemplate>
                 </ListBox.ItemTemplate>
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="cal:Message.Attach" Value="[Event PreviewMouseDoubleClick] = [OpenFolder()]" />
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
+                </ListBox>
                 <TextBlock x:Name="errorInfo" TextWrapping="Wrap" Foreground="Red" Visibility="{Binding errorInfoVis}" Height="Auto" FontSize="12"></TextBlock>
                 <TextBox Name ="textBox" Text="{Binding inputBucketName}" Visibility="{Binding TextBoxActive, Mode=TwoWay}"  cal:Message.Attach="[Event KeyDown] = [Action keydown($eventArgs)]"></TextBox>
                 <Button  Content="创建bucket" Click="Button_Click_1" cal:Message.Attach="[Event Click] = [Action createBucket2]" ></Button>
@@ -299,10 +260,10 @@
             </ListBox>
 
         </Expander>
-        <Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>
+        <!--<Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>
         <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>
         <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
-        <Button x:Name="refreshBuckets" Content="refresh" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="refreshBuckets" Content="refresh" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="120"/>-->
 
     </StackPanel>
 </UserControl>

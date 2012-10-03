@@ -99,6 +99,7 @@ namespace OssClientMetro.ViewModels
                refreshObjectList(currentFolder);
                history.add(temp.bucketName + "/" + temp.key);
                Countries.Add(new TempData(temp.bucketName + "/" + temp.key));
+               SelectedSourceCountryTwoLetterCode = Countries.LastOrDefault().Path;
            }
        }
 
@@ -117,6 +118,8 @@ namespace OssClientMetro.ViewModels
                  currentFolder = await folderListModel.getFolderModel(message.BuketName);
                  refreshObjectList(currentFolder);
                  history.add(message.BuketName + "/");
+                 Countries.Add(new TempData(message.BuketName + "/"));
+                 SelectedSourceCountryTwoLetterCode = Countries.LastOrDefault().Path;
              }
              else
              {
