@@ -109,17 +109,25 @@ namespace OssClientMetro.Model
 
         public async Task deleteFolder(string buketName, string key)
         {
-            List<ObjectListing> listObjectListing = await getObjectListing(buketName, key);
-
-            foreach (ObjectListing objectlisting in listObjectListing)
+            try
             {
-                foreach (OssObjectSummary ossObj in objectlisting.ObjectSummaries)
+                List<ObjectListing> listObjectListing = await getObjectListing(buketName, key);
+
+                foreach (ObjectListing objectlisting in listObjectListing)
                 {
-                    await client.DeleteObject(ossObj.BucketName, ossObj.Key);
+                    foreach (OssObjectSummary ossObj in objectlisting.ObjectSummaries)
+                    {
+                        await client.DeleteObject(ossObj.BucketName, ossObj.Key);
+                    }
                 }
+                FolderModel folderModle = find(buketName, key);
+                this.Remove(folderModle);
             }
-            FolderModel folderModle = find(buketName, key);
-            this.Remove(folderModle);
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
 
         }
 
@@ -143,9 +151,9 @@ namespace OssClientMetro.Model
             this.RemoveAll(x => x.bucketName == buketName);
         }
 
-        public async Task<OssObject> downloadFile(string buketName, string key, Action<HttpProcessData> callback = null)
+        public async Task<OssObject> downloadFile(string buketName, string key, Action<HttpProcessData> callback = null, System.Threading.CancellationToken? cancellationToken = null)
         {
-            return await client.GetObject(buketName, key, callback);
+            return await client.GetObject(buketName, key, callback, cancellationToken);
         }
 
         public async Task initFolderForDownload(FolderModel folderModel)

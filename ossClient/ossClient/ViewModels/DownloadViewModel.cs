@@ -103,6 +103,7 @@ namespace OssClientMetro.ViewModels
                 {
                     downloadingListModel.Remove(taskEvent.obj);
                     addToCompleteList(taskEvent.obj);
+                    events.Publish(new TaskCountEvent(downloadingListModel.Count, TaskCountEventType.DOWNLOADING));
                     events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
 
 
@@ -111,7 +112,18 @@ namespace OssClientMetro.ViewModels
                 {
                     uploadingListModel.Remove(taskEvent.obj);
                     addToCompleteList(taskEvent.obj);
+                    events.Publish(new TaskCountEvent(uploadingListModel.Count, TaskCountEventType.UPLOADING));
                     events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
+                }
+                else if (taskEvent.type == TaskEventType.DOWNLOADCANCEL)
+                {
+                    downloadingListModel.Remove(taskEvent.obj);
+                    events.Publish(new TaskCountEvent(downloadingListModel.Count, TaskCountEventType.DOWNLOADING));
+                }
+                else if (taskEvent.type == TaskEventType.UPLOADCANCEL)
+                {
+                    uploadingListModel.Remove(taskEvent.obj);                  
+                    events.Publish(new TaskCountEvent(uploadingListModel.Count, TaskCountEventType.UPLOADING));
                 }
 
             }
@@ -181,16 +193,21 @@ namespace OssClientMetro.ViewModels
             }
         }
 
-        public void openLocalFolder()
+        public void deleteOperate()
         {
-            string localPath = objectList[selectedIndex].localPath;
-            Process ExplorerWindowProcess = new Process();
+            ObjectModel objModel = objectList[selectedIndex];
+            if (objModel is FileModel)
+                objModel.tokenSource.Cancel();
+            else
+                ((FolderModel)objModel).cancelTask();
 
-            ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
-            ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + localPath + "\""; ;
-
-            ExplorerWindowProcess.Start();
 
         }
+
+        public void deleteFolder()
+        { 
+
+        }
+        
     }
 }

@@ -12,7 +12,11 @@ namespace OssClientMetro.Events
         DOWNLOADING,
         UPLOADING,
         DOWNLOADCOMPELETED,
-        UPLOADCOMPELETED
+        UPLOADCOMPELETED,
+        DOWNLOADCANCEL,
+        UPLOADCANCEL
+
+
     }
 
 

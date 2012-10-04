@@ -66,6 +66,7 @@
                                         <Grid.ContextMenu >
                                             <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                                                 <MenuItem Header="打开本地文件"  cal:Message.Attach="[Event Click] = [openLocalFolder()]"></MenuItem>
+                                                <MenuItem Header="删除"  cal:Message.Attach="[Event Click] = [deleteOperate()]"></MenuItem>
                                             </ContextMenu>
                                         </Grid.ContextMenu>
                                         <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />

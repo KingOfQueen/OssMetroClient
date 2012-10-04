@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Threading;
 
 namespace OssClientMetro.Model
@@ -105,5 +106,14 @@ namespace OssClientMetro.Model
         public List<OssObjectSummary> objList2 { get; set; }
         public List<string> CommonPrefixes2 { get; set; }
 
+        public void cancelTask()
+        {
+            foreach (FileModel file in objListAll)
+            {
+                if (file.tokenSource != null)
+                    file.tokenSource.Cancel();
+            }
+        }
+        
     }
 }

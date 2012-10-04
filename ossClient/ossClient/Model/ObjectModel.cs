@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -15,7 +16,7 @@ namespace OssClientMetro.Model
     public abstract class ObjectModel : PropertyChangedBase
     {
 
-       
+        public CancellationTokenSource tokenSource;
         public static TaskFactory factory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
 
         public static Hashtable iconsInfo = RegisteredFileType.GetFileTypeAndIcon();

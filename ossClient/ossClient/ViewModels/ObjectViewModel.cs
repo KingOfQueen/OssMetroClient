@@ -266,27 +266,53 @@ namespace OssClientMetro.ViewModels
 
        async Task downloadfile(FileModel fileModel, string fileName)
        {
-           OssObject obj = await folderListModel.downloadFile(fileModel.bucketName, fileModel.key, fileModel.callback);
-           Stream stream = obj.Content;
-           FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
-           await stream.CopyToAsync(fs);
-           fs.Position = 0;
-           fs.Flush();
-           fs.Close();
-           stream.Close();
+           FileStream fs = null;
+           Stream stream = null;
+           try
+           {
+               fileModel.tokenSource = new System.Threading.CancellationTokenSource();
+               OssObject obj = await folderListModel.downloadFile(fileModel.bucketName, fileModel.key, fileModel.callback, fileModel.tokenSource.Token);
+               stream = obj.Content;
+               fs = new FileStream(fileName, FileMode.OpenOrCreate);
+               await stream.CopyToAsync(fs);
+               fs.Position = 0;
+               fs.Flush();
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+
+           }
+           finally
+           {
+               if(fs != null)
+                  fs.Close();
+
+               if (stream != null)
+                  stream.Close();
+           }
+
        }
 
        async Task downloadFolder(FolderModel folderModel, string savePath)
        {
-           List<Task> taskList = new List<Task>();
-           foreach (FileModel file in folderModel.objListAll)
+           try
            {
-               string fileName = savePath + "/" + file.key.Substring(folderModel.key.Length);
-               FileInfo fileInfo = new FileInfo(fileName);
-               if (!Directory.Exists(fileInfo.DirectoryName))
-                   Directory.CreateDirectory(fileInfo.DirectoryName);
+               List<Task> taskList = new List<Task>();
+               foreach (FileModel file in folderModel.objListAll)
+               {
+                   string fileName = savePath + "/" + file.key.Substring(folderModel.key.Length);
+                   FileInfo fileInfo = new FileInfo(fileName);
+                   if (!Directory.Exists(fileInfo.DirectoryName))
+                       Directory.CreateDirectory(fileInfo.DirectoryName);
 
-               await downloadfile(file, fileName);
+                   await downloadfile(file, fileName);
+               }
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+
            }
        }
 
@@ -313,23 +339,43 @@ namespace OssClientMetro.ViewModels
 
                         if (objModel is FileModel)
                         {
+                            try
+                            {
+                                string fileName = foulderPath + objModel.key.Substring(currentFolder.key.Length);
+                                objModel.localPath = fileName;
+                                events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
+                                ((FileModel)objModel).startTimer();
+                                await downloadfile((FileModel)objModel, fileName);
+                                events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
+                            }
+                            catch( Exception ex)
+                            {
+                                if (ex is System.Threading.Tasks.TaskCanceledException)
+                                {
+                                    events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
+                                }
 
-                           
-                            string fileName = foulderPath  + objModel.key.Substring(currentFolder.key.Length);
-                            objModel.localPath = fileName;
-                            events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
-                            ((FileModel)objModel).startTimer();
-                            await downloadfile((FileModel)objModel, fileName);
-                            events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
+                            }
                         }
                         else
                         {
-                            await folderListModel.initFolderForDownload((FolderModel)objModel);
-                            objModel.localPath = foulderPath + objModel.key.Substring(currentFolder.key.Length);
-                            events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
-                            ((FolderModel)objModel).startTimer();
-                            await downloadFolder((FolderModel)objModel, foulderPath + objModel.key.Substring(currentFolder.key.Length));
-                            events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
+                            try
+                            {
+                                await folderListModel.initFolderForDownload((FolderModel)objModel);
+                                objModel.localPath = foulderPath + objModel.key.Substring(currentFolder.key.Length);
+                                events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
+                                ((FolderModel)objModel).startTimer();
+                                await downloadFolder((FolderModel)objModel, foulderPath + objModel.key.Substring(currentFolder.key.Length));
+                                events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
+                            }
+                            catch (Exception ex)
+                            {
+                                if (ex is System.Threading.Tasks.TaskCanceledException)
+                                {
+                                    events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
+                                }
+
+                            }
                         }
                     }
                 }
@@ -339,11 +385,27 @@ namespace OssClientMetro.ViewModels
 
        private async Task uploadSingleFile(FileModel fileModel)
        {
-           FileInfo fileInfo = new FileInfo(fileModel.localPath);
-           FileStream fs = new FileStream(fileModel.localPath, FileMode.Open);
-           ObjectMetadata oMetaData = new ObjectMetadata();
-           await folderListModel.client.PutObject(fileModel.bucketName, fileModel.key, fs, oMetaData, fileModel.callback);
-           fs.Dispose();
+           FileStream fs = null;
+
+           try
+           {
+               FileInfo fileInfo = new FileInfo(fileModel.localPath);
+               fs = new FileStream(fileModel.localPath, FileMode.Open);
+               ObjectMetadata oMetaData = new ObjectMetadata();
+               fileModel.tokenSource = new System.Threading.CancellationTokenSource();
+               await folderListModel.client.PutObject(fileModel.bucketName, fileModel.key, fs, oMetaData, fileModel.callback, fileModel.tokenSource.Token);           
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+           finally
+           {
+               if (fs != null)
+               {
+                   fs.Dispose();
+               }
+           }
        }
 
        private  FolderModel uploadfolderInit(string bucket, string parentKey, string dir)
@@ -437,22 +499,41 @@ namespace OssClientMetro.ViewModels
     
         private async Task uploadFileInCurrentFolder(string fileName)
         {
-            FileInfo fileInfo = new FileInfo(fileName);
-            FileModel objModel = new FileModel() { bucketName = currentFolder.bucketName, key = currentFolder.key + fileInfo.Name };
-            objModel.localPath = fileName;
-            events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADING));
-            objModel.startTimer();
-            await uploadSingleFile(objModel);
-            events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+            FileModel objModel = null;
+            try
+            {
+                FileInfo fileInfo = new FileInfo(fileName);
+                 objModel = new FileModel() { bucketName = currentFolder.bucketName, key = currentFolder.key + fileInfo.Name };
+                objModel.localPath = fileName;
+                events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADING));
+                objModel.startTimer();
+                await uploadSingleFile(objModel);
+                events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+            }
+            catch(Exception ex)
+            {
+                if (ex is System.Threading.Tasks.TaskCanceledException)
+                {
+                    events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCANCEL));
+                    folderListModel.deleteFile(objModel.bucketName, objModel.key);
+                }
+            }
         }
 
 
         async Task uploadFolder(FolderModel folderModel)
         {
-            List<Task> taskList = new List<Task>();
-            foreach (FileModel fileMode in folderModel.objListAll)
+            try
             {
-               await uploadSingleFile(fileMode);
+                List<Task> taskList = new List<Task>();
+                foreach (FileModel fileMode in folderModel.objListAll)
+                {
+                    await uploadSingleFile(fileMode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -476,14 +557,26 @@ namespace OssClientMetro.ViewModels
 
        private async Task uploadFolderInCurrentFolder(string Path)
        {
-           FolderModel folderModel = uploadfolderInit(currentFolder.bucketName, currentFolder.key, Path);
-           folderModel.localPath = Path;
+           FolderModel folderModel = null;
+           try
+           {
+               folderModel = uploadfolderInit(currentFolder.bucketName, currentFolder.key, Path);
+               folderModel.localPath = Path;
 
-           events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADING));
-           folderModel.startTimer();
-           await createFolders(folderModel, Path);
-           await uploadFolder(folderModel);
-           events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCOMPELETED));
+               events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADING));
+               folderModel.startTimer();
+               await createFolders(folderModel, Path);
+               await uploadFolder(folderModel);
+               events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCOMPELETED));
+           }
+           catch (Exception ex)
+           {
+               if (ex is System.Threading.Tasks.TaskCanceledException)
+               {
+                   events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCANCEL));
+                   folderListModel.deleteFolder(folderModel.bucketName, folderModel.key);
+               }
+           }
 
        }
 
