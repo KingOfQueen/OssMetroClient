@@ -10,13 +10,11 @@
     <UserControl.Resources>
     <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+
 
         </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
@@ -211,8 +209,8 @@
         </StackPanel.Resources>
         <Expander Header="Butkets" FontSize="16"  Style="{StaticResource ExpanderStyle2}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
             <StackPanel Orientation="Vertical">
-                <ListBox HorizontalContentAlignment="Stretch"  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
-                <ListBox.ItemTemplate>
+                <ListView HorizontalContentAlignment="Stretch"  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
+                    <ListView.ItemTemplate>
                     <DataTemplate>
                             <Grid Background="Transparent"  Tag="{Binding DataContext, ElementName=root}">
                                 <Grid.ContextMenu>
@@ -228,8 +226,8 @@
                                </TextBlock>
                             </Grid>
                         </DataTemplate>
-                </ListBox.ItemTemplate>
-                </ListBox>
+                </ListView.ItemTemplate>
+                </ListView>
                 <TextBlock x:Name="errorInfo" TextWrapping="Wrap" Foreground="Red" Visibility="{Binding errorInfoVis}" Height="Auto" FontSize="12"></TextBlock>
                 <TextBox Name ="textBox" Text="{Binding inputBucketName}" Visibility="{Binding TextBoxActive, Mode=TwoWay}"  cal:Message.Attach="[Event KeyDown] = [Action keydown($eventArgs)]"></TextBox>
                 <Button  Content="创建bucket" Click="Button_Click_1" cal:Message.Attach="[Event Click] = [Action createBucket2]" ></Button>
@@ -240,23 +238,23 @@
 
 
 
-            <ListView Margin="0,0,0,0"  SelectedIndex="{Binding SelectedViewIndex}">
+                <ListView Margin="0,0,0,0"  SelectedIndex="{Binding SelectedViewIndex}" BorderBrush="{DynamicResource AccentColorBrush}">
                 <ListViewItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"   Height="24">
                     <Grid>
                         <TextBlock Text="Downloading"></TextBlock>
-                        <TextBlock Text="{Binding DownloadingCount}" Foreground="{DynamicResource HighlightBrush}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
+                            <TextBlock Text="{Binding DownloadingCount}" Foreground="{DynamicResource AccentColorBrush}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
                     </Grid>
                 </ListViewItem>
                 <ListViewItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Height="24">
                     <Grid>
                         <TextBlock Text="Uploading"></TextBlock>
-                        <TextBlock   HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding UploadingCount}" Foreground="{StaticResource HighlightBrush}"></TextBlock>
+                            <TextBlock   HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding UploadingCount}" Foreground="{DynamicResource AccentColorBrush}"></TextBlock>
                     </Grid>
                 </ListViewItem>
                 <ListViewItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]"  Height="24">
                     <Grid>
                         <TextBlock Text="compeleted"></TextBlock>
-                        <TextBlock HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding CompeletedCount}" Foreground="{StaticResource HighlightBrush}"></TextBlock>
+                            <TextBlock HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding CompeletedCount}" Foreground="{DynamicResource AccentColorBrush}"></TextBlock>
                     </Grid>
                  </ListViewItem>
             </ListView>

@@ -11,13 +11,12 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                
+               
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         </Window.Resources>
@@ -41,13 +40,11 @@
                             <MenuItem Header="Light Green" Click="MiLightGreen" />
                             <MenuItem Header="Light Blue" Click="MiLightBlue" />
                             <MenuItem Header="Light Purple" Click="MiLightPurple" />
-                            <Separator />
-                            <MenuItem Header="Dark Red" Click="MiDarkRed" />
-                            <MenuItem Header="Dark Green" Click="MiDarkGreen" />
-                            <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
-                            <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
                     </ContextMenu>
                 </Button.ContextMenu>
+            </Button>
+            <Button Content="注销">
+
             </Button>
 
         </Controls:WindowCommands>

@@ -12,6 +12,10 @@
                 <ResourceDictionary Source="Theme/Expander.xaml"/>
                 <ResourceDictionary Source="Theme/Buttons.xaml"/>
                 <ResourceDictionary Source="Theme/Generic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
