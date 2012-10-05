@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OssClientMetro.ViewModels
 {
@@ -43,6 +44,7 @@ namespace OssClientMetro.ViewModels
                         folder.initial();
                         folder.localPath = obj.localPath;
                         folder.Size = obj.size;
+                        folder.completeTime = obj.completeTime;
                         compeletedListModel.Add(folder);
                     }
                     else
@@ -50,6 +52,7 @@ namespace OssClientMetro.ViewModels
                         FileModel fileModel = new FileModel() { bucketName = obj.bucketName, key = obj.key, Size = obj.size };
                         fileModel.initial();
                         fileModel.localPath = obj.localPath;
+                        fileModel.completeTime = obj.completeTime;
                         compeletedListModel.Add(fileModel);
                     }
                 }
@@ -73,14 +76,17 @@ namespace OssClientMetro.ViewModels
                 if (message.type == DownloadViewEventType.DOWNLOADINGVIEW)
                 {
                     ObjectList = downloadingListModel;
+                    setDownloadVis();
                 }
                 else if (message.type == DownloadViewEventType.UPLOADINGVIEW)
                 {
                     ObjectList = uploadingListModel;
+                    setDownloadVis();
                 }
                 else if (message.type == DownloadViewEventType.COMPELETEDVIEW)
                 {
                     ObjectList = compeletedListModel;
+                    setCompleteVis();
                 }
 
             }
@@ -106,6 +112,7 @@ namespace OssClientMetro.ViewModels
                 else if (taskEvent.type == TaskEventType.DOWNLOADCOMPELETED)
                 {
                     downloadingListModel.Remove(taskEvent.obj);
+                    taskEvent.obj.completeTime = DateTime.Now;
                     addToCompleteList(taskEvent.obj);
                     events.Publish(new TaskCountEvent(downloadingListModel.Count, TaskCountEventType.DOWNLOADING));
                     events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
@@ -115,6 +122,7 @@ namespace OssClientMetro.ViewModels
                 else if (taskEvent.type == TaskEventType.UPLOADCOMPELETED)
                 {
                     uploadingListModel.Remove(taskEvent.obj);
+                    taskEvent.obj.completeTime = DateTime.Now;
                     addToCompleteList(taskEvent.obj);
                     events.Publish(new TaskCountEvent(uploadingListModel.Count, TaskCountEventType.UPLOADING));
                     events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
@@ -154,7 +162,8 @@ namespace OssClientMetro.ViewModels
                       key = obj.key,
                       displayName = obj.displayName,
                       localPath = obj.localPath,
-                      size = obj.Size
+                      size = obj.Size,
+                      completeTime = obj.completeTime
                   });
 
 
@@ -240,6 +249,62 @@ namespace OssClientMetro.ViewModels
             }
 
 
+        }
+
+        public void openLocalFolder()
+       {
+           ObjectModel objModel = objectList[selectedIndex];
+
+          Process ExplorerWindowProcess = new Process();
+ 
+           ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
+          ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + objModel.localPath + "\""; ;
+
+          ExplorerWindowProcess.Start();
+
+     }
+
+
+        void setDownloadVis()
+        {
+            DownloadVis = Visibility.Visible;
+            CompleteVis = Visibility.Collapsed;
+        }
+
+        void setCompleteVis()
+        {
+            DownloadVis = Visibility.Collapsed;
+            CompleteVis = Visibility.Visible;
+        }
+
+        Visibility completeVis;
+
+        public Visibility CompleteVis
+        {
+            get
+            {
+                return this.completeVis;
+            }
+            set
+            {
+                this.completeVis = value;
+                NotifyOfPropertyChange(() => this.CompleteVis);
+            }
+        }
+
+        Visibility downloadVis;
+
+        public Visibility DownloadVis
+        {
+            get
+            {
+                return this.downloadVis;
+            }
+            set
+            {
+                this.downloadVis = value;
+                NotifyOfPropertyChange(() => this.DownloadVis);
+            }
         }
 
         

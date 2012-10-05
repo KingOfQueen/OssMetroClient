@@ -11,7 +11,6 @@
 
 using Caliburn.Micro;
 using MahApps.Metro.Controls;
-using OssClientMetro.Converters;
 using SortListView.Extention;
 using System;
 using System.Diagnostics;

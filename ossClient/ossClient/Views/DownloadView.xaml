@@ -20,27 +20,113 @@
     <Grid Name="root">
         <Grid.Resources>
             <DataTemplate x:Key="FileNameColumnDataTemplate">
-                <Grid Height="50">
-                    <ProgressBar Value="{Binding Percent}"  IsIndeterminate="False" Height="30" VerticalAlignment="Center"></ProgressBar>
-                    <TextBlock Text="{Binding displayName}" Foreground="White" VerticalAlignment="Center"></TextBlock>
-                </Grid>
-
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding IconUri}" Width="15" Height="15" Margin="5,0,5,0"/>
+                    <TextBlock Text="{Binding displayName}"/>
+                </StackPanel>
             </DataTemplate>
 
-            <DataTemplate x:Key="ModifyTimeColumnDataTemplate">
+            <DataTemplate x:Key="PercentColumnDataTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Speed,Converter={StaticResource LongSizeToString}}"/>
-                    <TextBlock Text="/S" />
-                    <TextBlock Text="{Binding ProcessSize, Converter={StaticResource LongSizeToString}}" Margin="10,0,0,0"/>
-                    <TextBlock Text="/" />
-                    <TextBlock Text="{Binding Size, Converter={StaticResource LongSizeToString}}"/>
+                    <ProgressBar Value="{Binding Percent}"  IsIndeterminate="False" Height="10" Width="80" VerticalAlignment="Center"></ProgressBar>
+                    <TextBlock Text="{Binding Percent}"  VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                    <TextBlock Text=" %"  VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
 
 
             </DataTemplate>
 
+            <DataTemplate x:Key="SpeedColumnDataTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Speed,Converter={StaticResource LongSizeToString}}"/>
+                    <TextBlock Text="/S" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="OperateColumnDataTemplate">
+                <StackPanel Orientation="Horizontal">
+
+                    <Button Height="24" ToolTip="打开所在文件夹" Style="{StaticResource MyMetroButton}"  cal:Message.Attach="[Event Click] = [openLocalFolder()]">
+                        <Image Source="../Images/openfolder.png" Height="16" Margin="5,0,5,0"></Image>
+                    </Button>
+                    <Button Height="24"  ToolTip="删除" Style="{StaticResource MyMetroButton}"  cal:Message.Attach="[Event Click] = [deleteOperate()]">
+                        <Image Source="../Images/delete2.png" Height="16" Margin="5,0,5,0"></Image>
+                    </Button>
+                </StackPanel>
+
+
+            </DataTemplate>
+
+            <Style TargetType="{x:Type ListViewItem}">
+                <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="MinHeight" Value="25" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+                <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                <Grid Tag="{Binding DataContext, ElementName=root}" Background="Transparent">
+                                    <Grid.ContextMenu >
+                                        <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                            <MenuItem Header="打开本地文件"  cal:Message.Attach="[Event Click] = [openLocalFolder()]"></MenuItem>
+                                            <MenuItem Header="删除"  cal:Message.Attach="[Event Click] = [deleteOperate()]"></MenuItem>
+                                        </ContextMenu>
+                                    </Grid.ContextMenu>
+                                    <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                    <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                                    <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
+                                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{DynamicResource AccentColor3}" />
+                                        </Setter.Value>
+                                    </Setter>
+
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="true" />
+                                        <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="True" />
+                                        <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </Grid.Resources>
-        <Grid.RowDefinitions>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -55,85 +141,36 @@
                 <Image Source="../Images/delete2.png" Margin="5,0,5,0"></Image>
                 <TextBlock Text="删除" FontSize="16" ></TextBlock>
             </StackPanel>
-        </Button>
-        <ListView Grid.Row="1" x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top" Margin="0,0,10,0">
+        </Button>-->
+        <ListView Visibility="{Binding DownloadVis}" x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top" Margin="0,0,10,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" />
-                    <GridViewColumn Header="大小"  CellTemplate="{StaticResource ModifyTimeColumnDataTemplate}" Width="200"/>
+                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="180" />
+                    <GridViewColumn Header="大小"   DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="Auto"/>
+                    <GridViewColumn Header="进度"  CellTemplate="{StaticResource PercentColumnDataTemplate}" Width="180"/>
+                    <GridViewColumn Header="速度"  CellTemplate="{StaticResource SpeedColumnDataTemplate}" Width="Auto"/>
+                    <GridViewColumn Header="操作"  CellTemplate="{StaticResource OperateColumnDataTemplate}" Width="Auto"/>
+                    
+                    
                 </GridView>
             </ListView.View>
 
-            
-            <ListView.ItemContainerStyle>              
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="MinHeight" Value="25" />
-                    <Setter Property="Margin" Value="0,0,0,0" />
-                    <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                                    <Grid Tag="{Binding DataContext, ElementName=root}" Background="Transparent">
-                                        <Grid.ContextMenu >
-                                            <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                                                <MenuItem Header="打开本地文件"  cal:Message.Attach="[Event Click] = [openLocalFolder()]"></MenuItem>
-                                                <MenuItem Header="删除"  cal:Message.Attach="[Event Click] = [deleteOperate()]"></MenuItem>
-                                            </ContextMenu>
-                                        </Grid.ContextMenu>
-                                        <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                        <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
-                                        <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="true">
-                                        <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="Bd" Property="Background">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                            </Setter.Value>
-                                        </Setter>
+           
+        </ListView>
 
-                                    </Trigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsSelected" Value="true" />
-                                            <Condition Property="Selector.IsSelectionActive" Value="True" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="Bd">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                                    </MultiTrigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsSelected" Value="True" />
-                                            <Condition Property="Selector.IsSelectionActive" Value="False" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="Bd">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                                    </MultiTrigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
+        <ListView  Visibility="{Binding CompleteVis}"   ItemsSource="{Binding ObjectList}"  SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top" Margin="0,0,10,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="180" />
+                    <GridViewColumn Header="大小"   DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="Auto"/>                    
+                    <GridViewColumn Header="完成时间" DisplayMemberBinding="{Binding CompleteTime}"   Width="Auto"/>
+                    <GridViewColumn Header="操作"  CellTemplate="{StaticResource OperateColumnDataTemplate}" Width="Auto"/>
+
+
+                </GridView>
+            </ListView.View>
+
+
         </ListView>
         <!--<ListBox  x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}" Height="400" VerticalAlignment="Top" >
             <ListBox.ItemTemplate>

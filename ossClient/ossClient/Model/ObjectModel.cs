@@ -125,5 +125,18 @@ namespace OssClientMetro.Model
         }
 
         public string localPath { get; set; }
+
+        public DateTime completeTime;
+
+        public string CompleteTime
+        {
+            get
+            {
+                if (completeTime != null)
+                    return this.completeTime.ToLocalTime().ToString();
+
+                return "";
+            }
+        }
     } 
 }
