@@ -31,10 +31,10 @@ namespace OssClientMetro.ViewModels
         downloadingListModel = new BindableCollection<ObjectModel>();
          uploadingListModel = new BindableCollection<ObjectModel>();
             compeletedListModel = new BindableCollection<ObjectModel>();
-            var temp = CompleteTaskListFile.readFromFile();
-            if (temp != null)
+            objectModelForSerialList = CompleteTaskListFile.readFromFile();
+            if (objectModelForSerialList != null)
             {
-                foreach (ObjectModelForSerial obj in temp)
+                foreach (ObjectModelForSerial obj in objectModelForSerialList)
                 {
 
                     if (obj.key.EndsWith("/"))
@@ -53,7 +53,11 @@ namespace OssClientMetro.ViewModels
                         compeletedListModel.Add(fileModel);
                     }
                 }
-                events.Publish(new TaskCountEvent(compeletedListModel.Count ,TaskCountEventType.COMPELETED));
+                events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
+            }
+            else
+            {
+                objectModelForSerialList = new List<ObjectModelForSerial>();
             }
  
 
@@ -138,25 +142,51 @@ namespace OssClientMetro.ViewModels
         public string key { get; set; }
         public string localPath { get; set; }
         public long size { get; set; }
+        public List<ObjectModelForSerial> objectModelForSerialList;
+
+
         void addToCompleteList(ObjectModel obj)
         {
               compeletedListModel.Add(obj);
-              List<ObjectModelForSerial> temp = new List<ObjectModelForSerial>();
-              foreach (ObjectModel objM in compeletedListModel)
-              {
-                  temp.Add(new ObjectModelForSerial()
+              objectModelForSerialList.Add(new ObjectModelForSerial()
                   {
-                      bucketName = objM.bucketName,
-                      key = objM.key,
-                      displayName = objM.displayName,
-                      localPath = objM.localPath,
-                      size = objM.Size
+                      bucketName = obj.bucketName,
+                      key = obj.key,
+                      displayName = obj.displayName,
+                      localPath = obj.localPath,
+                      size = obj.Size
                   });
-              }
 
 
-              CompleteTaskListFile.writeToFile(temp);
+              //List<ObjectModelForSerial> temp = new List<ObjectModelForSerial>();
+              //foreach (ObjectModel objM in compeletedListModel)
+              //{
+              //    temp.Add(new ObjectModelForSerial()
+              //    {
+              //        bucketName = objM.bucketName,
+              //        key = objM.key,
+              //        displayName = objM.displayName,
+              //        localPath = objM.localPath,
+              //        size = objM.Size
+              //    });
+              //}
+
+
+              CompleteTaskListFile.writeToFile(objectModelForSerialList);
         }
+
+        void deleteInCompleteList(ObjectModel obj)
+        {
+            compeletedListModel.Remove(obj);
+            objectModelForSerialList.RemoveAll( x => ( x.bucketName == obj.bucketName
+                     && x.key == obj.key
+                     && x.displayName == obj.displayName
+                     && x.localPath == obj.localPath));
+
+
+            CompleteTaskListFile.writeToFile(objectModelForSerialList);
+        }
+
 
         public BindableCollection<ObjectModel> downloadingListModel;
         public BindableCollection<ObjectModel> uploadingListModel;
@@ -196,18 +226,22 @@ namespace OssClientMetro.ViewModels
         public void deleteOperate()
         {
             ObjectModel objModel = objectList[selectedIndex];
-            if (objModel is FileModel)
-                objModel.tokenSource.Cancel();
+            if (compeletedListModel == objectList)
+            {
+                deleteInCompleteList(objModel);
+                events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
+            }
             else
-                ((FolderModel)objModel).cancelTask();
+            {
+                if (objModel is FileModel)
+                    objModel.tokenSource.Cancel();
+                else
+                    ((FolderModel)objModel).cancelTask();
+            }
 
 
         }
 
-        public void deleteFolder()
-        { 
-
-        }
         
     }
 }

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                 xmlns:cal="http://www.caliburnproject.org"
-             Height="400" Width="600">
+             Height="Auto" Width="Auto">
     <UserControl.Resources>
 
         <ResourceDictionary>
@@ -40,12 +40,27 @@
             </DataTemplate>
 
         </Grid.Resources>
-
-        <ListView  x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button   Style="{StaticResource MyMetroButton}"  x:Name="openLocalFolder"  HorizontalAlignment="Left" Height="25" Margin="10,0,0,0" VerticalAlignment="Center" Width="140">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../Images/openfolder.png" Margin="5,0,5,0"></Image>
+                <TextBlock Text="打开文件位置" FontSize="16"    ></TextBlock>
+            </StackPanel>
+        </Button>
+        <Button   Style="{StaticResource MyMetroButton}"  x:Name="deleteOperate" HorizontalAlignment="Left" Height="24" Margin="150,0,0,0" VerticalAlignment="Center" Width="84">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../Images/delete2.png" Margin="5,0,5,0"></Image>
+                <TextBlock Text="删除" FontSize="16" ></TextBlock>
+            </StackPanel>
+        </Button>
+        <ListView Grid.Row="1" x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}"  Height="400" VerticalAlignment="Top" Margin="0,0,10,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="displayName" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" />
-                    <GridViewColumn Header="Size"  CellTemplate="{StaticResource ModifyTimeColumnDataTemplate}" Width="200"/>
+                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" />
+                    <GridViewColumn Header="大小"  CellTemplate="{StaticResource ModifyTimeColumnDataTemplate}" Width="200"/>
                 </GridView>
             </ListView.View>
 

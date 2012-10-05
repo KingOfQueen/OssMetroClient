@@ -62,7 +62,7 @@
                 <ListViewItem Content="2"></ListViewItem>
             </ListView>-->
             <ContentControl Grid.Column="0" x:Name="LeftView"/>
-        <ContentControl  Grid.Column="1" x:Name="RightView" HorizontalAlignment="Stretch"/>
+            <ContentControl  Grid.Column="1" x:Name="RightView"  HorizontalContentAlignment="Stretch"  VerticalContentAlignment="Stretch"/>
     </Grid>
     </Controls:MetroContentControl>
 </Controls:MetroWindow>
