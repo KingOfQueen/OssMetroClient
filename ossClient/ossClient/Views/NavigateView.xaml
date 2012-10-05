@@ -38,12 +38,7 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                             <Border Padding="{TemplateBinding Padding}"  Margin="0,0,0,0">
-                                <Border.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="dakai"></MenuItem>
-                                        <MenuItem Header="dakai2"></MenuItem>
-                                    </ContextMenu>
-                                </Border.ContextMenu>
+                               
                                 <Grid Background="Transparent" SnapsToDevicePixels="False">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="19"/>
@@ -123,12 +118,7 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                             <Border Padding="{TemplateBinding Padding}"  Margin="0,0,0,0">
-                                <Border.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="dakai"></MenuItem>
-                                        <MenuItem Header="style2"></MenuItem>
-                                    </ContextMenu>
-                                </Border.ContextMenu>
+  
                                 <Grid Background="Transparent" SnapsToDevicePixels="False">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="19"/>
@@ -207,7 +197,7 @@
             
           
         </StackPanel.Resources>
-        <Expander Header="Butkets" FontSize="16"  Style="{StaticResource ExpanderStyle2}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
+        <Expander Header="Buckets" FontSize="16"  Style="{StaticResource ExpanderStyle2}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
             <StackPanel Orientation="Vertical">
                 <ListView HorizontalContentAlignment="Stretch"  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
                     <ListView.ItemTemplate>
@@ -220,9 +210,15 @@
 
 
                                 </Grid.ContextMenu>
-                                <TextBlock  Text="{Binding Name}"  
-                                       Margin='2 0 0 0'   
-                                       FontSize='30'  >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="16"></ColumnDefinition>
+                                        <ColumnDefinition Width="16"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="../Images/diskdrive.png" Margin="-5" Grid.Column="1"></Image>
+                                        <TextBlock Grid.Column="2"  Text="{Binding Name}"  
+                                       Margin='7 0 0 0'   
+                                       FontSize='16'  >
                                </TextBlock>
                             </Grid>
                         </DataTemplate>
@@ -241,20 +237,38 @@
                 <ListView Margin="0,0,0,0"  SelectedIndex="{Binding SelectedViewIndex}" BorderBrush="{DynamicResource AccentColorBrush}">
                 <ListViewItem x:Name="downloadingView" cal:Message.Attach="[Event Selected] = [Action downloadingView()]"   Height="24">
                     <Grid>
-                        <TextBlock Text="Downloading"></TextBlock>
-                            <TextBlock Text="{Binding DownloadingCount}" Foreground="{DynamicResource AccentColorBrush}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="16"></ColumnDefinition>
+                                <ColumnDefinition Width="16"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="../Images/downloading.png" Margin="-5" Grid.Column="1"></Image>
+                            <TextBlock Margin='7 0 0 0' Text="正在下载"  Grid.Column="2"></TextBlock>
+                            <TextBlock  Grid.Column="2" Text="{Binding DownloadingCount}"  HorizontalAlignment="Left" Margin="150,0,0,0"></TextBlock>
                     </Grid>
                 </ListViewItem>
                 <ListViewItem x:Name="uploadingView"  cal:Message.Attach="[Event Selected] = [Action uploadingView()]" Height="24">
                     <Grid>
-                        <TextBlock Text="Uploading"></TextBlock>
-                            <TextBlock   HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding UploadingCount}" Foreground="{DynamicResource AccentColorBrush}"></TextBlock>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="16"></ColumnDefinition>
+                                <ColumnDefinition Width="16"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="../Images/uploading.png" Margin="-5" Grid.Column="1"></Image>
+                            <TextBlock Margin='7 0 0 0' Grid.Column="2" Text="正在上传"></TextBlock>
+                            <TextBlock Grid.Column="2"  HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding UploadingCount}" ></TextBlock>
                     </Grid>
                 </ListViewItem>
                 <ListViewItem x:Name="compeletedView"  cal:Message.Attach="[Event Selected] = [Action compeletedView()]"  Height="24">
                     <Grid>
-                        <TextBlock Text="compeleted"></TextBlock>
-                            <TextBlock HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding CompeletedCount}" Foreground="{DynamicResource AccentColorBrush}"></TextBlock>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="16"></ColumnDefinition>
+                                <ColumnDefinition Width="16"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="../Images/complete.png" Margin="-5" Grid.Column="1"></Image>
+                            <TextBlock  Margin='7 0 0 0' Grid.Column="2"  Text="已完成"></TextBlock>
+                            <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="150,0,0,0" Text="{Binding CompeletedCount}" ></TextBlock>
                     </Grid>
                  </ListViewItem>
             </ListView>
