@@ -8,6 +8,7 @@
         Icon="Images/1.ico"
         ShowIconOnTitleBar="False"
         ShowInTaskbar="True"
+        xmlns:cal="http://www.caliburnproject.org"
         Title="OssMetroClient" Height="594" Width="938" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -45,7 +46,7 @@
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
-            <Button Content="注销">
+            <Button Content="注销"  cal:Message.Attach="[Event Click] = [loginOut()]">
 
             </Button>
 
