@@ -28,4 +28,35 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+
+    <ControlTemplate x:Key="ModalTemplateKey" TargetType="{x:Type Window}">
+        <Border x:Name="PART_Border" BorderBrush="{DynamicResource GrayBrush3}" BorderThickness="0,3,0,3" Background="{TemplateBinding Background}">
+            <Grid>
+                <AdornerDecorator>
+                    <ContentPresenter />
+                </AdornerDecorator>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="ModalDialogStyle" TargetType="{x:Type Window}">
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="ShowInTaskbar" Value="False" />
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template" Value="{StaticResource ModalTemplateKey}" />
+    </Style>
+
+
 </ResourceDictionary>

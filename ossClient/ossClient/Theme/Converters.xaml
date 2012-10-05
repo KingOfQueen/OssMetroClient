@@ -3,6 +3,9 @@
                     xmlns:converters="clr-namespace:OssClientMetro.Converters">
     <converters:BoolToVisibleConverter x:Key="BoolToVisibleConverter"/>
     <converters:LongSizeToString x:Key="LongSizeToString"/>
-
+    <converters:BoolToOpacity x:Key="BoolToOpacity"/>
+    <converters:BoolToBackgroundColor x:Key="BoolToBackgroundColor"/>
     
+
+
 </ResourceDictionary>

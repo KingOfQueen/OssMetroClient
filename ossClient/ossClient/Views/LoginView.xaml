@@ -30,14 +30,14 @@
         <Grid>
         
 
-            <TextBox x:Name="UserName" Controls:TextboxHelper.Watermark="Enter Username"
+            <TextBox x:Name="UserName" Controls:TextboxHelper.Watermark="请输入用户名"
                                          Controls:TextboxHelper.ClearTextButton="True"
 
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
                                              Width="204"
 										     VerticalContentAlignment="Center" Margin="26,58,0,0" />
-            <PasswordBox x:Name="UserPassword" Controls:TextboxHelper.Watermark="Enter Password"
+            <PasswordBox x:Name="UserPassword" Controls:TextboxHelper.Watermark="请输入密码"
 											     VerticalContentAlignment="Center" Margin="26,98,0,0" 
                          controls:PasswordBoxAssistant.BindPassword="true"  controls:PasswordBoxAssistant.BoundPassword="{Binding Path=UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="204" Height="20" VerticalAlignment="Top"/>
             <Button x:Name="login" Style="{DynamicResource SquareButtonStyle}" Content="登录" HorizontalAlignment="Left" Margin="155,298,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,1.364"/>

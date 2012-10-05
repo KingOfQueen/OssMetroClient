@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace OssClientMetro.Converters
 {
-    class BoolToVisibleConverter : IValueConverter
+
+    class BoolToBackgroundColor : IValueConverter
     {
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             bool temp = bool.Parse(value.ToString());
             if (temp)
-                return Visibility.Visible;
+                return Colors.Black;
 
             else
-                return Visibility.Collapsed;
+                return Colors.Transparent;
 
         }
 

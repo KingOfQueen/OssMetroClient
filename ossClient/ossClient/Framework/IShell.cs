@@ -8,5 +8,8 @@ namespace OssClientMetro.Framework
 {
     public interface IShell
     {
+         void ShowOverlay();
+
+         void HideOverlay();
     }
 }

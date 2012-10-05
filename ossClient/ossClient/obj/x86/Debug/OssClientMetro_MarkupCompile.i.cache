@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\github\ossClient\ossClient\ossClient\App.xaml
-15-1089365643
+16-354774152
 
-70-513280198
+752014161673
 241512457895
-Theme\Buttons.xaml;Theme\ContextMenu.xaml;Theme\Converters.xaml;Theme\Expander.xaml;Theme\Generic.xaml;Views\CreateFolderView.xaml;Views\DownloadView.xaml;Views\ObjectView.xaml;Resources\Icons.xaml;Views\NavigateView.xaml;Views\RightView.xaml;Views\LoginView.xaml;Views\LeftView.xaml;MainWindowView.xaml;Views\WelcomeView.xaml;
+Theme\Buttons.xaml;Theme\ContextMenu.xaml;Theme\Converters.xaml;Theme\Expander.xaml;Theme\Generic.xaml;Views\CreateFolderView.xaml;Views\DownloadView.xaml;Views\MetroMessageBoxView.xaml;Views\ObjectView.xaml;Resources\Icons.xaml;Views\NavigateView.xaml;Views\RightView.xaml;Views\LoginView.xaml;Views\LeftView.xaml;MainWindowView.xaml;Views\WelcomeView.xaml;
 
-True
+False
 

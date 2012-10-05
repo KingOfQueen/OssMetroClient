@@ -88,7 +88,10 @@
     </Controls:MetroWindow.WindowCommands>
 
     <Controls:MetroContentControl>
-    <Grid>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{Binding Path=IsOverlayVisible, Converter={StaticResource BoolToBackgroundColor}}" Opacity="{Binding Path=IsOverlayVisible, Converter={StaticResource BoolToOpacity}}">
+            <Grid>
+      
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="256"/>
             <ColumnDefinition/>
@@ -101,5 +104,6 @@
             <ContentControl Grid.Column="0" x:Name="LeftView"/>
             <ContentControl  Grid.Column="1" x:Name="RightView"  HorizontalContentAlignment="Stretch"  VerticalContentAlignment="Stretch"/>
     </Grid>
+        </Border>
     </Controls:MetroContentControl>
 </Controls:MetroWindow>
