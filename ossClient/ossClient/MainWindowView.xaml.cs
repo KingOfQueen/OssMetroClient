@@ -81,5 +81,7 @@ namespace OssClientMetro
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), MahApps.Metro.Theme.Dark);
         }
 
+
+
     }
 }

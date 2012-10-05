@@ -39,10 +39,44 @@
                 </StackPanel>-->
                 <Button.ContextMenu>
                     <ContextMenu>
-                            <MenuItem Header="Light Red" Click="MiLightRed" />
-                            <MenuItem Header="Light Green" Click="MiLightGreen" />
-                            <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                            <MenuItem Header="Light Purple" Click="MiLightPurple" />
+                            <MenuItem  Click="MiLightRed" >
+                                <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="24" Height="16"  Fill="#FFcb0000"></Rectangle>
+                                    <TextBlock Text="淡红色" Margin="4,0,0,0"></TextBlock>
+                                </StackPanel>
+                                </MenuItem.Header>                            
+                            </MenuItem>
+                          
+                        <MenuItem  Click="MiLightGreen" >
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="24" Height="16"  Fill="#FF48cb00"></Rectangle>
+                                    <TextBlock Text="淡绿色" Margin="4,0,0,0"></TextBlock>
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
+
+                        <MenuItem  Click="MiLightBlue" >
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="24" Height="16"  Fill="#FF086F9E"></Rectangle>
+                                    <TextBlock Text="淡蓝色" Margin="4,0,0,0"></TextBlock>
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
+
+                        <MenuItem  Click="MiLightPurple" >
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="24" Height="16"  Fill="#FFb400ff"></Rectangle>
+                                    <TextBlock Text="淡粉红色" Margin="4,0,0,0"></TextBlock>
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
+
+
+
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
