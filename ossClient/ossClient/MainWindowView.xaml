@@ -9,7 +9,7 @@
         ShowIconOnTitleBar="False"
         ShowInTaskbar="True"
         xmlns:cal="http://www.caliburnproject.org"
-        Title="OssMetroClient" Height="594" Width="938" WindowStartupLocation="CenterScreen">
+        Title="OssMetroClient" Height="594" Width="938" WindowStartupLocation="CenterScreen" FontFamily="Microsoft YaHei">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -25,7 +25,7 @@
         </Window.Resources>
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Content="换肤" Click="Button_Click" ContextMenuService.IsEnabled="False">
+            <Button Content="换肤" Click="Button_Click" ContextMenuService.IsEnabled="False" >
                 <!--<StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.Resources>
