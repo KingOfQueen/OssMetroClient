@@ -96,6 +96,7 @@ namespace OssClientMetro.ViewModels
 
         public async void OpenFolder()
        {
+           ProgressVisible = true;
            ObjectModel temp = objectList[selectedIndex];
 
            if (temp is FolderModel)
@@ -105,9 +106,10 @@ namespace OssClientMetro.ViewModels
                history.add(temp.bucketName + "/" + temp.key);
               // addToComboBox(temp.bucketName + "/" + temp.key);
            }
+           ProgressVisible = false;
        }
 
-        public async void refresh()
+        public async Task refresh()
         {
             currentFolder = await folderListModel.refreshFolderModel(currentFolder.bucketName, currentFolder.key);
             refreshObjectList(currentFolder);
@@ -134,19 +136,22 @@ namespace OssClientMetro.ViewModels
          public async void Handle(CreateFolderEvent message)
          {
              try
-             { 
+             {
+                  ProgressVisible = true;
                   await createFolder(currentFolder.bucketName, currentFolder.key + message.folderName + "/");
-                  refresh();
+                  await refresh();
+                  ProgressVisible = false;
 
              }
              catch (Exception ex)
              {
-
+                 ProgressVisible = false;
              }
          }
 
          public async void delete()
          {
+             ProgressVisible = true;
              if (selectedIndex < 0)
              {
 
@@ -164,16 +169,19 @@ namespace OssClientMetro.ViewModels
                     await folderListModel.deleteFolder(objModel.bucketName, objModel.key);
                 }
               
-                 refresh();
+                await refresh();
              }
+             ProgressVisible = false;
          }
 
 
-       public  void goback()
+       public async  void goback()
          {
+             ProgressVisible = true;
             history.goBack();
             //addToComboBox(history.NowPath);
-            refreshPath();           
+            await refreshPath();
+            ProgressVisible = false;
          }
 
        async Task refreshPath()
@@ -198,6 +206,7 @@ namespace OssClientMetro.ViewModels
 
        public async void searchOperate(string text)
        {
+           ProgressVisible = true;
            if (text != "")
            {
                FolderModel folderModel = new FolderModel();
@@ -235,12 +244,14 @@ namespace OssClientMetro.ViewModels
                }
 
                refreshObjectList(folderModel);
+               ProgressVisible = false;
            }
         }
 
 
        public async void searchOpenLoaction()
        {
+           ProgressVisible = true;
            ObjectModel objModel = objectList[selectedIndex];
            string[] ss = objModel.key.Split('/');
            string pathKey = "";
@@ -263,6 +274,7 @@ namespace OssClientMetro.ViewModels
            history.add(objModel.bucketName + "/" + pathKey);
            ObjectModel temp = objectList.First(x => objModel.bucketName == x.bucketName && objModel.key == x.key);
            selectedIndex = objectList.IndexOf(temp);
+           ProgressVisible = false;
        }
 
 
@@ -346,7 +358,8 @@ namespace OssClientMetro.ViewModels
                         {
                             try
                             {
-                                string fileName = foulderPath + objModel.key.Substring(currentFolder.key.Length);
+                                
+                                string fileName = foulderPath + objModel.displayName;
                                 objModel.localPath = fileName;
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
                                 ((FileModel)objModel).startTimer();
@@ -367,10 +380,10 @@ namespace OssClientMetro.ViewModels
                             try
                             {
                                 await folderListModel.initFolderForDownload((FolderModel)objModel);
-                                objModel.localPath = foulderPath + objModel.key.Substring(currentFolder.key.Length);
+                                objModel.localPath = foulderPath + objModel.displayName;
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
                                 ((FolderModel)objModel).startTimer();
-                                await downloadFolder((FolderModel)objModel, foulderPath + objModel.key.Substring(currentFolder.key.Length));
+                                await downloadFolder((FolderModel)objModel, objModel.localPath);
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
                             }
                             catch (Exception ex)
@@ -470,6 +483,7 @@ namespace OssClientMetro.ViewModels
 
        private async Task createFolders(FolderModel folderModel, string localDir)
        {
+           ProgressVisible = true;
            DirectoryInfo dirInfo = new DirectoryInfo(localDir);
 
            
@@ -481,6 +495,7 @@ namespace OssClientMetro.ViewModels
                await createFolders(new FolderModel() { bucketName = folderModel.bucketName, key = folderModel.key + sonDirInfo.Name + "/" }, 
                    sonDirInfo.FullName);
            }
+           ProgressVisible = false;
        }
 
        //private async Task uploadLargeFile(string fileName)
@@ -669,7 +684,20 @@ namespace OssClientMetro.ViewModels
                refreshPath(SelectedSourceCountryTwoLetterCode);
            }
        }
+       bool progressVisible = false;
 
+      public bool ProgressVisible
+       {
+           get
+           {
+               return this.progressVisible;
+           }
+           set
+           {
+               this.progressVisible = value;
+               NotifyOfPropertyChange(() => this.ProgressVisible);
+           }
+       }
 
        //void addToComboBox(string path)
        //{

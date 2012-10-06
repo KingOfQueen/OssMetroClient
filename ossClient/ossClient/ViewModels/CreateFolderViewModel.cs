@@ -42,5 +42,10 @@ namespace OssClientMetro.ViewModels
             this.TryClose();
         }
 
+        public void Cancel()
+        {
+            this.TryClose();
+        }
+
     }
 }

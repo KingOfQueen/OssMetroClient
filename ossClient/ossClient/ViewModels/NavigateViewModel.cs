@@ -54,8 +54,12 @@ namespace OssClientMetro.ViewModels
 
         }
 
+        public bool IsDeleteAvialable
+        {
+            get { return selectedBuketIndex > -1; }
+        }
 
-        private int m_selectedBuketIndex = 0;
+        private int m_selectedBuketIndex = -1;
 
         public int selectedBuketIndex
         {
@@ -66,7 +70,9 @@ namespace OssClientMetro.ViewModels
             set
             {
                 this.m_selectedBuketIndex = value;
-                NotifyOfPropertyChange(() => this.selectedBuketIndex);               
+                NotifyOfPropertyChange(() => this.selectedBuketIndex);
+                NotifyOfPropertyChange(() => this.IsDeleteAvialable);
+                Publish();
             }
         }
 
@@ -150,7 +156,7 @@ namespace OssClientMetro.ViewModels
              downloadingView();
         }
 
-        private int selectedViewIndex;
+        private int selectedViewIndex = -1;
 
         public int SelectedViewIndex
         {

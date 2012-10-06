@@ -60,7 +60,7 @@
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="3" />
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   Fill="Transparent"
                                    IsHitTestVisible="false"
                                    Opacity="0"
                                    RadiusY="3"
@@ -104,6 +104,7 @@
                             </Setter>
                             <Setter Property="RenderTransformOrigin" Value=".5,.5"/>
                         </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
                 

@@ -42,7 +42,7 @@
                             <MenuItem  Click="MiLightRed" >
                                 <MenuItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Rectangle Width="24" Height="16"  Fill="#FFcb0000"></Rectangle>
+                                    <Rectangle Width="24" Height="16"  Fill="#FFba3333"></Rectangle>
                                     <TextBlock Text="淡红色" Margin="4,0,0,0"></TextBlock>
                                 </StackPanel>
                                 </MenuItem.Header>                            
@@ -51,7 +51,7 @@
                         <MenuItem  Click="MiLightGreen" >
                             <MenuItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Rectangle Width="24" Height="16"  Fill="#FF48cb00"></Rectangle>
+                                    <Rectangle Width="24" Height="16"  Fill="#FF6dd533"></Rectangle>
                                     <TextBlock Text="淡绿色" Margin="4,0,0,0"></TextBlock>
                                 </StackPanel>
                             </MenuItem.Header>
@@ -60,7 +60,7 @@
                         <MenuItem  Click="MiLightBlue" >
                             <MenuItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Rectangle Width="24" Height="16"  Fill="#FF086F9E"></Rectangle>
+                                    <Rectangle Width="24" Height="16"  Fill="#FF41b1e1"></Rectangle>
                                     <TextBlock Text="淡蓝色" Margin="4,0,0,0"></TextBlock>
                                 </StackPanel>
                             </MenuItem.Header>
@@ -69,7 +69,7 @@
                         <MenuItem  Click="MiLightPurple" >
                             <MenuItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Rectangle Width="24" Height="16"  Fill="#FFb400ff"></Rectangle>
+                                    <Rectangle Width="24" Height="16"  Fill="#FFc333ff"></Rectangle>
                                     <TextBlock Text="淡粉红色" Margin="4,0,0,0"></TextBlock>
                                 </StackPanel>
                             </MenuItem.Header>

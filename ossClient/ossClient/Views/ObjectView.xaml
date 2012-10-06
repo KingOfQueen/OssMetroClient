@@ -179,8 +179,8 @@
                 <TextBlock Text="删除" FontSize="16" ></TextBlock>
             </StackPanel>
         </Button>
-
-        <ListView  ItemContainerStyle="{DynamicResource test}"  Grid.Row="2" x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="429" VerticalAlignment="Top" AllowDrop="True"   
+        <StackPanel Grid.Row="2">
+        <ListView  ItemContainerStyle="{DynamicResource test}"   x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="429" VerticalAlignment="Top" AllowDrop="True"   
                    cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]" Margin="0,0,10,0" ext:ListViewBehavior.HeaderSort="True">
             <!--<ListView.ContextMenu>
                 <ContextMenu>
@@ -196,12 +196,11 @@
                    
                 </GridView>
             </ListView.View>
-           
-
-
-
-           
         </ListView>
+            <Controls:ProgressIndicator DataContext="{Binding DataContext, ElementName=root}" ProgressColour="{StaticResource AccentColorBrush}"
+                                                    Height="6"
+                                                    Width="600" Visibility="{Binding  ProgressVisible, Converter={StaticResource BoolToVisibleConverter}}"  />
+        </StackPanel>
         <!--<ComboBox 
              ItemsSource="{Binding Countries}"
                     DisplayMemberPath="Path"

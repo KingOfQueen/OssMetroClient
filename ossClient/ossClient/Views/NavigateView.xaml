@@ -149,7 +149,7 @@
                                                 </Rectangle.Fill>
                                             </Rectangle>
                                         </Button>
-                                        <Button ToolTip="删除" Style="{DynamicResource MyMetroButton}" Grid.Column="4" cal:Message.Attach="[Event Click] = [Action deleteBucket()]">
+                                        <Button ToolTip="删除" Style="{DynamicResource MyMetroButton}" Grid.Column="4" IsEnabled="{Binding IsDeleteAvialable}" cal:Message.Attach="[Event Click] = [Action deleteBucket()]">
                                             <Image Source="../Images/delete2.png" Height="16" Margin="5,0,5,0"></Image>
                                         </Button>
 
@@ -193,7 +193,8 @@
                         <ControlTemplate TargetType="{x:Type Expander}">
                             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="true">
                                 <StackPanel Orientation="Vertical">
-                                    <ToggleButton Height="40" x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle2}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    <ToggleButton Height="40" x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" 
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle2}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                     <ContentPresenter x:Name="ExpandSite" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 </StackPanel>
                             </Border>
@@ -212,9 +213,9 @@
             
           
         </StackPanel.Resources>
-        <Expander Header="Buckets" FontSize="16"  Style="{StaticResource ExpanderStyle2}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
+        <Expander Header="Buckets" IsExpanded="True" FontSize="16"  Style="{StaticResource ExpanderStyle2}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
             <StackPanel Orientation="Vertical">
-                <ListView HorizontalContentAlignment="Stretch"  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" cal:Message.Attach="[Event SelectionChanged] = [Action Publish()]"  >
+                <ListView HorizontalContentAlignment="Stretch"  x:Name="buckets" SelectedIndex="{Binding selectedBuketIndex}" >
                     <ListView.ItemTemplate>
                     <DataTemplate>
                             <Grid Background="Transparent"  Tag="{Binding DataContext, ElementName=root}">

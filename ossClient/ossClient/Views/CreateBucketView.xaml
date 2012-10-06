@@ -27,7 +27,7 @@
 
             </ComboBox>
             <Button x:Name="Create" Content="确定" HorizontalAlignment="Left" Height="18" Margin="225,127,0,0" VerticalAlignment="Top" Width="61" RenderTransformOrigin="1.062,0.541"/>
-            <Button Content="取消" HorizontalAlignment="Left" Height="18" Margin="308,127,0,0" VerticalAlignment="Top" Width="61"/>
+            <Button x:Name="Cancel" Content="取消" HorizontalAlignment="Left" Height="18" Margin="308,127,0,0" VerticalAlignment="Top" Width="61"/>
 
         </Grid>
     </Controls:MetroContentControl>

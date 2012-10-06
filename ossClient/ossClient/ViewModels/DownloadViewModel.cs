@@ -235,6 +235,26 @@ namespace OssClientMetro.ViewModels
         public void deleteOperate()
         {
             ObjectModel objModel = objectList[selectedIndex];
+            deleteOperate(objModel);
+            //if (compeletedListModel == objectList)
+            //{
+            //    deleteInCompleteList(objModel);
+            //    events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
+            //}
+            //else
+            //{
+            //    if (objModel is FileModel)
+            //        objModel.tokenSource.Cancel();
+            //    else
+            //        ((FolderModel)objModel).cancelTask();
+            //}
+
+
+        }
+
+        public void deleteOperate(ObjectModel objModel)
+        {
+           // ObjectModel objModel = objectList[selectedIndex];
             if (compeletedListModel == objectList)
             {
                 deleteInCompleteList(objModel);
@@ -254,15 +274,27 @@ namespace OssClientMetro.ViewModels
         public void openLocalFolder()
        {
            ObjectModel objModel = objectList[selectedIndex];
-
-          Process ExplorerWindowProcess = new Process();
+           openLocalFolder(objModel);
+          //Process ExplorerWindowProcess = new Process();
  
-           ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
-          ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + objModel.localPath + "\""; ;
+          // ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
+          //ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + objModel.localPath + "\""; ;
 
-          ExplorerWindowProcess.Start();
+          //ExplorerWindowProcess.Start();
 
      }
+        public void openLocalFolder(ObjectModel objModel)
+        {
+           // ObjectModel objModel = objectList[selectedIndex];
+
+            Process ExplorerWindowProcess = new Process();
+
+            ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
+            ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + objModel.localPath + "\""; ;
+
+            ExplorerWindowProcess.Start();
+
+        }
 
 
         void setDownloadVis()

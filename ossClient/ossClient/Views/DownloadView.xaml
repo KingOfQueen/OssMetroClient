@@ -46,10 +46,10 @@
             <DataTemplate x:Key="OperateColumnDataTemplate">
                 <StackPanel Orientation="Horizontal">
 
-                    <Button Height="24" ToolTip="打开所在文件夹" Style="{StaticResource MyMetroButton}"  cal:Message.Attach="[Event Click] = [openLocalFolder()]">
+                    <Button Height="24" ToolTip="打开所在文件夹" Style="{StaticResource MyMetroButton}"  cal:Message.Attach="[Event Click] = [openLocalFolder($dataContext)]">
                         <Image Source="../Images/openfolder.png" Height="16" Margin="5,0,5,0"></Image>
                     </Button>
-                    <Button Height="24"  ToolTip="删除" Style="{StaticResource MyMetroButton}"  cal:Message.Attach="[Event Click] = [deleteOperate()]">
+                    <Button Height="24"  ToolTip="删除" Style="{StaticResource MyMetroButton}"  cal:Message.Attach="[Event Click] = [deleteOperate($dataContext)]">
                         <Image Source="../Images/delete2.png" Height="16" Margin="5,0,5,0"></Image>
                     </Button>
                 </StackPanel>
