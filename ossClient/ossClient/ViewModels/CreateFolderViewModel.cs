@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace OssClientMetro.ViewModels
 {
-    class CreateFolderViewModel : PropertyChangedBase
+    class CreateFolderViewModel : Screen
     {
 
         readonly IEventAggregator events;
@@ -39,6 +39,7 @@ namespace OssClientMetro.ViewModels
         public void Create()
         {
             events.Publish(new CreateFolderEvent(FolderName));
+            this.TryClose();
         }
 
     }

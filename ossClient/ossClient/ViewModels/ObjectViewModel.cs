@@ -13,6 +13,7 @@ using System.IO;
 using OssClientMetro.Services;
 using System.IO.Compression;
 using System.Windows;
+using System.Dynamic;
 
 namespace OssClientMetro.ViewModels
 {
@@ -34,7 +35,7 @@ namespace OssClientMetro.ViewModels
             objectList = new BindableCollection<ObjectModel>();
             folderListModel = _clientService.folders;
             history = new History();
-            Countries = new BindableCollection<TempData>();
+           
         }
 
 
@@ -58,7 +59,11 @@ namespace OssClientMetro.ViewModels
        public void createFolderOperate()
        {
            createFolderVM = new CreateFolderViewModel(events);
-           windowManager.ShowWindow(createFolderVM);
+           dynamic settings = new ExpandoObject();
+           settings.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+          
+           settings.Title = "创建文件夹";
+           windowManager.ShowDialog(createFolderVM, null, settings);
        }
 
        private async Task createFolder(string bucketName, string key)  //key is the parent 
@@ -666,16 +671,16 @@ namespace OssClientMetro.ViewModels
        }
 
 
-       void addToComboBox(string path)
-       {
-           if (Countries.FirstOrDefault(x => x.Path == path) == null)
-                 Countries.Insert(0, new TempData(path));
-           SelectedSourceCountryTwoLetterCode = path;
+       //void addToComboBox(string path)
+       //{
+       //    if (Countries.FirstOrDefault(x => x.Path == path) == null)
+       //          Countries.Insert(0, new TempData(path));
+       //    SelectedSourceCountryTwoLetterCode = path;
            
-       }
+       //}
 
 
-         public BindableCollection<TempData> Countries  { get; set; }
+         //public BindableCollection<AccessControlModel> Countries  { get; set; }
 
          public FolderListModel folderListModel;
          public FolderModel currentFolder;

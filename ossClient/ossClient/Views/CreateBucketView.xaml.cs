@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace OssClientMetro.Views
 {
     /// <summary>
-    /// NavigateView.xaml 的交互逻辑
+    /// CreateBucketWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class NavigateView : UserControl
+    public partial class CreateBucketView : MetroWindow
     {
-        public NavigateView()
+        public CreateBucketView()
         {
             InitializeComponent();
         }
-
     }
 }

@@ -13,12 +13,14 @@ namespace OssClientMetro.ViewModels
     [Export(typeof(ILeftView))]
     public class LeftViewModel : Conductor<ILeftWorkSpace>.Collection.OneActive, ILeftView, IHandle<LoginResultEvent>
     {
+         readonly IWindowManager windowManager;
           readonly IEventAggregator events;
         readonly IClientService clientService;
 
         [ImportingConstructor]
-        public LeftViewModel(IEventAggregator _events, IClientService _clientService)
+        public LeftViewModel(IEventAggregator _events, IClientService _clientService, IWindowManager _windowManager)
         {
+            windowManager = _windowManager;
             events = _events;
             events.Subscribe(this);
             clientService = _clientService;
@@ -34,7 +36,7 @@ namespace OssClientMetro.ViewModels
         {
             if (loginResult.result == Result.SUCCESS)
             {
-                navigateViewModel = new NavigateViewModel(events, clientService);
+                navigateViewModel = new NavigateViewModel(events, clientService, windowManager);
                 ActivateItem(navigateViewModel);
             }
 

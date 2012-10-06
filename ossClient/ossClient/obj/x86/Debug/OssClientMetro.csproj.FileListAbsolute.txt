@@ -50,3 +50,5 @@ D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.pdb
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\OssClientMetro.csprojResolveAssemblyReference.cache
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\MetroMessageBoxView.baml
 D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\MetroMessageBoxView.g.cs
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\CreateBucketView.baml
+D:\github\ossClient\ossClient\ossClient\obj\x86\Debug\Views\CreateBucketView.g.cs

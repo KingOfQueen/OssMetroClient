@@ -124,7 +124,9 @@
                                         <ColumnDefinition Width="19"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="25"/>
-                                    </Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25"/>
+                                            <ColumnDefinition Width="25"/>
+                                        </Grid.ColumnDefinitions>
                                     <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                                         <Path.RenderTransform>
                                             <TransformGroup>
@@ -135,10 +137,23 @@
                                             </TransformGroup>
                                         </Path.RenderTransform>
                                     </Path>
-                                    <Button  Style="{DynamicResource MyMetroButton}" Grid.Column="2" cal:Message.Attach="[Event Click] = [refreshBuckets()]">
+                                    <Button  ToolTip="刷新" Style="{DynamicResource MyMetroButton}" Grid.Column="2" cal:Message.Attach="[Event Click] = [refreshBuckets()]">
                                         <Image Source="../Images/refresh.png"></Image>
                                     </Button>
-                                    <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                                        <Button  ToolTip="新建Bucket" Style="{DynamicResource MyMetroButton}" Grid.Column="3"  cal:Message.Attach="[Event Click] = [Action createBucket2]">
+                                            <Rectangle Width="12"
+                            			Height="12">
+                                                <Rectangle.Fill>
+                                                    <VisualBrush Stretch="Fill"
+                            					Visual="{StaticResource appbar_add}" />
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                        </Button>
+                                        <Button ToolTip="删除" Style="{DynamicResource MyMetroButton}" Grid.Column="4" cal:Message.Attach="[Event Click] = [Action deleteBucket()]">
+                                            <Image Source="../Images/delete2.png" Height="16" Margin="5,0,5,0"></Image>
+                                        </Button>
+
+                                        <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -224,9 +239,8 @@
                         </DataTemplate>
                 </ListView.ItemTemplate>
                 </ListView>
-                <TextBlock x:Name="errorInfo" TextWrapping="Wrap" Foreground="Red" Visibility="{Binding errorInfoVis}" Height="Auto" FontSize="12"></TextBlock>
-                <TextBox Name ="textBox" Text="{Binding inputBucketName}" Visibility="{Binding TextBoxActive, Mode=TwoWay}"  cal:Message.Attach="[Event KeyDown] = [Action keydown($eventArgs)]"></TextBox>
-                <Button  Content="创建bucket" Click="Button_Click_1" cal:Message.Attach="[Event Click] = [Action createBucket2]" ></Button>
+               
+            
             </StackPanel>
         </Expander>
         <Expander Header="任务" FontSize="16" cal:Message.Attach="[Event Expanded] = [Action expanded()]" 

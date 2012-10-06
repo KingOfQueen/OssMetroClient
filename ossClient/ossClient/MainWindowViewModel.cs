@@ -52,8 +52,8 @@ namespace OssClientMetro
 
         public void loginOut()
         {
-            //windowManager.ShowMetroMessageBox("Are you sure you want to delete...", "Confirm Delete",
-            //                       MessageBoxButton.YesNo);
+            windowManager.ShowMetroMessageBox("Are you sure you want to delete...", "Confirm Delete",
+                                   MessageBoxButton.YesNo);
             UserInfoFile.saveFile(new User("", ""));
 
             Properties.Settings.Default.AutoLogin = false;

@@ -7,26 +7,30 @@ using OssClientMetro.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using OssClientMetro.Services;
 
 namespace OssClientMetro.ViewModels
 {
-    class NavigateViewModel : PropertyChangedBase, ILeftWorkSpace, IHandle<BuketSelectedUiUpdateEvent>, IHandle<TaskCountEvent>
+    class NavigateViewModel : PropertyChangedBase, ILeftWorkSpace, IHandle<BuketSelectedUiUpdateEvent>, IHandle<TaskCountEvent>,
+        IHandle<CreateBucketEvent>
     {
+        readonly IWindowManager windowManager;
         readonly IEventAggregator events;
         readonly IClientService clientService;
 
-        public NavigateViewModel(IEventAggregator _events, IClientService _clientService)
+        public NavigateViewModel(IEventAggregator _events, IClientService _clientService,  IWindowManager _windowManager)
         {
             events = _events;
             clientService = _clientService;
             buckets = clientService.buckets;
             events.Subscribe(this);
-
+            windowManager = _windowManager;
         }
 
         bool uiSelected = true;
@@ -93,18 +97,13 @@ namespace OssClientMetro.ViewModels
         {
             try
             {
-                if (errorInfoVis == Visibility.Visible)
-                {
-                    errorInfoVis = Visibility.Collapsed;
-                }
+
                 await buckets.createBucket(inputBucketName, CannedAccessControlList.Private);
-                TextBoxActive = Visibility.Collapsed;
-                inputBucketName = "";
+             
             }
             catch (Exception ex)
             {
-                errorInfo = ex.Message;
-                errorInfoVis = Visibility.Visible;
+
             }
         }
 
@@ -190,79 +189,34 @@ namespace OssClientMetro.ViewModels
 
         public void createBucket2()
         {
-            if (TextBoxActive == Visibility.Visible && inputBucketName != "")
+            //if (TextBoxActive == Visibility.Visible && inputBucketName != "")
+            //{
+            //    createBucket();
+            //}
+
+            CreateBucketViewModel createBucketViewModel = new CreateBucketViewModel(events);
+            dynamic settings = new ExpandoObject();
+            settings.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            settings.Title = "创建Bucket";
+            windowManager.ShowDialog(createBucketViewModel, null, settings);
+        }
+
+        public async void Handle(CreateBucketEvent createBucketEvent)
+        {
+            try
             {
-                createBucket();
+                await buckets.createBucket(createBucketEvent.bucketName, createBucketEvent.type);
             }
+            catch (Exception ex)
+            {
+                windowManager.ShowMetroMessageBox(ex.Message, "Error",
+                                       MessageBoxButton.OK);
+            }
+
         }
 
 
-
-
-        public void createBucket3(object sender)
-        {
-            NavigateView view = sender as NavigateView;
-            if (TextBoxActive == Visibility.Visible && inputBucketName != "")
-            {
-                createBucket();
-            }
-        }
-
-
-        string m_errorInfo;
-
-        public string errorInfo
-        {
-            get
-            {
-                return this.m_errorInfo;
-            }
-            set
-            {
-                this.m_errorInfo = value;
-                NotifyOfPropertyChange(() => this.errorInfo);
-            }
-        }
-
-        Visibility textBoxActive = Visibility.Collapsed;
-
-        public Visibility TextBoxActive
-        {
-            get
-            {
-                return this.textBoxActive;
-            }
-            set
-            {
-                this.textBoxActive = value;
-                NotifyOfPropertyChange(() => this.TextBoxActive);
-            }
-         }
-
-        Visibility m_errorInfoVis = Visibility.Collapsed;
-        public Visibility errorInfoVis
-        {
-            get
-            {
-                return this.m_errorInfoVis;
-            }
-            set
-            {
-                this.m_errorInfoVis = value;
-                NotifyOfPropertyChange(() => this.errorInfoVis);
-            }
-        }
-
-        public void keydown(KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-               
-
-                createBucket();
-            }
-
-        }
 
         int downloadingCount;
 

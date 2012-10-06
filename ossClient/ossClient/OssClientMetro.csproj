@@ -94,18 +94,23 @@
     <Compile Include="Converters\BoolToOpacity.cs" />
     <Compile Include="Converters\LongSizeToString.cs" />
     <Compile Include="Events\ChangeThemeEvent.cs" />
+    <Compile Include="Events\CreateBucketEvent.cs" />
     <Compile Include="Events\TaskCountEvent.cs" />
     <Compile Include="Extension\ListSortDirector.cs" />
     <Compile Include="Extension\ListViewBehavior.cs" />
     <Compile Include="Model\ObjectModelForSerial.cs" />
-    <Compile Include="Model\TempData.cs" />
+    <Compile Include="Model\AccessControlModel.cs" />
     <Compile Include="Services\WindowManagerExtensions.cs" />
     <Compile Include="Services\CompleteTaskListFile.cs" />
     <Compile Include="Services\PathValue.cs" />
     <Compile Include="Services\RegisteredFileType.cs" />
     <Compile Include="Extension\SortInfo.cs" />
     <Compile Include="Extension\UIElementAdorner.cs" />
+    <Compile Include="ViewModels\CreateBucketViewModel.cs" />
     <Compile Include="ViewModels\MetroMessageBoxViewModel.cs" />
+    <Compile Include="Views\CreateBucketView.xaml.cs">
+      <DependentUpon>CreateBucketView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MetroMessageBoxView.xaml.cs">
       <DependentUpon>MetroMessageBoxView.xaml</DependentUpon>
     </Compile>
@@ -131,6 +136,10 @@
     <Page Include="Theme\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CreateBucketView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateFolderView.xaml">
       <SubType>Designer</SubType>
