@@ -48,5 +48,29 @@ namespace OssClientMetro.Model
             await _ossClient.DeleteBucket(bucketName);
             this.Remove(this.First(x => x.Name == bucketName));
         }
+
+        public async Task <CannedAccessControlList> getBucketAcl(string bucketName)
+        {
+            AccessControlList accessControlList =  await _ossClient.GetBucketAcl(bucketName);
+
+            if (accessControlList.Grants != null && accessControlList.Grants.Count() != 0)
+            {
+                if (accessControlList.Grants.First().Permission == Permission.Read)
+                    return CannedAccessControlList.PublicRead;
+                if (accessControlList.Grants.First().Permission == Permission.FullControl)
+                    return CannedAccessControlList.PublicReadWrite;
+            }
+
+            return CannedAccessControlList.Private;
+        
+        }
+
+
+        public async Task setBucketAcl(string bucketName, CannedAccessControlList acl)
+        {
+             await _ossClient.SetBucketAcl(bucketName, acl);
+
+         
+        }
     }
 }

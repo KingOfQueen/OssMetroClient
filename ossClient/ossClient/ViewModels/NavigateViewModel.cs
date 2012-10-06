@@ -18,7 +18,7 @@ using OssClientMetro.Services;
 namespace OssClientMetro.ViewModels
 {
     class NavigateViewModel : PropertyChangedBase, ILeftWorkSpace, IHandle<BuketSelectedUiUpdateEvent>, IHandle<TaskCountEvent>,
-        IHandle<CreateBucketEvent>
+        IHandle<CreateBucketEvent>, IHandle<ChangeBucketAcl>
     {
         readonly IWindowManager windowManager;
         readonly IEventAggregator events;
@@ -262,8 +262,36 @@ namespace OssClientMetro.ViewModels
                 NotifyOfPropertyChange(() => this.CompeletedCount);
             }
         }
-   
 
+        public async void changeBucketAcl()
+        {
+            string bucketName = buckets[selectedBuketIndex].Name;
+            CannedAccessControlList type =  await buckets.getBucketAcl(bucketName);
+
+
+            CreateBucketViewModel createBucketViewModel = new CreateBucketViewModel(bucketName, type, events);
+            dynamic settings = new ExpandoObject();
+            settings.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            settings.Title = "修改Bucket权限";
+            windowManager.ShowDialog(createBucketViewModel, null, settings);
+
+        }
+
+
+        public async void Handle(ChangeBucketAcl changeBucketAcl)
+        {
+            try
+            {
+                await buckets.setBucketAcl(changeBucketAcl.bucketName, changeBucketAcl.type);
+            }
+            catch (Exception ex)
+            {
+                windowManager.ShowMetroMessageBox(ex.Message, "Error",
+                                       MessageBoxButton.OK);
+            }
+
+        }
 
         public BucketListModel buckets { get; set; }
 

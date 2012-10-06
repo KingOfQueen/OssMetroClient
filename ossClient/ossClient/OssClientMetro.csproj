@@ -93,6 +93,7 @@
     <Compile Include="Converters\BoolToVisibleConverter.cs" />
     <Compile Include="Converters\BoolToOpacity.cs" />
     <Compile Include="Converters\LongSizeToString.cs" />
+    <Compile Include="Events\ChangeBucketAcl.cs" />
     <Compile Include="Events\ChangeThemeEvent.cs" />
     <Compile Include="Events\CreateBucketEvent.cs" />
     <Compile Include="Events\TaskCountEvent.cs" />

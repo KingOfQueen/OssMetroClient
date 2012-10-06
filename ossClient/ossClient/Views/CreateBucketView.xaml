@@ -18,7 +18,7 @@
     <Controls:MetroContentControl>
     <Grid>
             <TextBlock HorizontalAlignment="Left" Height="17" Margin="41,38,0,0" TextWrapping="Wrap" Text="Bucket名称：" VerticalAlignment="Top" Width="76"/>
-            <TextBox x:Name="BucketName" HorizontalAlignment="Left" Height="17" Margin="122,31,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="247"/>
+            <TextBox x:Name="BucketName" IsReadOnly="{Binding IsChangeAcl}" HorizontalAlignment="Left" Height="17" Margin="122,31,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="247"/>
             <TextBlock HorizontalAlignment="Left" Height="22" Margin="41,74,0,0" TextWrapping="Wrap" Text="访问权限：" VerticalAlignment="Top" Width="76" RenderTransformOrigin="0.497,0.888"/>
             <ComboBox  ItemsSource="{Binding accessControlList}"
                     DisplayMemberPath="DisplayName"

@@ -23,6 +23,17 @@ namespace OssClientMetro.ViewModels
             accessControlList.Add(new AccessControlModel(Oss.CannedAccessControlList.PublicRead));
             accessControlList.Add(new AccessControlModel(Oss.CannedAccessControlList.PublicReadWrite));
         }
+
+        public CreateBucketViewModel(string bucketName, Oss.CannedAccessControlList acl, IEventAggregator _events)
+            : this(_events)
+        {
+            BucketName = bucketName;
+            SelectedValue = acl;
+            IsChangeAcl = true;
+        }
+
+
+
         
         string bucketName;
 
@@ -56,9 +67,32 @@ namespace OssClientMetro.ViewModels
             }
         }
 
+        bool isChangeAcl = false;
+
+        public bool IsChangeAcl
+        {
+            get
+            {
+                return this.isChangeAcl;
+            }
+            set
+            {
+                this.isChangeAcl = value;
+                NotifyOfPropertyChange(() => this.isChangeAcl);
+            }
+        }
+
         public void Create()
         {
-            events.Publish(new CreateBucketEvent(BucketName, SelectedValue));
+            if (!IsChangeAcl)
+            {
+                events.Publish(new CreateBucketEvent(BucketName, SelectedValue));
+            }
+            else
+            {
+                events.Publish(new ChangeBucketAcl(BucketName, SelectedValue));
+                
+            }
             this.TryClose();
         }
 

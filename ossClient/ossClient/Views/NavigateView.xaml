@@ -221,6 +221,7 @@
                                 <Grid.ContextMenu>
                                     <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                                         <MenuItem Header="删除" cal:Message.Attach="[Event Click] = [Action deleteBucket()]"/>
+                                        <MenuItem Header="修改权限" cal:Message.Attach="[Event Click] = [Action changeBucketAcl()]"/>
                                     </ContextMenu>
 
 
