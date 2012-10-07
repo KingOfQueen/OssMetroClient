@@ -41,12 +41,13 @@
                             <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
                                 <Grid Tag="{Binding DataContext, ElementName=root}" Background="Transparent">
                                     <Grid.ContextMenu >
-                                        <ContextMenu  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                                            <MenuItem Header="打开"  cal:Message.Attach="[Event MouseDown] = [OpenFolder()]"></MenuItem>
-                                            <MenuItem Header="打开文件夹位置"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]"></MenuItem>
+                                        <ContextMenu cal:Bind.Model="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}"  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                            <MenuItem Header="打开"    cal:Message.Attach="[Event Click] = [OpenFolder()]"  Visibility="{Binding IsFolder,Converter={StaticResource BoolToVisibleConverter}}"></MenuItem>
+                                            
                                             <MenuItem Header="下载"  cal:Message.Attach="[Event Click] = [download()]"></MenuItem>
-                                            <MenuItem Header="创建文件夹"  cal:Message.Attach="[Event Click] = [createFolderOperate()]"></MenuItem>
+                                            <!--<MenuItem Header="创建文件夹"  cal:Message.Attach="[Event Click] = [createFolderOperate()]"></MenuItem>-->
                                             <MenuItem Header="删除"  cal:Message.Attach="[Event Click] = [delete()]"></MenuItem>
+                                            <MenuItem Header="打开所在文件夹"  cal:Message.Attach="[Event Click] = [searchOpenLoaction()]" Visibility="{Binding IsSearchView,Converter={StaticResource BoolToVisibleConverter}}"></MenuItem>
                                         </ContextMenu>
                                     </Grid.ContextMenu>
                                     <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -135,23 +136,23 @@
 
         </Button>
 
-        <Button x:Name="refresh"  ToolTip="刷新" BorderThickness="0" Background="Transparent"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Center" Width="35">
+        <Button x:Name="refresh" IsEnabled="{Binding IsCreateFolderEnabled}"  ToolTip="刷新" BorderThickness="0" Background="Transparent"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Center" Width="35">
             <Image Source="../Images/refresh.png"  Margin="-10" ></Image>
 
         </Button>
         <TextBox  IsReadOnly="True" VerticalContentAlignment="Center" Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Width="356"/>
         <TextBox VerticalContentAlignment="Center"  Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="162"/>
-        <Button BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left" Height="35" Margin="642,0,0,0" VerticalAlignment="Center" Width="35">
+        <Button IsEnabled="{Binding IsSearchEnabled}"  BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left" Height="35" Margin="642,0,0,0" VerticalAlignment="Center" Width="35">
              <Image Source="../Images/search.png" ></Image>
         </Button>
 
-        <Button  Style="{StaticResource MyMetroButton}" BorderThickness="0" Background="Transparent" Grid.Row="1" x:Name="download"  HorizontalAlignment="Left" Height="24" Margin="162,0,0,0" VerticalAlignment="Center" Width="90" HorizontalContentAlignment="Left">
+        <Button IsEnabled="{Binding IsDownloadEnable}" Style="{StaticResource MyMetroButton}" BorderThickness="0" Background="Transparent" Grid.Row="1" x:Name="download"  HorizontalAlignment="Left" Height="24" Margin="162,0,0,0" VerticalAlignment="Center" Width="90" HorizontalContentAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/download.png" Margin="-5,-12,-5, -12"></Image>
                 <TextBlock Text="下载" FontSize="16" ></TextBlock>
             </StackPanel>
         </Button>
-        <Button  Click="Button_Click" ContextMenuService.IsEnabled="False" Style="{StaticResource MyMetroButton}" Grid.Row="1"   HorizontalAlignment="Left" Height="24" Margin="266,0,0,0" VerticalAlignment="Center" Width="100">
+        <Button IsEnabled="{Binding IsCreateFolderEnabled}" Click="Button_Click" ContextMenuService.IsEnabled="False" Style="{StaticResource MyMetroButton}" Grid.Row="1"   HorizontalAlignment="Left" Height="24" Margin="266,0,0,0" VerticalAlignment="Center" Width="100">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/upload.png" Margin="-5,-12,-5, -12"></Image>
                 <TextBlock Text="上传" FontSize="16"></TextBlock>
@@ -167,13 +168,13 @@
         </Button>
         <!--<Button Grid.Row="1" x:Name="uploadFolderOperate" Content="uploadFolder" HorizontalAlignment="Left" Height="22" Margin="309,30,0,0" VerticalAlignment="Top" Width="108" />
         <Button Grid.Row="1"  x:Name="uploadFolderZipOperate"  Content="uploadFolderAndZip" HorizontalAlignment="Left" Height="25" Margin="352,0,0,0" VerticalAlignment="Top" Width="115"/>-->
-        <Button  Grid.Row="1" Style="{StaticResource MyMetroButton}"  x:Name="createFolderOperate"  HorizontalAlignment="Left" Height="25" Margin="10,0,0,0" VerticalAlignment="Center" Width="120">
+        <Button   Grid.Row="1" Style="{StaticResource MyMetroButton}" IsEnabled="{Binding IsCreateFolderEnabled}"  x:Name="createFolderOperate"  HorizontalAlignment="Left" Height="25" Margin="10,0,0,0" VerticalAlignment="Center" Width="120">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/add_folder.png" Margin="5,0,5,0"></Image>
                 <TextBlock Text="创建文件夹" FontSize="16"    ></TextBlock>
             </StackPanel>
         </Button>
-        <Button  Grid.Row="1" Style="{StaticResource MyMetroButton}"  x:Name="delete" HorizontalAlignment="Left" Height="24" Margin="412,0,0,0" VerticalAlignment="Center" Width="84">
+        <Button IsEnabled="{Binding IsDownloadEnable}" Grid.Row="1" Style="{StaticResource MyMetroButton}"  x:Name="delete" HorizontalAlignment="Left" Height="24" Margin="412,0,0,0" VerticalAlignment="Center" Width="84">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/delete.png" Margin="-5,-12,-5,-12"></Image>
                 <TextBlock Text="删除" FontSize="16" ></TextBlock>

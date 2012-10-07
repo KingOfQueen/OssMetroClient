@@ -39,7 +39,7 @@ namespace OssClientMetro.ViewModels
         }
 
 
-       private int m_selectedIndex = 0;
+       private int m_selectedIndex = -1;
 
        public int selectedIndex
        {
@@ -51,6 +51,9 @@ namespace OssClientMetro.ViewModels
            {
                this.m_selectedIndex = value;
                NotifyOfPropertyChange(() => this.selectedIndex);
+               NotifyOfPropertyChange(() => this.IsDownloadEnable);
+               NotifyOfPropertyChange(() => this.IsFolder);
+               
            }
        }
 
@@ -124,10 +127,12 @@ namespace OssClientMetro.ViewModels
                  currentFolder = await folderListModel.getFolderModel(message.BuketName);
                  refreshObjectList(currentFolder);
                  history.add(message.BuketName + "/");
+                 IsSearchEnabled = true;
                 // addToComboBox(message.BuketName + "/");
              }
              else
              {
+                 IsSearchEnabled = false;
                  currentFolder = null;
                  refreshObjectList(null);
              }
@@ -209,11 +214,17 @@ namespace OssClientMetro.ViewModels
            ProgressVisible = true;
            if (text != "")
            {
+               FolderModel searchFolder;
+               if (currentFolder != null)
+                   searchFolder = currentFolder;
+               else
+                   searchFolder = backUpCurrentFolder;
+
                FolderModel folderModel = new FolderModel();
                folderModel.folderList = new List<FolderModel>();
                folderModel.objList = new List<FileModel>();
 
-               List<ObjectListing> listObjectListing = await folderListModel.getObjectListing(currentFolder.bucketName, "");
+               List<ObjectListing> listObjectListing = await folderListModel.getObjectListing(searchFolder.bucketName, searchFolder.key);
 
                foreach (ObjectListing objectlisting in listObjectListing)
                {
@@ -242,15 +253,19 @@ namespace OssClientMetro.ViewModels
 
                    }
                }
-
+               currentFolder = null;
+ 
                refreshObjectList(folderModel);
                ProgressVisible = false;
            }
         }
-
+       
+      
 
        public async void searchOpenLoaction()
        {
+   
+
            ProgressVisible = true;
            ObjectModel objModel = objectList[selectedIndex];
            string[] ss = objModel.key.Split('/');
@@ -498,24 +513,6 @@ namespace OssClientMetro.ViewModels
            ProgressVisible = false;
        }
 
-       //private async Task uploadLargeFile(string fileName)
-       //{
-       //    FileInfo fileInfo = new FileInfo(fileName);
-       //    FileModel objModel = new FileModel() { bucketName = currentFolder.bucketName, key = currentFolder.key + fileInfo.Name };
-       //    objModel.localPath = fileName;
-
-       //    long bufferSize = 
-
-
-          
-
-
-       //}
-
-
-
-
-
     
         private async Task uploadFileInCurrentFolder(string fileName)
         {
@@ -524,6 +521,7 @@ namespace OssClientMetro.ViewModels
             {
                 FileInfo fileInfo = new FileInfo(fileName);
                  objModel = new FileModel() { bucketName = currentFolder.bucketName, key = currentFolder.key + fileInfo.Name };
+                 objModel.initial();
                 objModel.localPath = fileName;
                 events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADING));
                 objModel.startTimer();
@@ -699,6 +697,85 @@ namespace OssClientMetro.ViewModels
            }
        }
 
+      
+
+      public bool IsFolder
+      {
+          get
+          {
+              return selectedIndex > -1 && objectList[selectedIndex] is FolderModel;
+          }
+
+      }
+
+      public bool IsSearchView
+      {
+          get
+          {
+              return currentFolder == null;
+          }
+      }
+
+
+      bool isCreateFolderEnabled = false;
+
+      public bool IsCreateFolderEnabled
+      {
+          get
+          {
+              return currentFolder != null;
+          }
+
+      }
+
+      bool isSearchEnabled = false;
+
+      public bool IsSearchEnabled
+      {
+          get
+          {
+              return this.isSearchEnabled;
+          }
+          set
+          {
+              this.isSearchEnabled = value;
+              NotifyOfPropertyChange(() => this.IsSearchEnabled);
+          }
+      }
+
+
+      public bool IsDownloadEnable
+      {
+          get
+          {
+              return selectedIndex > -1;
+          }
+
+      }
+
+      private FolderModel m_currentFolder = null;
+      private FolderModel backUpCurrentFolder = null;
+
+      public FolderModel currentFolder
+      {
+          get
+          {
+              return this.m_currentFolder;
+          }
+          set
+          {
+              this.m_currentFolder = value;
+              NotifyOfPropertyChange(() => this.currentFolder);
+              NotifyOfPropertyChange(() => this.IsCreateFolderEnabled);
+              NotifyOfPropertyChange(() => this.IsSearchView);
+          }
+      }
+
+
+
+        
+
+
        //void addToComboBox(string path)
        //{
        //    if (Countries.FirstOrDefault(x => x.Path == path) == null)
@@ -711,7 +788,7 @@ namespace OssClientMetro.ViewModels
          //public BindableCollection<AccessControlModel> Countries  { get; set; }
 
          public FolderListModel folderListModel;
-         public FolderModel currentFolder;
+
          public BindableCollection<ObjectModel> objectList { get; set; }
          public History history{get;set;}
     }
