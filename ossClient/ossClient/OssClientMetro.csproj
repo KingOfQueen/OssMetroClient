@@ -96,6 +96,7 @@
     <Compile Include="Events\ChangeBucketAcl.cs" />
     <Compile Include="Events\ChangeThemeEvent.cs" />
     <Compile Include="Events\CreateBucketEvent.cs" />
+    <Compile Include="Events\DeleteBucketEvent.cs" />
     <Compile Include="Events\TaskCountEvent.cs" />
     <Compile Include="Extension\ListSortDirector.cs" />
     <Compile Include="Extension\ListViewBehavior.cs" />

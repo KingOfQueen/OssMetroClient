@@ -17,7 +17,8 @@ using System.Dynamic;
 
 namespace OssClientMetro.ViewModels
 {
-    class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, IHandle<BuketSelectedEvent>, IHandle<CreateFolderEvent>
+    class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, 
+        IHandle<BuketSelectedEvent>, IHandle<CreateFolderEvent>, IHandle<DeleteBucketEvent>
     {
         readonly IEventAggregator events;
         readonly IClientService clientService;
@@ -135,6 +136,7 @@ namespace OssClientMetro.ViewModels
                  IsSearchEnabled = false;
                  currentFolder = null;
                  refreshObjectList(null);
+                 history.reset();
              }
          }
 
@@ -153,6 +155,19 @@ namespace OssClientMetro.ViewModels
                  ProgressVisible = false;
              }
          }
+
+         public async void Handle(DeleteBucketEvent message)
+         {
+             //try
+             //{
+             //   history.paths.Removemessage.bucketName
+             //}
+             //catch (Exception ex)
+             //{
+                 
+             //}
+         }
+
 
          public async void delete()
          {

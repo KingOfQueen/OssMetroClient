@@ -73,6 +73,14 @@ namespace OssClientMetro.Services
 
         }
 
+        public void reset()
+        {
+            paths.Clear();
+            nowPos = -1;
+            CanGoForward = false;
+            CanGoBack = false;
+            NowPath = "";
+        }
 
 
         public List<string> paths;

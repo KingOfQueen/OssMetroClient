@@ -245,7 +245,7 @@
             
             </StackPanel>
         </Expander>
-        <Expander Header="任务" FontSize="16" cal:Message.Attach="[Event Expanded] = [Action expanded()]" 
+        <Expander IsExpanded="True" Header="任务" FontSize="16" cal:Message.Attach="[Event Expanded] = [Action expanded()]" 
                   Style="{StaticResource ExpanderStyle1}"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="250">
 
 

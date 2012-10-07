@@ -123,6 +123,7 @@ namespace OssClientMetro.ViewModels
                 string bucketName = buckets[selectedBuketIndex].Name;
                 await clientService.folders.deleteBuketResource(bucketName);
                 await buckets.deleteBucket(bucketName);
+                events.Publish(new DeleteBucketEvent(bucketName));
             }
         }
 
@@ -131,7 +132,11 @@ namespace OssClientMetro.ViewModels
             if (message.BuketName != null)
             {
                 uiSelected = false;
-                selectedBuketIndex = buckets.IndexOf(buckets.First(x => x.Name == message.BuketName));
+                Bucket bucket = buckets.First(x => x.Name == message.BuketName);
+                if (bucket != null)
+                    selectedBuketIndex = buckets.IndexOf(bucket);
+                else
+                    selectedBuketIndex = -1;
             }
         }
 
