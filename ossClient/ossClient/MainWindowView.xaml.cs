@@ -43,42 +43,24 @@ namespace OssClientMetro
 
         private void MiLightRed(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), MahApps.Metro.Theme.Light);
+            ThemeManager.ChangeTheme(Application.Current.Resources, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), MahApps.Metro.Theme.Light);
         }
 
-        private void MiDarkRed(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), MahApps.Metro.Theme.Dark);
-        }
 
         private void MiLightGreen(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), MahApps.Metro.Theme.Light);
-        }
-
-        private void MiDarkGreen(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), MahApps.Metro.Theme.Dark);
+            ThemeManager.ChangeTheme(Application.Current.Resources, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), MahApps.Metro.Theme.Light);
         }
 
         private void MiLightBlue(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), MahApps.Metro.Theme.Light);
+            ThemeManager.ChangeTheme(Application.Current.Resources, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), MahApps.Metro.Theme.Light);
         }
 
-        private void MiDarkBlue(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), MahApps.Metro.Theme.Dark);
-        }
 
         private void MiLightPurple(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), MahApps.Metro.Theme.Light);
-        }
-
-        private void MiDarkPurple(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), MahApps.Metro.Theme.Dark);
+            ThemeManager.ChangeTheme(Application.Current.Resources, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), MahApps.Metro.Theme.Light);
         }
 
 
