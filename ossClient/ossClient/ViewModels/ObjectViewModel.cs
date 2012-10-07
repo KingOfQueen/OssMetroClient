@@ -392,6 +392,7 @@ namespace OssClientMetro.ViewModels
                                 string fileName = foulderPath + objModel.displayName;
                                 objModel.localPath = fileName;
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
+                                events.Publish(new TaskAddNumEvent(1));
                                 ((FileModel)objModel).startTimer();
                                 await downloadfile((FileModel)objModel, fileName);
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
@@ -412,6 +413,7 @@ namespace OssClientMetro.ViewModels
                                 await folderListModel.initFolderForDownload((FolderModel)objModel);
                                 objModel.localPath = foulderPath + objModel.displayName;
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
+                                events.Publish(new TaskAddNumEvent(1));
                                 ((FolderModel)objModel).startTimer();
                                 await downloadFolder((FolderModel)objModel, objModel.localPath);
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
@@ -539,6 +541,7 @@ namespace OssClientMetro.ViewModels
                  objModel.initial();
                 objModel.localPath = fileName;
                 events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADING));
+                events.Publish(new TaskAddNumEvent(1));
                 objModel.startTimer();
                 await uploadSingleFile(objModel);
                 events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
@@ -597,6 +600,7 @@ namespace OssClientMetro.ViewModels
                folderModel.localPath = Path;
 
                events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADING));
+               events.Publish(new TaskAddNumEvent(1));
                folderModel.startTimer();
                await createFolders(folderModel, Path);
                await uploadFolder(folderModel);

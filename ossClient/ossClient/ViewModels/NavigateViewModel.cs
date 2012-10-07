@@ -18,7 +18,7 @@ using OssClientMetro.Services;
 namespace OssClientMetro.ViewModels
 {
     class NavigateViewModel : PropertyChangedBase, ILeftWorkSpace, IHandle<BuketSelectedUiUpdateEvent>, IHandle<TaskCountEvent>,
-        IHandle<CreateBucketEvent>, IHandle<ChangeBucketAcl>
+        IHandle<CreateBucketEvent>, IHandle<ChangeBucketAcl>, IHandle<TaskAddNumEvent>
     {
         readonly IWindowManager windowManager;
         readonly IEventAggregator events;
@@ -303,6 +303,51 @@ namespace OssClientMetro.ViewModels
             }
 
         }
+        bool addTaskNumVisibility = false;
+
+        public bool AddTaskNumVisibility
+        {
+            get
+            {
+                return this.addTaskNumVisibility;
+            }
+            set
+            {
+                this.addTaskNumVisibility = value;
+                NotifyOfPropertyChange(() => this.AddTaskNumVisibility);
+            }
+        }
+
+        string addTaskNumText = "";
+
+        public string AddTaskNumText
+        {
+            get
+            {
+                return this.addTaskNumText;
+            }
+            set
+            {
+                this.addTaskNumText = value;
+                NotifyOfPropertyChange(() => this.AddTaskNumText);
+            }
+        }
+        
+
+
+
+
+       public async void Handle(TaskAddNumEvent massage)
+       {
+           AddTaskNumText = "+1";
+           AddTaskNumVisibility = true;
+           await Task.Delay(1000);
+           AddTaskNumVisibility = false;
+
+       }
+      //  testVisibility
+
+
 
         public BucketListModel buckets { get; set; }
 

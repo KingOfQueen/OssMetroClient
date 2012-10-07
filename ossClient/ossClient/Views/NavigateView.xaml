@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
+              xmlns:common="clr-namespace:WPF.Common"
              Width="300" Height="600" Background="#ffe5e5e5"
               xmlns:controls="clr-namespace:OssClientMetro.Controls"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
@@ -43,8 +44,9 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="19"/>
                                         <ColumnDefinition Width="*"/>
-              
-                                    </Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+
+                                        </Grid.ColumnDefinitions>
                                     <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                                         <Path.RenderTransform>
                                             <TransformGroup>
@@ -55,7 +57,10 @@
                                             </TransformGroup>
                                         </Path.RenderTransform>
                                     </Path>
-                                   
+                                        <Border BorderBrush="{x:Null}" Grid.Column="2" Margin="-20" >
+                                            <TextBlock Text="{Binding AddTaskNumText}" common:VisibilityAnimation.AnimationType="Fade"   FontSize="26" TextAlignment="Center" VerticalAlignment="Center"  Visibility="{Binding AddTaskNumVisibility, Converter={StaticResource BoolToVisibleConverter}}"/>
+                                        </Border>
+                                       
                                     <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>
@@ -290,7 +295,7 @@
             </ListView>
 
         </Expander>
-        <!--<Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>
+            <!--<Button x:Name="createBucket" Content="create" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>
         <Button x:Name="deleteBucket" Content="delete" HorizontalAlignment="Left" Height="27"  VerticalAlignment="Top" Width="106"/>
         <TextBox x:Name="inputBucketName" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap"  VerticalAlignment="Top" Width="201" />
         <Button x:Name="refreshBuckets" Content="refresh" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="120"/>-->
