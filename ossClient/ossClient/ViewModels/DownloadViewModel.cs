@@ -101,12 +101,12 @@ namespace OssClientMetro.ViewModels
             {
                 if (taskEvent.type == TaskEventType.DOWNLOADING)
                 {
-                    downloadingListModel.Add(taskEvent.obj);
+                    downloadingListModel.Insert(0, taskEvent.obj);
                     events.Publish(new TaskCountEvent(downloadingListModel.Count, TaskCountEventType.DOWNLOADING));
                 }
                 else if (taskEvent.type == TaskEventType.UPLOADING)
                 {
-                    uploadingListModel.Add(taskEvent.obj);
+                    uploadingListModel.Insert(0, taskEvent.obj);
                     events.Publish(new TaskCountEvent(uploadingListModel.Count, TaskCountEventType.UPLOADING));
                 }
                 else if (taskEvent.type == TaskEventType.DOWNLOADCOMPELETED)
@@ -155,8 +155,8 @@ namespace OssClientMetro.ViewModels
 
         void addToCompleteList(ObjectModel obj)
         {
-              compeletedListModel.Add(obj);
-              objectModelForSerialList.Add(new ObjectModelForSerial()
+            compeletedListModel.Insert(0, obj);
+            objectModelForSerialList.Insert(0, new ObjectModelForSerial()
                   {
                       bucketName = obj.bucketName,
                       key = obj.key,
