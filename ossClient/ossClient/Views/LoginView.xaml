@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
-             xmlns:controls="clr-namespace:OssClientMetro.Controls" Width="256.169" Height="708.161"  Background="#ffe5e5e5" FontFamily="Microsoft YaHei">
+             xmlns:controls="clr-namespace:OssClientMetro.Controls" Width="Auto" Height="594"  Background="#ffe5e5e5" FontFamily="Microsoft YaHei">
     <UserControl.Resources>
 
         <ResourceDictionary>
@@ -28,24 +28,29 @@
             </LinearGradientBrush>
         </Border.BorderBrush>-->
         <Grid>
+
         
 
-            <TextBox x:Name="UserName" Controls:TextboxHelper.Watermark="请输入用户名"
+            <TextBox x:Name="UserName" Controls:TextboxHelper.Watermark="请输入AccessId"
                                          Controls:TextboxHelper.ClearTextButton="True"
 
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
                                              Width="204"
-										     VerticalContentAlignment="Center" Margin="26,58,0,0" />
-            <PasswordBox x:Name="UserPassword" Controls:TextboxHelper.Watermark="请输入密码"
-											     VerticalContentAlignment="Center" Margin="26,98,0,0" 
+										     VerticalContentAlignment="Center" Margin="23,207,0,0" />
+            <PasswordBox x:Name="UserPassword" Controls:TextboxHelper.Watermark="请输入AccessKey"
+											     VerticalContentAlignment="Center" Margin="23,247,0,0" 
                          controls:PasswordBoxAssistant.BindPassword="true"  controls:PasswordBoxAssistant.BoundPassword="{Binding Path=UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="204" Height="20" VerticalAlignment="Top"/>
-            <Button x:Name="login" Style="{DynamicResource SquareButtonStyle}" Content="登 录" HorizontalAlignment="Left" Margin="155,298,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,1.364" FontFamily="Microsoft YaHei"/>
-            <CheckBox x:Name="RememberKey" Content="记住密码" HorizontalAlignment="Left" Margin="26,136,0,0" VerticalAlignment="Top" />
-            <CheckBox x:Name="AutoLogin"  Content="自动登录" HorizontalAlignment="Left" Margin="138,136,0,0" VerticalAlignment="Top"/>
-            <Controls:ProgressRing IsActive="{Binding ProgressActive}" Margin="90,184,101,464" Height="55" Width="48"/>
-            <TextBlock x:Name="Status"  Foreground="Red" HorizontalAlignment="Left" Height="83" Margin="26,171,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
+            <Button x:Name="login" Style="{DynamicResource SquareButtonStyle}" Content="登 录" HorizontalAlignment="Left" Margin="152,434,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,1.364" FontFamily="Microsoft YaHei"/>
+            <CheckBox x:Name="RememberKey" Content="记住密码" HorizontalAlignment="Left" Margin="28,285,0,0" VerticalAlignment="Top" />
+            <CheckBox x:Name="AutoLogin"  Content="自动登录" HorizontalAlignment="Left" Margin="135,285,0,0" VerticalAlignment="Top"/>
+            
+            <TextBlock x:Name="Status"  Foreground="Red" HorizontalAlignment="Left" Height="83" Margin="23,328,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
+            <Image HorizontalAlignment="Left" Height="100" Margin="85,55,0,0" VerticalAlignment="Top" Width="80" Source="../Images/2.ico"/>
+            <Grid Background="#ffe5e5e5" Opacity="0.8" Visibility="{Binding ProgressActive, Converter={StaticResource BoolToVisibleConverter}}">
+                <Controls:ProgressRing  IsActive="{Binding ProgressActive}" HorizontalAlignment="Center" Margin="0,201,0,0" VerticalAlignment="Top" Height="60" Width="60"/>
 
+            </Grid>
 
         </Grid>
     </Border>

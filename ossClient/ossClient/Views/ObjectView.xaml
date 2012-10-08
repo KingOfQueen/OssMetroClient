@@ -120,7 +120,7 @@
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#ffcccccc"></Border>
+        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource AccentColorBrush}"></Border>
 
         <Button x:Name="goback"    ToolTip="后退" BorderThickness="0" Background="Transparent"  Style="{StaticResource MyMetroButton}" 
                             		Height="35"
@@ -181,7 +181,7 @@
             </StackPanel>
         </Button>
         <StackPanel Grid.Row="2">
-        <ListView  ItemContainerStyle="{DynamicResource test}"   x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="429" VerticalAlignment="Top" AllowDrop="True"   
+        <ListView  ItemContainerStyle="{DynamicResource test}"   x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="460" VerticalAlignment="Top" AllowDrop="True"   
                    cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]" Margin="0,0,10,0" ext:ListViewBehavior.HeaderSort="True">
             <!--<ListView.ContextMenu>
                 <ContextMenu>
@@ -191,8 +191,8 @@
             </ListView.ContextMenu>-->
                 <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" ext:ListViewBehavior.SortField="displayName"/>
-                    <GridViewColumn Header="大小" DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="200" ext:ListViewBehavior.SortField="Size"/>
+                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="300" ext:ListViewBehavior.SortField="displayName"/>
+                    <GridViewColumn Header="大小" DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="100" ext:ListViewBehavior.SortField="Size"/>
                     <GridViewColumn Header="修改时间" CellTemplate="{StaticResource ModifyTimeColumnDataTemplate}" Width="200" ext:ListViewBehavior.SortField="ModifyTime"/>
                    
                 </GridView>

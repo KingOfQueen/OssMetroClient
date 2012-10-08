@@ -36,21 +36,16 @@ namespace OssClientMetro.ViewModels
         bool uiSelected = true;
         public void Publish()
         {
-            if (uiSelected)
+
+            if (selectedBuketIndex >= 0)
             {
-                if (selectedBuketIndex >= 0)
-                {
-                    events.Publish(new BuketSelectedEvent(buckets[selectedBuketIndex].Name));
-                }
-                else
-                {
-                    events.Publish(new BuketSelectedEvent(null));
-                }
+                events.Publish(new BuketSelectedEvent(buckets[selectedBuketIndex].Name));
             }
             else
             {
-                uiSelected = true;
+                events.Publish(new BuketSelectedEvent(null));
             }
+
 
         }
 
@@ -72,7 +67,19 @@ namespace OssClientMetro.ViewModels
                 this.m_selectedBuketIndex = value;
                 NotifyOfPropertyChange(() => this.selectedBuketIndex);
                 NotifyOfPropertyChange(() => this.IsDeleteAvialable);
-                Publish();
+                if (uiSelected)
+                {
+                    Publish();
+                }
+                else
+                {
+                    uiSelected = true;
+                }
+                if (selectedBuketIndex != -1)
+                {
+                    selectedViewIndex = -1;
+                    NotifyOfPropertyChange(() => this.selectedViewIndex);
+                }
             }
         }
 
@@ -121,9 +128,14 @@ namespace OssClientMetro.ViewModels
             else
             {
                 string bucketName = buckets[selectedBuketIndex].Name;
-                await clientService.folders.deleteBuketResource(bucketName);
-                await buckets.deleteBucket(bucketName);
-                events.Publish(new DeleteBucketEvent(bucketName));
+                if (windowManager.ShowMetroMessageBox("是否删除Bucket " + bucketName + "?", "Warning",
+                                       MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+
+                    await clientService.folders.deleteBuketResource(bucketName);
+                    await buckets.deleteBucket(bucketName);
+                    events.Publish(new DeleteBucketEvent(bucketName));
+                }
             }
         }
 
@@ -172,7 +184,13 @@ namespace OssClientMetro.ViewModels
             set
             {
                 this.selectedViewIndex = value;
-                NotifyOfPropertyChange(() => this.SelectedViewIndex);               
+                NotifyOfPropertyChange(() => this.SelectedViewIndex);
+                if (selectedViewIndex != -1)
+                {
+                    uiSelected = false;
+                    selectedBuketIndex = -1;
+                    NotifyOfPropertyChange(() => this.selectedBuketIndex);
+                }
             }
         }
 

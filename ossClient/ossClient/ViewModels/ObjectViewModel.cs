@@ -271,11 +271,20 @@ namespace OssClientMetro.ViewModels
                 ObjectModel objModel = objectList[selectedIndex];
                 if (objModel is FileModel)
                 {
-                    await folderListModel.deleteFile(objModel.bucketName, objModel.key);
+                    if (windowManager.ShowMetroMessageBox("是否删除文件 " + objModel.displayName + "?", "Warning",
+                                      MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+
+                        await folderListModel.deleteFile(objModel.bucketName, objModel.key);
+                    }
                 }
                 else
                 {
-                    await folderListModel.deleteFolder(objModel.bucketName, objModel.key);
+                    if (windowManager.ShowMetroMessageBox("是否删除文件夹 " + objModel.displayName + "?", "Warning",
+                  MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        await folderListModel.deleteFolder(objModel.bucketName, objModel.key);
+                    }
                 }
               
                 await refresh();

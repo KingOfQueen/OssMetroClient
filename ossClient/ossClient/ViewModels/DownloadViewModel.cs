@@ -286,17 +286,43 @@ namespace OssClientMetro.ViewModels
            // ObjectModel objModel = objectList[selectedIndex];
             if (compeletedListModel == objectList)
             {
-                deleteInCompleteList(objModel);
-                events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
+                if (windowManager.ShowMetroMessageBox("是否删除记录 " + objModel.displayName + "?", "Warning",
+                                      MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    deleteInCompleteList(objModel);
+                    events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
+                }
             }
             else
-            {
-                if (objModel is FileModel)
-                    objModel.tokenSource.Cancel();
+            {       string warningText = "";
+                if (downloadingListModel == objectList)
+                {
+                    warningText += "是否取消下载";
+                }
                 else
-                    ((FolderModel)objModel).cancelTask();
+                {
+                    warningText += "是否取消上传";
+                }
+                if (objModel is FileModel)
+                {
+                    warningText += "文件 ";
+                    if (windowManager.ShowMetroMessageBox(warningText + objModel.displayName + "?", "Warning",
+                                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        objModel.tokenSource.Cancel();
+                    }
+                }
+                else
+                {
+                    warningText += "文件夹 ";
+                    if (windowManager.ShowMetroMessageBox(warningText + objModel.displayName + "?", "Warning",
+                                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        ((FolderModel)objModel).cancelTask();
+                    }
+                }
+                
             }
-
 
         }
 

@@ -17,13 +17,15 @@ namespace OssClientMetro.Converters
             {
                 long temp = long.Parse(value.ToString());
                 if (temp == 0)
-                    temp = 0;
+                    return "0 KB";
+                else if(temp / 1024 / 1024  == 0)
+                {
+                    return string.Format("{0:0.}",  temp / 1024 + ((temp % 1024 > 0) ? 1 : 0))  + " KB";                    
+                }
                 else
                 {
-                    temp = temp / 1024 + ((temp % 1024) > 0 ? 1 : 0);
-                }
-
-                return string.Format("{0:#,###0.#}", temp) + " KB";
+                    return string.Format("{0:0.00}", 1.0 * temp / 1024 / 1024)  + " MB"; 
+                } 
             }
             else
                 return "";
