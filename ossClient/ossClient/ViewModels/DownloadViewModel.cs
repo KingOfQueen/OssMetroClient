@@ -45,6 +45,7 @@ namespace OssClientMetro.ViewModels
                         folder.localPath = obj.localPath;
                         folder.Size = obj.size;
                         folder.completeTime = obj.completeTime;
+                        folder.compeleteStatus = obj.compeleteStatus;
                         compeletedListModel.Add(folder);
                     }
                     else
@@ -53,6 +54,7 @@ namespace OssClientMetro.ViewModels
                         fileModel.initial();
                         fileModel.localPath = obj.localPath;
                         fileModel.completeTime = obj.completeTime;
+                        fileModel.compeleteStatus = obj.compeleteStatus;
                         compeletedListModel.Add(fileModel);
                     }
                 }
@@ -131,6 +133,7 @@ namespace OssClientMetro.ViewModels
                 {
                     downloadingListModel.Remove(taskEvent.obj);
                     taskEvent.obj.completeTime = DateTime.Now;
+                    taskEvent.obj.compeleteStatus = "下载完成";
                     addToCompleteList(taskEvent.obj);
                     events.Publish(new TaskCountEvent(downloadingListModel.Count, TaskCountEventType.DOWNLOADING));
                     events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
@@ -141,6 +144,7 @@ namespace OssClientMetro.ViewModels
                 {
                     uploadingListModel.Remove(taskEvent.obj);
                     taskEvent.obj.completeTime = DateTime.Now;
+                    taskEvent.obj.compeleteStatus = "上传完成";
                     addToCompleteList(taskEvent.obj);
                     events.Publish(new TaskCountEvent(uploadingListModel.Count, TaskCountEventType.UPLOADING));
                     events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
@@ -181,7 +185,8 @@ namespace OssClientMetro.ViewModels
                       displayName = obj.displayName,
                       localPath = obj.localPath,
                       size = obj.Size,
-                      completeTime = obj.completeTime
+                      completeTime = obj.completeTime,
+                      compeleteStatus = obj.compeleteStatus
                   });
 
 

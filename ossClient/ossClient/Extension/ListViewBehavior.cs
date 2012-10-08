@@ -76,7 +76,7 @@ namespace SortListView.Extention
         {
             ListView listView = e.Source as ListView;
             GridViewColumnHeader header = e.OriginalSource as GridViewColumnHeader;
-            if (header.Column != null)
+            if (header!=null && header.Column != null)
             {
                 SortInfo sortInfo = listView.GetValue(SortInfoProperty.DependencyProperty) as SortInfo;
 

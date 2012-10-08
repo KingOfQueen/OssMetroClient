@@ -15,5 +15,6 @@ namespace OssClientMetro.Model
         public string localPath { get; set; }
         public long? size{ get; set; }
         public DateTime completeTime { get; set; }
+        public string compeleteStatus { get; set; }
     }
 }

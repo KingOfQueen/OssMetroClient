@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
-            Width="391.954" Height="206.897" ResizeMode="NoResize" Title="创建文件夹">
+            Width="391.954" Height="206.897" ResizeMode="NoResize" Title="创建文件夹"  FontFamily="Microsoft YaHei">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,7 +20,7 @@
     </Window.Resources>
     <Controls:MetroContentControl>
         <Grid>
-        <TextBox x:Name="FolderName" Controls:TextboxHelper.Watermark="Enter Folder Name"
+        <TextBox x:Name="FolderName" Controls:TextboxHelper.Watermark="请输入文件名"
                                      Controls:TextboxHelper.ClearTextButton="True"
 
                                          VerticalAlignment="Top"
@@ -28,7 +28,7 @@
                                          Width="238"
 										 VerticalContentAlignment="Center" Margin="92,33,0,0" />
         <Button x:Name="Create" Content="确定" HorizontalAlignment="Left" Height="20" Margin="181,106,0,0" VerticalAlignment="Top" Width="64"/>
-            <TextBlock  HorizontalAlignment="Left" Height="26" Margin="29,33,0,0" TextWrapping="Wrap" Text="文件名：" VerticalAlignment="Top" Width="49" />
+            <TextBlock  HorizontalAlignment="Left" Height="26" Margin="33,35,0,0" TextWrapping="Wrap" Text="文件名：" FontSize="14" VerticalAlignment="Top" Width="60" />
             <Button x:Name="Cancel" Content="取消" HorizontalAlignment="Left" Height="25" Margin="266,106,0,0" VerticalAlignment="Top" Width="64"/>
         </Grid>
     </Controls:MetroContentControl>

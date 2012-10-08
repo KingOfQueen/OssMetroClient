@@ -84,6 +84,7 @@ namespace OssClientMetro.ViewModels
 
         public void Create()
         {
+            this.TryClose();
             if (!IsChangeAcl)
             {
                 events.Publish(new CreateBucketEvent(BucketName, SelectedValue));
@@ -93,7 +94,7 @@ namespace OssClientMetro.ViewModels
                 events.Publish(new ChangeBucketAcl(BucketName, SelectedValue));
                 
             }
-            this.TryClose();
+            
         }
 
         public void Cancel()

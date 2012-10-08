@@ -28,15 +28,15 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-                    <Label Content="{Binding Path=Title}" Style="{DynamicResource HeaderLabelStyle}" />
+            <Label Content="{Binding Path=Title}" Style="{DynamicResource HeaderLabelStyle}" FontFamily="Microsoft YaHei" FontSize="24" />
 
-                    <TextBlock Grid.Row="1" Text="{Binding Path=Message}" TextWrapping="Wrap" Margin="6,6,0,0" Style="{DynamicResource DefaultTextStyle}" />
+            <TextBlock FontFamily="Microsoft YaHei" FontSize="18"  Grid.Row="1" Text="{Binding Path=Message}" TextWrapping="Wrap" Margin="6,6,0,0" Style="{DynamicResource DefaultTextStyle}" />
 
                     <StackPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,10,10" Orientation="Horizontal">
-                <Button Width="70" Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Visibility="{Binding Path=IsYesButtonVisible, Converter={StaticResource BoolToVisibleConverter}}" cal:Message.Attach="Yes" Content="Yes" />
-                <Button Width="70" Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Visibility="{Binding Path=IsNoButtonVisible, Converter={StaticResource BoolToVisibleConverter}}" cal:Message.Attach="No" Content="No" />
-                <Button Width="70" Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Visibility="{Binding Path=IsOkButtonVisible, Converter={StaticResource BoolToVisibleConverter}}" cal:Message.Attach="Ok" Content="OK" />
-                <Button Width="70" Margin="10,0,0,0" IsCancel="True" Style="{DynamicResource SquareButtonStyle}" Visibility="{Binding Path=IsCancelButtonVisible, Converter={StaticResource BoolToVisibleConverter}}" cal:Message.Attach="Cancel" Content="Cancel" />
+                <Button Width="70" Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Visibility="{Binding Path=IsYesButtonVisible, Converter={StaticResource BoolToVisibleConverter}}" cal:Message.Attach="Yes" Content="是" />
+                <Button Width="70" Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Visibility="{Binding Path=IsNoButtonVisible, Converter={StaticResource BoolToVisibleConverter}}" cal:Message.Attach="No" Content="否" />
+                <Button Width="70" Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Visibility="{Binding Path=IsOkButtonVisible, Converter={StaticResource BoolToVisibleConverter}}" cal:Message.Attach="Ok" Content="确定" />
+                <Button Width="70" Margin="10,0,0,0" IsCancel="True" Style="{DynamicResource SquareButtonStyle}" Visibility="{Binding Path=IsCancelButtonVisible, Converter={StaticResource BoolToVisibleConverter}}" cal:Message.Attach="Cancel" Content="取消" />
                     </StackPanel>
         </Grid>
     </Border>

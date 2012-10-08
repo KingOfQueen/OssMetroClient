@@ -25,6 +25,8 @@ namespace OssClientMetro.Model
         public string displayName { get; set; }
         public string key { get; set; }
 
+        public string compeleteStatus { get; set; }
+
         public bool modifyTimeVisible { get; set; }
 
         public DateTime modifyTime;

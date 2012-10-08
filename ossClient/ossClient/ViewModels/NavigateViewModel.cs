@@ -235,7 +235,15 @@ namespace OssClientMetro.ViewModels
         {
             try
             {
-                await buckets.createBucket(createBucketEvent.bucketName, createBucketEvent.type);
+                if (buckets.FirstOrDefault(x => x.Name == createBucketEvent.bucketName) != null)
+                {
+                    windowManager.ShowMetroMessageBox(createBucketEvent.bucketName + "已经存在！", "Warning",
+                                       MessageBoxButton.OK);
+                }
+                else
+                {
+                    await buckets.createBucket(createBucketEvent.bucketName, createBucketEvent.type);
+                }
             }
             catch (Exception ex)
             {

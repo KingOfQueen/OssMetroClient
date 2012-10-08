@@ -55,6 +55,7 @@ namespace OssClientMetro.ViewModels
                NotifyOfPropertyChange(() => this.selectedIndex);
                NotifyOfPropertyChange(() => this.IsDownloadEnable);
                NotifyOfPropertyChange(() => this.IsFolder);
+               NotifyOfPropertyChange(() => this.IsDeleteEnable);
                
            }
        }
@@ -106,9 +107,11 @@ namespace OssClientMetro.ViewModels
 
            if (temp is FolderModel)
            {
+               history.add(temp.bucketName + "/" + temp.key);
+               refreshObjectList(null);
                currentFolder = await folderListModel.getFolderModel(temp.bucketName, temp.key);
                refreshObjectList(currentFolder);
-               history.add(temp.bucketName + "/" + temp.key);
+               
               // addToComboBox(temp.bucketName + "/" + temp.key);
            }
            ProgressVisible = false;
@@ -145,10 +148,18 @@ namespace OssClientMetro.ViewModels
          {
              try
              {
-                  ProgressVisible = true;
-                  await createFolder(currentFolder.bucketName, currentFolder.key + message.folderName + "/");
-                  await refresh();
-                  ProgressVisible = false;
+                 if (message.folderName == "" || message.folderName == null)
+                 {
+                     windowManager.ShowMetroMessageBox("文件名不能为空！", "Error",
+                                    MessageBoxButton.OK);
+                 }
+                 else
+                 {
+                     ProgressVisible = true;
+                     await createFolder(currentFolder.bucketName, currentFolder.key + message.folderName + "/");
+                     await refresh();
+                     ProgressVisible = false;
+                 }
 
              }
              catch (Exception ex)
@@ -191,6 +202,11 @@ namespace OssClientMetro.ViewModels
                          {
                              events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
                          }
+                         else
+                         {
+                             windowManager.ShowMetroMessageBox(ex.Message, "Error",
+                                      MessageBoxButton.OK);
+                         }
 
                      }
 
@@ -211,6 +227,11 @@ namespace OssClientMetro.ViewModels
                          {
                              events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCANCEL));
                              folderListModel.deleteFile(objModel.bucketName, objModel.key);
+                         }
+                         else
+                         {
+                             windowManager.ShowMetroMessageBox(ex.Message, "Error",
+                                      MessageBoxButton.OK);
                          }
                      }
                  }
@@ -233,6 +254,11 @@ namespace OssClientMetro.ViewModels
                          {
                              events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
                          }
+                         else
+                         {
+                             windowManager.ShowMetroMessageBox(ex.Message, "Error",
+                                      MessageBoxButton.OK);
+                         }
 
                      }
 
@@ -254,6 +280,11 @@ namespace OssClientMetro.ViewModels
                          {
                              events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCANCEL));
                              folderListModel.deleteFolder(objModel.bucketName, objModel.key);
+                         }
+                         else
+                         {
+                             windowManager.ShowMetroMessageBox(ex.Message, "Error",
+                                      MessageBoxButton.OK);
                          }
                      }
                  }
@@ -877,6 +908,15 @@ namespace OssClientMetro.ViewModels
 
       }
 
+      public bool IsDeleteEnable
+      {
+          get
+          {
+              return selectedIndex > -1 && currentFolder != null;
+          }
+
+      }
+
       private FolderModel m_currentFolder = null;
       private FolderModel backUpCurrentFolder = null;
 
@@ -892,6 +932,7 @@ namespace OssClientMetro.ViewModels
               NotifyOfPropertyChange(() => this.currentFolder);
               NotifyOfPropertyChange(() => this.IsCreateFolderEnabled);
               NotifyOfPropertyChange(() => this.IsSearchView);
+              NotifyOfPropertyChange(() => this.IsDeleteEnable);
           }
       }
 

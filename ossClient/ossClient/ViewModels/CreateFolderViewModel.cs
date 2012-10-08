@@ -38,8 +38,8 @@ namespace OssClientMetro.ViewModels
 
         public void Create()
         {
-            events.Publish(new CreateFolderEvent(FolderName));
             this.TryClose();
+            events.Publish(new CreateFolderEvent(FolderName));     
         }
 
         public void Cancel()

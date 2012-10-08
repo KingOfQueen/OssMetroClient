@@ -126,10 +126,10 @@
             </Style>
 
         </Grid.Resources>
-        <ListView Visibility="{Binding DownloadVis,Converter={StaticResource BoolToVisibleConverter}}" x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}"  Height="550" VerticalAlignment="Top" Margin="0,0,10,0">
+        <ListView SelectionMode="Single"  Visibility="{Binding DownloadVis,Converter={StaticResource BoolToVisibleConverter}}" x:Name="ObjectList" SelectedIndex="{Binding selectedIndex}"  Height="550" VerticalAlignment="Top" Margin="0,0,10,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="230" />
+                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="200" />
                     <GridViewColumn Header="大小"   DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="80"/>
                     <GridViewColumn Header="进度"  CellTemplate="{StaticResource PercentColumnDataTemplate}" Width="180"/>
                     <GridViewColumn Header="速度"  CellTemplate="{StaticResource SpeedColumnDataTemplate}" Width="80"/>
@@ -142,11 +142,12 @@
            
         </ListView>
 
-        <ListView  Visibility="{Binding CompleteVis,Converter={StaticResource BoolToVisibleConverter}}"   ItemsSource="{Binding compeletedListModel}"  SelectedIndex="{Binding selectedIndex}"  Height="550" VerticalAlignment="Top" Margin="0,0,10,0">
+        <ListView  SelectionMode="Single" Visibility="{Binding CompleteVis,Converter={StaticResource BoolToVisibleConverter}}"   ItemsSource="{Binding compeletedListModel}"  SelectedIndex="{Binding selectedIndex}"  Height="550" VerticalAlignment="Top" Margin="0,0,10,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="280" />
-                    <GridViewColumn Header="大小"   DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="100"/>                    
+                    <GridViewColumn Header="名称" CellTemplate="{StaticResource FileNameColumnDataTemplate}" Width="230" />
+                    <GridViewColumn Header="大小"   DisplayMemberBinding="{Binding Size, Converter={StaticResource LongSizeToString}}" Width="80"/>
+                    <GridViewColumn Header="状态"   DisplayMemberBinding="{Binding compeleteStatus}" Width="80"/>
                     <GridViewColumn Header="完成时间" DisplayMemberBinding="{Binding CompleteTime}"   Width="150"/>
                     <GridViewColumn Header="操作"  CellTemplate="{StaticResource OperateColumnDataTemplate}" Width="100"/>
 
