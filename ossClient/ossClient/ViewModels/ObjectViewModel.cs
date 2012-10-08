@@ -14,6 +14,7 @@ using OssClientMetro.Services;
 using System.IO.Compression;
 using System.Windows;
 using System.Dynamic;
+using System.Windows.Controls;
 
 namespace OssClientMetro.ViewModels
 {
@@ -202,6 +203,7 @@ namespace OssClientMetro.ViewModels
                          objModel.startTimer();
                          await uploadSingleFile(objModel);
                          events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+                         await refresh();
                      }
                      catch (Exception ex)
                      {
@@ -244,6 +246,7 @@ namespace OssClientMetro.ViewModels
                          await createFolders(objModel, objModel.localPath);
                          await uploadFolder(objModel);
                          events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+                         await refresh();
                      }
                      catch (Exception ex)
                      {
@@ -329,7 +332,10 @@ namespace OssClientMetro.ViewModels
            {
                FolderModel searchFolder;
                if (currentFolder != null)
+               {
                    searchFolder = currentFolder;
+                   backUpCurrentFolder = currentFolder;
+               }
                else
                    searchFolder = backUpCurrentFolder;
 
@@ -890,7 +896,15 @@ namespace OssClientMetro.ViewModels
       }
 
 
-       
+      public void keydown(object sender, System.Windows.Input.KeyEventArgs e)
+	    {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                searchOperate(((TextBox)sender).Text);	 
+	        }
+	
+	    }
+ 
 
         
 

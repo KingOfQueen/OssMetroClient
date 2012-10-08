@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
-             xmlns:controls="clr-namespace:OssClientMetro.Controls" Width="Auto" Height="594"  Background="#ffe5e5e5" FontFamily="Microsoft YaHei">
+             xmlns:controls="clr-namespace:OssClientMetro.Controls" Width="Auto" Height="Auto"  Background="#ffe5e5e5" FontFamily="Microsoft YaHei">
     <UserControl.Resources>
 
         <ResourceDictionary>
@@ -41,7 +41,7 @@
             <PasswordBox x:Name="UserPassword" Controls:TextboxHelper.Watermark="请输入AccessKey"
 											     VerticalContentAlignment="Center" Margin="23,247,0,0" 
                          controls:PasswordBoxAssistant.BindPassword="true"  controls:PasswordBoxAssistant.BoundPassword="{Binding Path=UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="204" Height="20" VerticalAlignment="Top"/>
-            <Button x:Name="login" Style="{DynamicResource SquareButtonStyle}" Content="登 录" HorizontalAlignment="Left" Margin="152,434,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,1.364" FontFamily="Microsoft YaHei"/>
+            <Button x:Name="login" Style="{DynamicResource SquareButtonStyle}" Content="登 录" HorizontalAlignment="Left" Margin="152,410,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,1.364" FontFamily="Microsoft YaHei"/>
             <CheckBox x:Name="RememberKey" Content="记住密码" HorizontalAlignment="Left" Margin="28,285,0,0" VerticalAlignment="Top" />
             <CheckBox x:Name="AutoLogin"  Content="自动登录" HorizontalAlignment="Left" Margin="135,285,0,0" VerticalAlignment="Top"/>
             

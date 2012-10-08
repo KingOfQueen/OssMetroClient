@@ -129,20 +129,20 @@
             <Image Source="../Images/left.png" Margin="-10"></Image>
 
         </Button>
-        <Button x:Name="gofoward" ToolTip="前进" BorderThickness="0" Background="Transparent"
+        <Button x:Name="gofoward" ToolTip="前进" BorderThickness="0" Background="Transparent" Style="{StaticResource MyMetroButton}" 
                             		Height="35"
                             		Width="35" HorizontalAlignment="Left"  Margin="45,0,0,0" VerticalAlignment="Center" IsEnabled="{Binding history.CanGoForward}" RenderTransformOrigin="0.487,-0.006">
         <Image Source="../Images/right.png" Margin="-10"></Image>
 
         </Button>
 
-        <Button x:Name="refresh" IsEnabled="{Binding IsCreateFolderEnabled}"  ToolTip="刷新" BorderThickness="0" Background="Transparent"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Center" Width="35">
+        <Button x:Name="refresh" Style="{StaticResource MyMetroButton}" IsEnabled="{Binding IsCreateFolderEnabled}"  ToolTip="刷新" BorderThickness="0" Background="Transparent"   HorizontalAlignment="Left" Height="35" Margin="85,0,0,0" VerticalAlignment="Center" Width="35">
             <Image Source="../Images/refresh.png"  Margin="-10" ></Image>
 
         </Button>
         <TextBox  IsReadOnly="True" VerticalContentAlignment="Center" Text="{Binding history.NowPath}" HorizontalAlignment="Left" Height="34" Margin="140,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Width="356"/>
-        <TextBox VerticalContentAlignment="Center"  Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="162"/>
-        <Button IsEnabled="{Binding IsSearchEnabled}"  BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left" Height="35" Margin="642,0,0,0" VerticalAlignment="Center" Width="35">
+        <TextBox IsEnabled="{Binding IsSearchEnabled}" VerticalContentAlignment="Center"  Name="searchTextBox"  Controls:TextboxHelper.Watermark="搜索" HorizontalAlignment="Left" Height="35" Margin="515,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="162"  cal:Message.Attach="[Event KeyDown] = [Action keydown($source, $eventArgs)]"/>
+        <Button IsEnabled="{Binding IsSearchEnabled}" Style="{StaticResource MyMetroButton}"   BorderThickness="0" Background="Transparent"  cal:Message.Attach="[Event Click] = [Action searchOperate(searchTextBox.Text)]"  HorizontalAlignment="Left"  Margin="642,0,0,0" VerticalAlignment="Center" Width="32" Height="32">
              <Image Source="../Images/search.png" ></Image>
         </Button>
 
@@ -152,7 +152,7 @@
                 <TextBlock Text="下载" FontSize="16" ></TextBlock>
             </StackPanel>
         </Button>
-        <Button IsEnabled="{Binding IsCreateFolderEnabled}" Click="Button_Click" ContextMenuService.IsEnabled="False" Style="{StaticResource MyMetroButton}" Grid.Row="1"   HorizontalAlignment="Left" Height="24" Margin="266,0,0,0" VerticalAlignment="Center" Width="100">
+        <Button  IsEnabled="{Binding IsCreateFolderEnabled}" Click="Button_Click" ContextMenuService.IsEnabled="False" Style="{StaticResource MyMetroButton}" Grid.Row="1"   HorizontalAlignment="Left" Height="24" Margin="266,0,0,0" VerticalAlignment="Center" Width="100">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Images/upload.png" Margin="-5,-12,-5, -12"></Image>
                 <TextBlock Text="上传" FontSize="16"></TextBlock>
@@ -181,7 +181,7 @@
             </StackPanel>
         </Button>
         <StackPanel Grid.Row="2">
-        <ListView  ItemContainerStyle="{DynamicResource test}"   x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="460" VerticalAlignment="Top" AllowDrop="True"   
+        <ListView SelectionMode="Single"  ItemContainerStyle="{DynamicResource test}"   x:Name="objectList" SelectedIndex="{Binding selectedIndex}"  Height="460" VerticalAlignment="Top" AllowDrop="True"   
                    cal:Message.Attach="[Event Drop] = [Action DragEnter($eventArgs)]" Margin="0,0,10,0" ext:ListViewBehavior.HeaderSort="True">
             <!--<ListView.ContextMenu>
                 <ContextMenu>

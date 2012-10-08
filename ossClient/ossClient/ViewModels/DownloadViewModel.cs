@@ -85,7 +85,7 @@ namespace OssClientMetro.ViewModels
                 }
                 else if (message.type == DownloadViewEventType.COMPELETEDVIEW)
                 {
-                    ObjectList = compeletedListModel;
+                    //ObjectList = compeletedListModel;
                     setCompleteVis();
                 }
 
@@ -228,7 +228,7 @@ namespace OssClientMetro.ViewModels
 
         public BindableCollection<ObjectModel> downloadingListModel;
         public BindableCollection<ObjectModel> uploadingListModel;
-        public BindableCollection<ObjectModel> compeletedListModel;
+        public BindableCollection<ObjectModel> compeletedListModel { get; set; }
 
         private BindableCollection<ObjectModel> objectList;
 
@@ -263,28 +263,25 @@ namespace OssClientMetro.ViewModels
 
         public void deleteOperate()
         {
-            ObjectModel objModel = objectList[selectedIndex];
+            ObjectModel objModel = null;
+            if (CompleteVis)
+            {
+                objModel = compeletedListModel[selectedIndex];
+            }
+            else
+            {
+                objModel = objectList[selectedIndex];
+            }
             deleteOperate(objModel);
-            //if (compeletedListModel == objectList)
-            //{
-            //    deleteInCompleteList(objModel);
-            //    events.Publish(new TaskCountEvent(compeletedListModel.Count, TaskCountEventType.COMPELETED));
-            //}
-            //else
-            //{
-            //    if (objModel is FileModel)
-            //        objModel.tokenSource.Cancel();
-            //    else
-            //        ((FolderModel)objModel).cancelTask();
-            //}
+
 
 
         }
 
         public void deleteOperate(ObjectModel objModel)
         {
-           // ObjectModel objModel = objectList[selectedIndex];
-            if (compeletedListModel == objectList)
+         
+            if (CompleteVis)
             {
                 if (windowManager.ShowMetroMessageBox("是否删除记录 " + objModel.displayName + "?", "Warning",
                                       MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -328,20 +325,21 @@ namespace OssClientMetro.ViewModels
 
         public void openLocalFolder()
        {
-           ObjectModel objModel = objectList[selectedIndex];
+           ObjectModel objModel = null;
+           if (CompleteVis)
+           {
+               objModel = compeletedListModel[selectedIndex];
+           }
+           else
+            {
+                 objModel = objectList[selectedIndex];
+           }
            openLocalFolder(objModel);
-          //Process ExplorerWindowProcess = new Process();
- 
-          // ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
-          //ExplorerWindowProcess.StartInfo.Arguments = "/select,\"" + objModel.localPath + "\""; ;
 
-          //ExplorerWindowProcess.Start();
 
      }
         public void openLocalFolder(ObjectModel objModel)
         {
-           // ObjectModel objModel = objectList[selectedIndex];
-
             Process ExplorerWindowProcess = new Process();
 
             ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
@@ -354,19 +352,19 @@ namespace OssClientMetro.ViewModels
 
         void setDownloadVis()
         {
-            DownloadVis = Visibility.Visible;
-            CompleteVis = Visibility.Collapsed;
+            DownloadVis = true;
+            CompleteVis = false;
         }
 
         void setCompleteVis()
         {
-            DownloadVis = Visibility.Collapsed;
-            CompleteVis = Visibility.Visible;
+            DownloadVis = false;
+            CompleteVis = true;
         }
 
-        Visibility completeVis;
+        bool completeVis;
 
-        public Visibility CompleteVis
+        public bool CompleteVis
         {
             get
             {
@@ -379,9 +377,9 @@ namespace OssClientMetro.ViewModels
             }
         }
 
-        Visibility downloadVis;
+        bool downloadVis;
 
-        public Visibility DownloadVis
+        public bool DownloadVis
         {
             get
             {
