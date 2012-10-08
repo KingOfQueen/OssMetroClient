@@ -99,6 +99,7 @@
     <Compile Include="Events\DeleteBucketEvent.cs" />
     <Compile Include="Events\TaskAddNumEvent.cs" />
     <Compile Include="Events\TaskCountEvent.cs" />
+    <Compile Include="Events\TaskStartEvent.cs" />
     <Compile Include="Extension\ListSortDirector.cs" />
     <Compile Include="Extension\ListViewBehavior.cs" />
     <Compile Include="Model\ObjectModelForSerial.cs" />

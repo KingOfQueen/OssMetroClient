@@ -101,13 +101,31 @@ namespace OssClientMetro.ViewModels
             {
                 if (taskEvent.type == TaskEventType.DOWNLOADING)
                 {
-                    downloadingListModel.Insert(0, taskEvent.obj);
-                    events.Publish(new TaskCountEvent(downloadingListModel.Count, TaskCountEventType.DOWNLOADING));
+                    if (!isInTheList(downloadingListModel, taskEvent.obj))
+                    {
+                        downloadingListModel.Insert(0, taskEvent.obj);
+                        events.Publish(new TaskStartEvent(taskEvent.obj, TaskStartEventType.DOWNLOAD));
+                        events.Publish(new TaskCountEvent(downloadingListModel.Count, TaskCountEventType.DOWNLOADING));
+                    }
+                    else
+                    {
+                        windowManager.ShowMetroMessageBox("你已经将该任务添加到下载队列中", "Error",
+                                     MessageBoxButton.OK);
+                    }
                 }
                 else if (taskEvent.type == TaskEventType.UPLOADING)
                 {
-                    uploadingListModel.Insert(0, taskEvent.obj);
-                    events.Publish(new TaskCountEvent(uploadingListModel.Count, TaskCountEventType.UPLOADING));
+                    if (!isInTheList(uploadingListModel, taskEvent.obj))
+                    {
+                        uploadingListModel.Insert(0, taskEvent.obj);
+                        events.Publish(new TaskStartEvent(taskEvent.obj, TaskStartEventType.UPLOAD));
+                        events.Publish(new TaskCountEvent(uploadingListModel.Count, TaskCountEventType.UPLOADING));
+                    }
+                    else
+                    {
+                        windowManager.ShowMetroMessageBox("你已经将该任务添加到上传队列中", "Error",
+                                     MessageBoxButton.OK);
+                    }
                 }
                 else if (taskEvent.type == TaskEventType.DOWNLOADCOMPELETED)
                 {
@@ -195,6 +213,17 @@ namespace OssClientMetro.ViewModels
 
             CompleteTaskListFile.writeToFile(objectModelForSerialList);
         }
+
+
+        bool isInTheList(BindableCollection<ObjectModel> list,  ObjectModel obj)
+        {
+            return list.FirstOrDefault(x => x.bucketName == obj.bucketName
+                     && x.key == obj.key
+                     && x.displayName == obj.displayName
+                     && x.localPath == obj.localPath) != null;
+        }
+
+       
 
 
         public BindableCollection<ObjectModel> downloadingListModel;

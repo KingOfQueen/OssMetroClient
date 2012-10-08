@@ -18,7 +18,7 @@ using System.Dynamic;
 namespace OssClientMetro.ViewModels
 {
     class ObjectViewModel : PropertyChangedBase, IRightWorkSpace, 
-        IHandle<BuketSelectedEvent>, IHandle<CreateFolderEvent>, IHandle<DeleteBucketEvent>
+        IHandle<BuketSelectedEvent>, IHandle<CreateFolderEvent>, IHandle<DeleteBucketEvent>, IHandle<TaskStartEvent>
     {
         readonly IEventAggregator events;
         readonly IClientService clientService;
@@ -166,6 +166,95 @@ namespace OssClientMetro.ViewModels
              //{
                  
              //}
+         }
+
+
+         public async void Handle(TaskStartEvent message)
+         {
+             if (message.obj is FileModel)
+             {
+                 FileModel objModel = (FileModel)message.obj;
+                 if (message.type == TaskStartEventType.DOWNLOAD)
+                 {
+                     try
+                     {
+
+                         events.Publish(new TaskAddNumEvent(1));
+                         objModel.startTimer();
+                         await downloadfile((FileModel)message.obj, objModel.localPath);
+                         events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
+                     }
+                     catch (Exception ex)
+                     {
+                         if (ex is System.Threading.Tasks.TaskCanceledException)
+                         {
+                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
+                         }
+
+                     }
+
+                 }
+                 else
+                 {
+                     try
+                     {
+                         events.Publish(new TaskAddNumEvent(1));
+                         objModel.startTimer();
+                         await uploadSingleFile(objModel);
+                         events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+                     }
+                     catch (Exception ex)
+                     {
+                         if (ex is System.Threading.Tasks.TaskCanceledException)
+                         {
+                             events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCANCEL));
+                             folderListModel.deleteFile(objModel.bucketName, objModel.key);
+                         }
+                     }
+                 }
+             }
+             else
+             {
+                 FolderModel objModel = (FolderModel)message.obj;
+                 if (message.type == TaskStartEventType.DOWNLOAD)
+                 {
+                     try
+                     {
+                         events.Publish(new TaskAddNumEvent(1));
+                         ((FolderModel)objModel).startTimer();
+                         await downloadFolder((FolderModel)objModel, objModel.localPath);
+                         events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
+                     }
+                     catch (Exception ex)
+                     {
+                         if (ex is System.Threading.Tasks.TaskCanceledException)
+                         {
+                             events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
+                         }
+
+                     }
+
+                 }
+                 else
+                 {
+                     try
+                     {
+                         events.Publish(new TaskAddNumEvent(1));
+                         objModel.startTimer();
+                         await createFolders(objModel, objModel.localPath);
+                         await uploadFolder(objModel);
+                         events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+                     }
+                     catch (Exception ex)
+                     {
+                         if (ex is System.Threading.Tasks.TaskCanceledException)
+                         {
+                             events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCANCEL));
+                             folderListModel.deleteFolder(objModel.bucketName, objModel.key);
+                         }
+                     }
+                 }
+             }
          }
 
 
@@ -392,17 +481,17 @@ namespace OssClientMetro.ViewModels
                                 string fileName = foulderPath + objModel.displayName;
                                 objModel.localPath = fileName;
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
-                                events.Publish(new TaskAddNumEvent(1));
-                                ((FileModel)objModel).startTimer();
-                                await downloadfile((FileModel)objModel, fileName);
-                                events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
+                                //events.Publish(new TaskAddNumEvent(1));
+                                //((FileModel)objModel).startTimer();
+                                //await downloadfile((FileModel)objModel, fileName);
+                                //events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
                             }
                             catch( Exception ex)
                             {
-                                if (ex is System.Threading.Tasks.TaskCanceledException)
-                                {
-                                    events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
-                                }
+                                //if (ex is System.Threading.Tasks.TaskCanceledException)
+                                //{
+                                //    events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
+                                //}
 
                             }
                         }
@@ -413,17 +502,17 @@ namespace OssClientMetro.ViewModels
                                 await folderListModel.initFolderForDownload((FolderModel)objModel);
                                 objModel.localPath = foulderPath + objModel.displayName;
                                 events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADING));
-                                events.Publish(new TaskAddNumEvent(1));
-                                ((FolderModel)objModel).startTimer();
-                                await downloadFolder((FolderModel)objModel, objModel.localPath);
-                                events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
+                                //events.Publish(new TaskAddNumEvent(1));
+                                //((FolderModel)objModel).startTimer();
+                                //await downloadFolder((FolderModel)objModel, objModel.localPath);
+                                //events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCOMPELETED));
                             }
                             catch (Exception ex)
                             {
-                                if (ex is System.Threading.Tasks.TaskCanceledException)
-                                {
-                                    events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
-                                }
+                                //if (ex is System.Threading.Tasks.TaskCanceledException)
+                                //{
+                                //    events.Publish(new TaskEvent(objModel, TaskEventType.DOWNLOADCANCEL));
+                                //}
 
                             }
                         }
@@ -541,18 +630,18 @@ namespace OssClientMetro.ViewModels
                  objModel.initial();
                 objModel.localPath = fileName;
                 events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADING));
-                events.Publish(new TaskAddNumEvent(1));
-                objModel.startTimer();
-                await uploadSingleFile(objModel);
-                events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
+                //events.Publish(new TaskAddNumEvent(1));
+                //objModel.startTimer();
+                //await uploadSingleFile(objModel);
+                //events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCOMPELETED));
             }
             catch(Exception ex)
             {
-                if (ex is System.Threading.Tasks.TaskCanceledException)
-                {
-                    events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCANCEL));
-                    folderListModel.deleteFile(objModel.bucketName, objModel.key);
-                }
+                //if (ex is System.Threading.Tasks.TaskCanceledException)
+                //{
+                //    events.Publish(new TaskEvent(objModel, TaskEventType.UPLOADCANCEL));
+                //    folderListModel.deleteFile(objModel.bucketName, objModel.key);
+                //}
             }
         }
 
@@ -600,19 +689,19 @@ namespace OssClientMetro.ViewModels
                folderModel.localPath = Path;
 
                events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADING));
-               events.Publish(new TaskAddNumEvent(1));
-               folderModel.startTimer();
-               await createFolders(folderModel, Path);
-               await uploadFolder(folderModel);
-               events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCOMPELETED));
+               //events.Publish(new TaskAddNumEvent(1));
+               //folderModel.startTimer();
+               //await createFolders(folderModel, Path);
+               //await uploadFolder(folderModel);
+               //events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCOMPELETED));
            }
            catch (Exception ex)
            {
-               if (ex is System.Threading.Tasks.TaskCanceledException)
-               {
-                   events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCANCEL));
-                   folderListModel.deleteFolder(folderModel.bucketName, folderModel.key);
-               }
+               //if (ex is System.Threading.Tasks.TaskCanceledException)
+               //{
+               //    events.Publish(new TaskEvent(folderModel, TaskEventType.UPLOADCANCEL));
+               //    folderListModel.deleteFolder(folderModel.bucketName, folderModel.key);
+               //}
            }
 
        }
@@ -791,6 +880,7 @@ namespace OssClientMetro.ViewModels
       }
 
 
+       
 
         
 
