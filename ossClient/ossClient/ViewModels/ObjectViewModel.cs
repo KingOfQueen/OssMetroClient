@@ -557,6 +557,7 @@ namespace OssClientMetro.ViewModels
            folderModel.Size = 0;
            folderModel.bucketName = bucket;
            folderModel.key = parentKey + dirInfo.Name + "/";
+           folderModel.initial();
 
            FileInfo[] fileInfos = dirInfo.GetFiles();
            foreach (FileInfo fileInfo in fileInfos)
