@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-C:\github\ossClient\ossClient\ossClient\obj\x86\Debug\
+C:\github\ossClient\ossClient\ossClient\obj\x86\Release\
 OssClientMetro
 none
 false
-DEBUG;TRACE
+TRACE
 C:\github\ossClient\ossClient\ossClient\App.xaml
 171911397439
 
-831230063172
+79-1996989129
 23-750074832
 Theme\Buttons.xaml;Theme\ContextMenu.xaml;Theme\Converters.xaml;Theme\Expander.xaml;Theme\Generic.xaml;Views\CreateBucketView.xaml;Views\CreateFolderView.xaml;Views\DownloadView.xaml;Views\MetroMessageBoxView.xaml;Views\ObjectView.xaml;Resources\Icons.xaml;Views\NavigateView.xaml;Views\RightView.xaml;Views\LoginView.xaml;Views\LeftView.xaml;MainWindowView.xaml;Views\WelcomeView.xaml;
 

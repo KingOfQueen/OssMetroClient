@@ -7,7 +7,6 @@ using Oss;
 using System.IO;
 using OssClientMetro.Model;
 using System.Threading.Tasks;
-using NLog;
 using OssClientMetro.Framework;
 using System.ComponentModel.Composition;
 using OssClientMetro.Services;
