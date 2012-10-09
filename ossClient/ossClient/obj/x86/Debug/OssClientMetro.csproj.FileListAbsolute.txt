@@ -1,1 +1,2 @@
 C:\github\ossClient\ossClient\ossClient\bin\Debug\OssClientMetro.exe.config
+K:\github\ossClient\ossClient\ossClient\bin\Debug\OssClientMetro.exe.config

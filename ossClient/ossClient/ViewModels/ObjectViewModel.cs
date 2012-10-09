@@ -339,7 +339,14 @@ namespace OssClientMetro.ViewModels
        async Task refreshPath()
        {
            string[] ss = history.NowPath.Split('/');
-           if (currentFolder.bucketName != ss[0])
+           FolderModel folderModel = null;
+
+           if (currentFolder != null)
+               folderModel = currentFolder;
+           else
+               folderModel = backUpCurrentFolder;
+
+           if (folderModel.bucketName != ss[0])
            {
                events.Publish(new BuketSelectedUiUpdateEvent(ss[0]));
            }
@@ -784,6 +791,7 @@ namespace OssClientMetro.ViewModels
                    while (File.Exists(zipFileName))
                    {
                        zipFileName = dirInfo.FullName + "_" + i.ToString() + ".zip";
+                       i++;
                    }
 
                    ZipFile.CreateFromDirectory(foulderPath, zipFileName);
